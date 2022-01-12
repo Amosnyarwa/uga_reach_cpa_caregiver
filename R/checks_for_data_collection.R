@@ -23,3 +23,7 @@ df_survey <- readxl::read_excel("inputs/Child_Protection_Caregiver_Tool.xlsx", s
 df_choices <- readxl::read_excel("inputs/Child_Protection_Caregiver_Tool.xlsx", sheet = "choices")
 
 df_sample_data <- sf::st_read("inputs/cpa_caregiver_settlement_host_samples.gpkg", quiet = TRUE)
+
+# output holder -----------------------------------------------------------
+
+logic_output <- list()
