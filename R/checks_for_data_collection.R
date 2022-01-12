@@ -55,3 +55,11 @@ if(exists("df_c_time_btn_survey")){
     logic_output$df_c_time_btn_survey <- df_c_time_btn_survey
   }
 }
+
+# Logical checks ----------------------------------------------------------
+
+
+# spatial checks ----------------------------------------------------------
+
+
+
