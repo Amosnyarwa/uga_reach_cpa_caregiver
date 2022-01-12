@@ -27,3 +27,19 @@ df_sample_data <- sf::st_read("inputs/cpa_caregiver_settlement_host_samples.gpkg
 # output holder -----------------------------------------------------------
 
 logic_output <- list()
+
+# Time checks -------------------------------------------------------------
+
+# Time interval for the survey
+min_time_of_survey <- 30
+max_time_of_survey <- 120
+
+df_c_survey_time <-  check_survey_time(input_df = df_tool_data, 
+                                       input_min_time = min_time_of_survey, 
+                                       input_max_time = max_time_of_survey)
+
+if(exists("df_c_survey_time")){
+  if(nrow(df_c_survey_time) > 0){
+    logic_output$df_c_survey_time <- df_c_survey_time
+  }
+}
