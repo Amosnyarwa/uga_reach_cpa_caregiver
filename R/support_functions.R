@@ -134,3 +134,30 @@ check_survey_time <- function(input_df, input_min_time, input_max_time) {
     dplyr::select(starts_with("i.check"))%>% 
     rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 }
+
+# check interval between surveys by the same enumerator
+check_time_interval_btn_surveys <- function(input_df, input_min_time) {
+  input_df %>% 
+    group_by(i.check.start_date, i.check.enumerator_id) %>%
+    filter(n()>1) %>% 
+    arrange(start, .by_group = TRUE) %>%
+    mutate(int.time_between_survey = lubridate::time_length(start - lag(end, default = first(start)), unit = "min"),
+           int.time_between_survey = ceiling(int.time_between_survey)) %>%
+    filter(int.time_between_survey != 0 & int.time_between_survey < input_min_time) %>%
+    mutate(i.check.type = "remove_survey",
+           i.check.name = "point_number",
+           i.check.current_value = "",
+           i.check.value = "",
+           i.check.issue_id = "less_time_btn_surveys",
+           i.check.issue = glue("{int.time_between_survey} min taken between surveys"),
+           i.check.other_text = "",
+           i.check.checked_by = "",
+           i.check.checked_date = as_date(today()),
+           i.check.comment = "", 
+           i.check.reviewed = "",
+           i.check.adjust_log = "",
+           i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+           i.check.so_sm_choices = "") %>% 
+    dplyr::select(starts_with("i.check"))%>% 
+    rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+}
