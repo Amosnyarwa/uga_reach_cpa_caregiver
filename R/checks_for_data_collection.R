@@ -43,3 +43,15 @@ if(exists("df_c_survey_time")){
     logic_output$df_c_survey_time <- df_c_survey_time
   }
 }
+
+# check the time between surveys
+min_time_btn_surveys <- 5
+
+df_c_time_btn_survey <- check_time_interval_btn_surveys(input_df = df_tool_data,
+                                                        input_min_time = min_time_btn_surveys)
+
+if(exists("df_c_time_btn_survey")){
+  if(nrow(df_c_time_btn_survey) > 0){
+    logic_output$df_c_time_btn_survey <- df_c_time_btn_survey
+  }
+}
