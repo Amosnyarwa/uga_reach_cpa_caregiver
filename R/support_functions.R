@@ -109,8 +109,8 @@ extract_other_data <- function(input_tool_data, input_survey, input_choices) {
 # survey time check -------------------------------------------------------
 
 # check survey time against expected minimum time and maximum time of the survey
-check_survey_time <- function(input_df, input_min_time, input_max_time) {
-  input_df %>% 
+check_survey_time <- function(input_tool_data, input_min_time, input_max_time) {
+  input_tool_data %>% 
     mutate(int.survey_time_interval = lubridate::time_length(end - start, unit = "min"),
            int.survey_time_interval = ceiling(int.survey_time_interval),
            i.check.type = "remove_survey",
@@ -136,8 +136,8 @@ check_survey_time <- function(input_df, input_min_time, input_max_time) {
 }
 
 # check interval between surveys by the same enumerator
-check_time_interval_btn_surveys <- function(input_df, input_min_time) {
-  input_df %>% 
+check_time_interval_btn_surveys <- function(input_tool_data, input_min_time) {
+  input_tool_data %>% 
     group_by(i.check.start_date, i.check.enumerator_id) %>%
     filter(n()>1) %>% 
     arrange(start, .by_group = TRUE) %>%
