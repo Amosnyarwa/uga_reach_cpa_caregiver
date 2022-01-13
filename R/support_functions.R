@@ -213,12 +213,12 @@ check_pt_number_not_in_samples <- function(input_tool_data, input_sample_pt_nos_
 }
 
 # check that collected point is not at a distance greater than the threshold 
-check_threshold_distance <- function(df_sample_data, df_tool_data, threshold_dist) {
-  df_sample_data_thresh <- df_sample_data %>% 
+check_threshold_distance <- function(input_sample_data, input_tool_data, input_threshold_dist) {
+  df_sample_data_thresh <- input_sample_data %>% 
     mutate(unique_pt_number = paste0(status, "_", Name)) %>% 
     sf::st_transform(4326)
   
-  df_tool_data_thresh <- df_tool_data %>% 
+  df_tool_data_thresh <- input_tool_data %>% 
     mutate(unique_pt_number = paste0(status, "_", point_number)) %>% 
     sf::st_as_sf(coords = c("_geopoint_longitude","_geopoint_latitude"), crs = 4326)
   
@@ -257,13 +257,13 @@ check_threshold_distance <- function(df_sample_data, df_tool_data, threshold_dis
     
     # format the required data
     df_data_with_distance %>% 
-      filter(as.numeric(distance) >= threshold_dist) %>% 
+      filter(as.numeric(distance) >= input_threshold_dist) %>% 
       mutate(i.check.type = "remove_survey",
              i.check.name = "point_number",
              i.check.current_value = point_number,
              i.check.value = "",
              i.check.issue_id = "spatial_c_dist_to_sample_greater_than_threshold",
-             i.check.issue = glue("{distance} m greater_than_threshold:{threshold_dist} m"),
+             i.check.issue = glue("{distance} m greater_than_threshold:{input_threshold_dist} m"),
              i.check.other_text = "",
              i.check.checked_by = "",
              i.check.checked_date = as_date(today()),
