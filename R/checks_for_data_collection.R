@@ -99,3 +99,7 @@ if(exists("df_c_greater_thresh_distance")){
     logic_output$df_c_greater_thresh_distance <- df_c_greater_thresh_distance
   }
 }
+
+# combined logical checks ----------------------------------------------------------
+
+df_logic_checks <- bind_rows(logic_output)
