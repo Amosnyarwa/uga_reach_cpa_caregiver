@@ -109,3 +109,6 @@ df_logic_checks <- bind_rows(logic_output)
 df_others_data <- extract_other_data(input_tool_data = df_tool_data, 
                                      input_survey = df_survey, 
                                      input_choices = df_choices)
+
+# combine logic and others checks
+df_combined_checks <- bind_rows(df_logic_checks, df_others_data)
