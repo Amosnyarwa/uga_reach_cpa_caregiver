@@ -145,3 +145,30 @@ dt_enum_performance_options <- function(x){
 ## Summary on the surveys done
 
 >There are **`r nrow(df_updated_tool_data)`** total number of surveys done as of **`r df_days_for_data_collection[length(df_days_for_data_collection)]`**.
+
+### Settlements:  **`r df_updated_tool_data %>% filter(status == "refugee") %>% nrow()`** surveys
+
+```{r, echo = FALSE}
+df_refugee_samp_per_settlement <- df_settlement_samples_required %>% 
+  group_by(settlement_name) %>% 
+  summarise(required_samples = sum(smpl_sz, na.rm = TRUE))
+
+df_cl_surveys_for_deletion <- df_cl_log %>% 
+  filter(status == "refugee", type == "remove_survey", reviewed == 1, adjust_log != "delete_log") %>%
+  group_by(settlement_name) %>% 
+  distinct(uuid) %>%
+  summarise(surveys_for_deletion = n())
+
+df_updated_tool_data %>% 
+  filter(status == "refugee") %>% 
+  group_by(district_name, settlement_name) %>% 
+  summarise(number_of_surveys = n()) %>% 
+  arrange(district_name) %>% 
+  left_join(df_refugee_samp_per_settlement, by = "settlement_name") %>% 
+  left_join(df_cl_surveys_for_deletion, by = "settlement_name") %>% 
+  mutate(int.surveys_and_deletion = ifelse(is.na(surveys_for_deletion), number_of_surveys, number_of_surveys - surveys_for_deletion),
+         remaining_surveys = required_samples - int.surveys_and_deletion ) %>% 
+  select(-int.surveys_and_deletion) %>% 
+  dt_with_modified_options()
+
+```
