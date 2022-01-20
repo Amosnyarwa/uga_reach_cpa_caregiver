@@ -42,4 +42,22 @@ df_tool_data <- readxl::read_excel("../inputs/Child_Protection_Assessment_Caregi
          !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
          )
   
+# days that contain data
+df_days_for_data_collection <- df_tool_data %>% select(start_date) %>% unique() %>% arrange(start_date) %>% pull()
+
+df_data_support_cl_log <- df_tool_data %>% 
+  select(uuid, status,sub_county_name,	settlement_name, latitude,	longitude )
+# cleaning log handling
+df_cl_log <- read_csv(file = "../inputs/combined_logic_spatial_and_others_checks.csv") %>% 
+  mutate(adjust_log = ifelse(is.na(adjust_log), "apply_suggested_change", adjust_log)) %>% 
+  left_join(df_data_support_cl_log, by = "uuid")
+
+# change_response logs that affect stats in the data collection progress
+cl_log_change_response <- df_cl_log %>% 
+  filter(type == "change_response", 
+         !is.na(value),
+         reviewed == 1, 
+         adjust_log != "delete_log", 
+        ) %>% 
+  select(uuid, name, value)
 ```
