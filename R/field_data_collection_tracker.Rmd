@@ -60,4 +60,25 @@ cl_log_change_response <- df_cl_log %>%
          adjust_log != "delete_log", 
         ) %>% 
   select(uuid, name, value)
+
+# updated tool data
+df_updated_tool_data <- df_tool_data
+
+# get uuids from cleaning log
+uuids_chg_response <- cl_log_change_response %>% pull(uuid) %>% unique()
+
+for (current_uuid in uuids_chg_response) {
+  current_uuid_data <- cl_log_change_response %>% 
+    filter(uuid == current_uuid) %>% 
+    mutate(value = ifelse(name == "enumerator_id", as.numeric(value), value)) %>% 
+    pivot_wider(names_from = "name", values_from = "value", uuid)
+  print(current_uuid_data)
+  # process current updates
+  df_current_updated <- df_updated_tool_data %>% 
+    rows_update(y = current_uuid_data, by = "uuid")
+  # update the parent dataset with current updates
+  df_updated_tool_data <- df_current_updated
+}
+
+
 ```
