@@ -199,3 +199,15 @@ df_updated_tool_data %>%
   dt_with_modified_options()
 
 ```
+
+### Daily enumerator performance
+
+The average survey time for all the data is: **`r round(mean(df_enum_performance$int.survey_time_interval), 0)`** Minutes
+
+```{r, echo = FALSE}
+
+df_enum_performance %>% 
+  group_by(district_name, start_date, enumerator_id) %>% 
+  summarise(number_of_interviews_done = n(), `average_survey_time(minutes)` = round(mean(int.survey_time_interval, na.rm = TRUE), 0)) %>% 
+  dt_enum_performance_options()
+```
