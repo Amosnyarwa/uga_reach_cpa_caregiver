@@ -141,3 +141,7 @@ dt_enum_performance_options <- function(x){
 }
 
 ```
+
+## Summary on the surveys done
+
+>There are **`r nrow(df_updated_tool_data)`** total number of surveys done as of **`r df_days_for_data_collection[length(df_days_for_data_collection)]`**.
