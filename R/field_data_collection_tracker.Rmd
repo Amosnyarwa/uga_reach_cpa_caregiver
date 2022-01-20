@@ -20,4 +20,14 @@ library(tidyverse)
 library(lubridate)
 library(glue)
 library(leaflet)
+
+# read data 
+df_settlement_samples_required <- readxl::read_excel("../inputs/Refugee_caregiver_survey_samples_definition.csv") %>% 
+  rename(settlement_name = settlement) %>% 
+  select(settlement_name, smpl_sz)
+
+df_host_samples_required <- readr::read_csv("../inputs/Host_community_caregiver_survey_samples_definition.csv")%>% 
+  rename(sub_county_name =  Sub_county ) %>%
+  select(sub_county_name, smpl_sz)
+
 ```
