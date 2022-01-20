@@ -1,0 +1,10 @@
+---
+title: "Tracker for field data collection"
+author: "Anthony Twesigye"
+date: "20/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
