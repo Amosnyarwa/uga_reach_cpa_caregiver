@@ -12,5 +12,12 @@ knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = e
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+
+# read packages
+library(tidyverse)
+library(lubridate)
+library(glue)
+library(leaflet)
 ```
