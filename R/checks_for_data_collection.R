@@ -15,7 +15,7 @@ df_tool_data <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver
          i.check.point_number = point_number,
          start = as_datetime(start),
          end = as_datetime(end)) %>% 
-  filter(consent == "yes", respondent_age >= 18, i.check.start_date > as_date("2022-01-17"), 
+  filter(consent == "yes", respondent_age >= 18, i.check.start_date > as_date("2022-01-20"), 
          !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
   )
 
