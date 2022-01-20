@@ -172,3 +172,30 @@ df_updated_tool_data %>%
   dt_with_modified_options()
 
 ```
+
+### Host community: **`r df_updated_tool_data %>% filter(status == "host_community") %>% nrow()`** surveys
+
+```{r, echo = FALSE}
+df_host_samp_per_sub_county <- df_host_samples_required %>% 
+  group_by(sub_county_name) %>% 
+  summarise(required_samples = sum(smpl_sz, na.rm = TRUE))
+
+df_cl_surveys_for_deletion <- df_cl_log %>% 
+  filter(status == "host_community", type == "remove_survey", reviewed == 1, adjust_log != "delete_log") %>%
+  group_by(sub_county_name) %>% 
+  distinct(uuid) %>%
+  summarise(surveys_for_deletion = n())
+
+df_updated_tool_data %>% 
+  filter(status == "host_community") %>% 
+  group_by(district_name, sub_county_name) %>% 
+  summarise(number_of_surveys = n()) %>% 
+  arrange(district_name) %>% 
+  left_join(df_host_samp_per_sub_county, by = "sub_county_name") %>% 
+  left_join(df_cl_surveys_for_deletion, by = "sub_county_name") %>% 
+  mutate(int.surveys_and_deletion = ifelse(is.na(surveys_for_deletion), number_of_surveys, number_of_surveys - surveys_for_deletion),
+         remaining_surveys = required_samples - int.surveys_and_deletion ) %>% 
+  select(-int.surveys_and_deletion) %>% 
+  dt_with_modified_options()
+
+```
