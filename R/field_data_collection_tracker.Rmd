@@ -39,7 +39,7 @@ df_tool_data <- readxl::read_excel("../inputs/Child_Protection_Assessment_Caregi
          longitude = as.numeric(`_geopoint_longitude`)) %>% 
   filter(consent == "yes",  respondent_age >= 18,
          start_date > as_date("2022-01-20"), 
-         !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE)),
+         !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
          )
   
 ```
