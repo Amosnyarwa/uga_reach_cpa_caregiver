@@ -67,7 +67,7 @@ sample_pt_nos <- df_sample_data %>%
   unique()
 
 # duplicate point numbers
-df_c_duplicate_pt_nos <- check_duplicate_pt_numbers(input_tool_data = df_tool_data,
+df_c_duplicate_pt_nos <- check_duplicate_pt_numbers(input_tool_data = df_tool_data %>% filter(district_name != "kampala"),
                                                     input_sample_pt_nos_list = sample_pt_nos)
 
 if(exists("df_c_duplicate_pt_nos")){
@@ -77,7 +77,7 @@ if(exists("df_c_duplicate_pt_nos")){
 }
 
 # pt id does not exist in sample
-df_c_pt_not_in_sample <- check_pt_number_not_in_samples(input_tool_data = df_tool_data, 
+df_c_pt_not_in_sample <- check_pt_number_not_in_samples(input_tool_data = df_tool_data %>% filter(district_name != "kampala"), 
                                                         input_sample_pt_nos_list = sample_pt_nos)
 
 if(exists("df_c_pt_not_in_sample")){
@@ -91,7 +91,7 @@ if(exists("df_c_pt_not_in_sample")){
 threshold_dist <- 150
 
 df_c_greater_thresh_distance <- check_threshold_distance(input_sample_data = df_sample_data,
-                                                         input_tool_data = df_tool_data,
+                                                         input_tool_data = df_tool_data %>% filter(district_name != "kampala"),
                                                          input_threshold_dist = threshold_dist)
 
 if(exists("df_c_greater_thresh_distance")){
