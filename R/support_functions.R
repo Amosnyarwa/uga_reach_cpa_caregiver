@@ -10,7 +10,7 @@ extract_other_data <- function(input_tool_data, input_survey, input_choices) {
   
   # get questions with other
   others_colnames <-  df_data %>% 
-    select(ends_with("_other"), -contains("/")) %>% 
+    select(ends_with("_other"), -contains("/"), -c("okay_children_fight_each_other")) %>% 
     colnames()
   
   # data.frame for holding _other response data
