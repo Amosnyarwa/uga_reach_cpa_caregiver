@@ -15,8 +15,8 @@ df_tool_data <- readxl::read_excel("inputs/UGA2109_Cross_Sectoral_Child_Protecti
          i.check.point_number = point_number,
          start = as_datetime(start),
          end = as_datetime(end)) %>% 
-  filter(consent == "yes", respondent_age >= 18, i.check.start_date > as_date("2022-01-20"), 
-         !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
+  filter(consent_three == "yes", respondent_age >= 18, i.check.start_date > as_date("2022-01-20"), 
+         # !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
   )
 
 df_survey <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "survey")
