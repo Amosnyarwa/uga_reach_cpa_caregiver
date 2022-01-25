@@ -37,7 +37,7 @@ df_tool_data <- readxl::read_excel("../inputs/UGA2109_Cross_Sectoral_Child_Prote
          end = as_datetime(end),
          latitude = as.numeric(`_geopoint_latitude`),
          longitude = as.numeric(`_geopoint_longitude`)) %>% 
-  filter(consent == "yes",  respondent_age >= 18,
+  filter(consent_three == "yes",  respondent_age >= 18,
          start_date > as_date("2022-01-20"), 
          !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
          )
