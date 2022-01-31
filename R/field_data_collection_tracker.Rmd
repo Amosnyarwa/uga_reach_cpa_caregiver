@@ -35,6 +35,7 @@ df_tool_data <- readxl::read_excel("../inputs/UGA2109_Cross_Sectoral_Child_Prote
          start_date = as_date(start),
          start = as_datetime(start),
          end = as_datetime(end),
+         sub_county_div = as.character(sub_county_div),
          latitude = as.numeric(`_geopoint_latitude`),
          longitude = as.numeric(`_geopoint_longitude`)) %>% 
   filter(consent_three == "yes",  respondent_age >= 18,
