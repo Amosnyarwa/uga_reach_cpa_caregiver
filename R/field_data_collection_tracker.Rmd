@@ -23,12 +23,12 @@ library(leaflet)
 
 # read data 
 df_settlement_samples_required <- readr::read_csv("../inputs/Refugee_caregiver_survey_samples_definition.csv") %>% 
-  rename(settlement_name = settlement) %>% 
-  select(settlement_name, smpl_sz)
+  rename(refugee_settlement = settlement) %>% 
+  select(refugee_settlement, sample_size)
 
 df_host_samples_required <- readr::read_csv("../inputs/Host_community_caregiver_survey_samples_definition.csv")%>% 
-  rename(sub_county_name =  Sub_county ) %>%
-  select(sub_county_name, smpl_sz)
+  rename(sub_county_div =  Sub_county ) %>%
+  select(sub_county_div, sample_size)
 
 df_tool_data <- readxl::read_excel("../inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx") %>% 
   mutate(uuid = `_uuid`,
@@ -46,7 +46,7 @@ df_tool_data <- readxl::read_excel("../inputs/UGA2109_Cross_Sectoral_Child_Prote
 df_days_for_data_collection <- df_tool_data %>% select(start_date) %>% unique() %>% arrange(start_date) %>% pull()
 
 df_data_support_cl_log <- df_tool_data %>% 
-  select(uuid, status,sub_county_name,	settlement_name, latitude,	longitude )
+  select(uuid, status,sub_county_div,	refugee_settlement, latitude,	longitude )
 # cleaning log handling
 df_cl_log <- read_csv(file = "../inputs/combined_checks_caregiver.csv") %>% 
   mutate(adjust_log = ifelse(is.na(adjust_log), "apply_suggested_change", adjust_log)) %>% 
@@ -150,22 +150,22 @@ dt_enum_performance_options <- function(x){
 
 ```{r, echo = FALSE}
 df_refugee_samp_per_settlement <- df_settlement_samples_required %>% 
-  group_by(settlement_name) %>% 
-  summarise(required_samples = sum(smpl_sz, na.rm = TRUE))
+  group_by(refugee_settlement) %>% 
+  summarise(required_samples = sum(sample_size, na.rm = TRUE))
 
 df_cl_surveys_for_deletion <- df_cl_log %>% 
   filter(status == "refugee", type == "remove_survey", reviewed == 1, adjust_log != "delete_log") %>%
-  group_by(settlement_name) %>% 
+  group_by(refugee_settlement) %>% 
   distinct(uuid) %>%
   summarise(surveys_for_deletion = n())
 
 df_updated_tool_data %>% 
   filter(status == "refugee") %>% 
-  group_by(district_name, settlement_name) %>% 
+  group_by(district_name, refugee_settlement) %>% 
   summarise(number_of_surveys = n()) %>% 
   arrange(district_name) %>% 
-  left_join(df_refugee_samp_per_settlement, by = "settlement_name") %>% 
-  left_join(df_cl_surveys_for_deletion, by = "settlement_name") %>% 
+  left_join(df_refugee_samp_per_settlement, by = "refugee_settlement") %>% 
+  left_join(df_cl_surveys_for_deletion, by = "refugee_settlement") %>% 
   mutate(int.surveys_and_deletion = ifelse(is.na(surveys_for_deletion), number_of_surveys, number_of_surveys - surveys_for_deletion),
          remaining_surveys = required_samples - int.surveys_and_deletion ) %>% 
   select(-int.surveys_and_deletion) %>% 
@@ -177,22 +177,22 @@ df_updated_tool_data %>%
 
 ```{r, echo = FALSE}
 df_host_samp_per_sub_county <- df_host_samples_required %>% 
-  group_by(sub_county_name) %>% 
-  summarise(required_samples = sum(smpl_sz, na.rm = TRUE))
+  group_by(sub_county_div) %>% 
+  summarise(required_samples = sum(sample_size, na.rm = TRUE))
 
 df_cl_surveys_for_deletion <- df_cl_log %>% 
   filter(status == "host_community", type == "remove_survey", reviewed == 1, adjust_log != "delete_log") %>%
-  group_by(sub_county_name) %>% 
+  group_by(sub_county_div) %>% 
   distinct(uuid) %>%
   summarise(surveys_for_deletion = n())
 
 df_updated_tool_data %>% 
   filter(status == "host_community") %>% 
-  group_by(district_name, sub_county_name) %>% 
+  group_by(district_name, sub_county_div) %>% 
   summarise(number_of_surveys = n()) %>% 
   arrange(district_name) %>% 
-  left_join(df_host_samp_per_sub_county, by = "sub_county_name") %>% 
-  left_join(df_cl_surveys_for_deletion, by = "sub_county_name") %>% 
+  left_join(df_host_samp_per_sub_county, by = "sub_county_div") %>% 
+  left_join(df_cl_surveys_for_deletion, by = "sub_county_div") %>% 
   mutate(int.surveys_and_deletion = ifelse(is.na(surveys_for_deletion), number_of_surveys, number_of_surveys - surveys_for_deletion),
          remaining_surveys = required_samples - int.surveys_and_deletion ) %>% 
   select(-int.surveys_and_deletion) %>% 
@@ -266,7 +266,7 @@ labels_pts <- ~sprintf(
 
 df_cl_log %>% 
   filter(type == "remove_survey", reviewed == 1, adjust_log != "delete_log") %>% 
-  group_by(uuid, status, sub_county_name, settlement_name, latitude, longitude) %>% 
+  group_by(uuid, status, sub_county_div, refugee_settlement, latitude, longitude) %>% 
   summarise(start_date = paste(start_date, collapse = " : "),
             enumerator_id = paste(enumerator_id, collapse = " : "),
             district_name = paste(district_name, collapse = " : "),
@@ -280,7 +280,7 @@ df_cl_log %>%
   ) %>% 
   unique() %>% 
   mutate(int.status = ifelse(status == "refugee", 
-                             glue("{status}_{settlement_name}"), glue("{status}_{sub_county_name}"))) %>% 
+                             glue("{status}_{refugee_settlement}"), glue("{status}_{sub_county_div}"))) %>% 
   leaflet() %>% 
   addTiles() %>%
   addCircleMarkers(~longitude,
