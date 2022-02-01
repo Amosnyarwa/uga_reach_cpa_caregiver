@@ -15,8 +15,8 @@ df_tool_data <- readxl::read_excel("inputs/UGA2109_Cross_Sectoral_Child_Protecti
          i.check.point_number = point_number,
          start = as_datetime(start),
          end = as_datetime(end)) %>% 
-  filter(consent_three == "yes", respondent_age >= 18, i.check.start_date > as_date("2022-01-20"), 
-         # !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
+  filter(consent_three == "yes", respondent_age >= 18, i.check.start_date > as_date("2022-01-30"), 
+         !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
   )
 
 df_survey <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "survey")
@@ -91,7 +91,7 @@ if(exists("df_c_pt_not_in_sample")){
 threshold_dist <- 150
 
 df_c_greater_thresh_distance <- check_threshold_distance(input_sample_data = df_sample_data,
-                                                         input_tool_data = df_tool_data %>% filter(district_name != "kampala"),
+                                                         input_tool_data = df_tool_data %>% filter(!district_name %in% c("kampala")),
                                                          input_threshold_dist = threshold_dist)
 
 if(exists("df_c_greater_thresh_distance")){
