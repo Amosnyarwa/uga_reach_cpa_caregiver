@@ -276,3 +276,25 @@ check_threshold_distance <- function(input_sample_data, input_tool_data, input_t
       rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
   }
 }
+
+
+# other support functions -------------------------------------------------
+
+# get date to prefix file names
+
+last_date_in_tool_data <- function(input_tool_data) {
+  if("start" %in% colnames(input_tool_data)){
+    input_tool_data %>%
+      mutate(start_date = as_date(start)) %>% 
+      select(start_date) %>% 
+      unique() %>% 
+      arrange(start_date) %>% 
+      last() %>% 
+      str_replace_all(pattern = "-", replacement = "_")
+  } else{
+    message(str_glue("no column of 'start' in the dataset, used the system date: ", format(Sys.Date(), '%Y_%m_%d')))
+    
+    format(Sys.Date(), '%Y_%m_%d')
+  }
+  
+}
