@@ -24,7 +24,10 @@ library(leaflet)
 # read data 
 df_settlement_samples_required <- readr::read_csv("../inputs/Refugee_caregiver_survey_samples_definition.csv") %>% 
   rename(refugee_settlement = settlement) %>% 
-  select(refugee_settlement, sample_size)
+  select(refugee_settlement, sample_size) %>% 
+  mutate(refugee_settlement = str_to_lower(refugee_settlement),
+         refugee_settlement = str_replace_all(string = refugee_settlement, pattern = " ", replacement = "_")
+         )
 
 df_host_samples_required <- readr::read_csv("../inputs/Host_community_caregiver_survey_samples_definition.csv")%>% 
   rename(sub_county_div =  Sub_county ) %>%
