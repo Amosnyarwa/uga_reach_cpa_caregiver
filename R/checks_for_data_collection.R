@@ -6,7 +6,9 @@ library(glue)
 
 source("R/support_functions.R")
 
-# read data 
+
+# read data ---------------------------------------------------------------
+
 df_tool_data <- readxl::read_excel("inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx") %>% 
   mutate(i.check.uuid = `_uuid`,
          i.check.start_date = as_date(start),
@@ -85,6 +87,9 @@ if(exists("df_c_logic_okay_parents_arrange_child_marriage_not_agree")){
     logic_output$df_c_logic_okay_parents_arrange_child_marriage_not_agree <- df_c_logic_okay_parents_arrange_child_marriage_not_agree
   }
 }
+
+
+
 
 
 # spatial checks ----------------------------------------------------------
