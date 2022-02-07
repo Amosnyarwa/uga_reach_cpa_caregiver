@@ -115,7 +115,6 @@ if(exists("df_c_logic_okay_parents_arrange_child_marriage_agree")){
     logic_output$df_c_logic_okay_parents_arrange_child_marriage_agree <- df_c_logic_okay_parents_arrange_child_marriage_agree
   }
 }
-
 # okay_girl_less_18_years_get_married_not_agree
 girl_less_18_years_get_married_not_agree <- df_tool_data %>% 
   filter(okay_girl_less_18_years_get_married %in% c("disagree", "strongly_disagree") & 
