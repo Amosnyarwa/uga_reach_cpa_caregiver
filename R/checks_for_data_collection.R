@@ -58,6 +58,34 @@ if(exists("df_c_time_btn_survey")){
 
 # Logical checks ----------------------------------------------------------
 
+df_c_logic_okay_parents_arrange_child_marriage_not_agree <- df_tool_data %>% 
+  filter(okay_parents_arrange_child_marriage %in% c("disagree", "strongly_disagree", "neither_agree_nor_agree") &
+           (okay_parents_arrange_child_marriage_for_money %in% c("agree", "strongly_agree") | 
+              okay_parents_arrange_child_marriage_for_her_safety %in% c("agree", "strongly_agree"))) %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "okay_parents_arrange_child_marriage",
+         i.check.current_value = okay_parents_arrange_child_marriage,
+         i.check.value = "",
+         i.check.issue_id = "okay_parents_arrange_child_marriage_not_agree",
+         i.check.issue = glue("okay_parents_arrange_child_marriage_for_money: {okay_parents_arrange_child_marriage_for_money},  
+                              okay_parents_arrange_child_marriage_for_her_safety: {okay_parents_arrange_child_marriage_for_her_safety}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check"))%>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_okay_parents_arrange_child_marriage_not_agree")){
+  if(nrow(df_c_logic_okay_parents_arrange_child_marriage_not_agree) > 0){
+    logic_output$df_c_logic_okay_parents_arrange_child_marriage_not_agree <- df_c_logic_okay_parents_arrange_child_marriage_not_agree
+  }
+}
+
 
 # spatial checks ----------------------------------------------------------
 
