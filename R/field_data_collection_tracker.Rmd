@@ -31,7 +31,10 @@ df_settlement_samples_required <- readr::read_csv("../inputs/Refugee_caregiver_s
 
 df_host_samples_required <- readr::read_csv("../inputs/Host_community_caregiver_survey_samples_definition.csv")%>% 
   rename(sub_county_div =  Sub_county ) %>%
-  select(sub_county_div, sample_size)
+  select(sub_county_div, sample_size) %>% 
+  mutate(sub_county_div = str_to_lower(sub_county_div),
+         sub_county_div = str_replace_all(string = sub_county_div, pattern = " ", replacement = "_")
+         )
 
 df_tool_data <- readxl::read_excel("../inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx") %>% 
   mutate(uuid = `_uuid`,
