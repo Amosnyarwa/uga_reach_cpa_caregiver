@@ -333,4 +333,33 @@ if(exists("df_c_logic_work_type_children_involved")){
     logic_output$df_c_logic_work_type_children_involved <- df_c_logic_work_type_children_involved
   }
 }
-# 
+# action_taken_by_caretaker_for_child_harsh_work_15
+df_c_logic_action_taken_by_caretaker_for_child_harsh_work <- df_tool_data %>% 
+  filter(action_taken_by_caretaker_when_sees_child_doing_harsh_work %in% c("i_engage_the_child_protection_committees", "I_report_it_to_ngo_staff", 
+                                                                           "i_report_it_to_rwc", "i_report_it_to_the_police"), 
+         (child_labour_protection_services_sought == "no" | services_available_to_protect_child_from_harsh_labour == "no")
+  ) %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "action_taken_by_caretaker_when_sees_child_doing_harsh_work",
+         i.check.current_value = action_taken_by_caretaker_when_sees_child_doing_harsh_work,
+         i.check.value = "",
+         i.check.issue_id = "action_taken_by_caretaker_for_child_harsh_work_15",
+         i.check.issue = glue("action_taken_by_caretaker_when_sees_child_doing_harsh_work: {action_taken_by_caretaker_when_sees_child_doing_harsh_work},
+                              child_labour_protection_services_sought: {child_labour_protection_services_sought}, 
+                              services_available_to_protect_child_from_harsh_labour: {services_available_to_protect_child_from_harsh_labour}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check")) %>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_action_taken_by_caretaker_for_child_harsh_work")){
+  if(nrow(df_c_logic_action_taken_by_caretaker_for_child_harsh_work) > 0){
+    logic_output$df_c_logic_action_taken_by_caretaker_for_child_harsh_work <- df_c_logic_action_taken_by_caretaker_for_child_harsh_work
+  }
+}
