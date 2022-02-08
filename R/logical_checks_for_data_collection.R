@@ -390,3 +390,86 @@ if(exists("df_c_logic_protection_services_for_child")){
     logic_output$df_c_logic_protection_services_for_child <- df_c_logic_protection_services_for_child
   }
 }
+
+
+# frequency_children_separate_from_parents_20
+df_c_logic_frequency_children_separate_from_parents <- df_tool_data %>% 
+  filter(current_giving_care_to_separated_children == "yes" &
+           frequency_children_separate_from_parents == "none") %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "frequency_children_separate_from_parents",
+         i.check.current_value = frequency_children_separate_from_parents,
+         i.check.value = "",
+         i.check.issue_id = "frequency_children_separate_from_parents_20",
+         i.check.issue = glue(": {},  
+                              : {}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check"))%>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_frequency_children_separate_from_parents")){
+  if(nrow(df_c_logic_frequency_children_separate_from_parents) > 0){
+    logic_output$df_c_logic_frequency_children_separate_from_parents <- df_c_logic_frequency_children_separate_from_parents
+  }
+}
+# frequency_unaccompanied_children_occurence_21
+df_c_logic_frequency_unaccompanied_children_occurence <- df_tool_data %>% 
+  filter(current_giving_care_to_unaccompanied_children == "yes" &
+           frequency_unaccompanied_children_occurence == "none") %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "frequency_unaccompanied_children_occurence",
+         i.check.current_value = frequency_unaccompanied_children_occurence,
+         i.check.value = "",
+         i.check.issue_id = "frequency_unaccompanied_children_occurence_21",
+         i.check.issue = glue(": {},  
+                              : {}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check"))%>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_frequency_unaccompanied_children_occurence")){
+  if(nrow(df_c_logic_frequency_unaccompanied_children_occurence) > 0){
+    logic_output$df_c_logic_frequency_unaccompanied_children_occurence <- df_c_logic_frequency_unaccompanied_children_occurence
+  }
+}
+# frequency_of_child_violence_occurrence_22
+df_c_logic_frequency_of_child_violence_occurrence <- df_tool_data %>% 
+  filter(hh_child_experienced_violence == "yes" &
+           frequency_of_child_violence_occurrence == "never") %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "frequency_of_child_violence_occurrence",
+         i.check.current_value = frequency_of_child_violence_occurrence,
+         i.check.value = "",
+         i.check.issue_id = "frequency_of_child_violence_occurrence_22",
+         i.check.issue = glue(": {},  
+                              : {}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check"))%>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_frequency_of_child_violence_occurrence")){
+  if(nrow(df_c_logic_frequency_of_child_violence_occurrence) > 0){
+    logic_output$df_c_logic_frequency_of_child_violence_occurrence <- df_c_logic_frequency_of_child_violence_occurrence
+  }
+}
