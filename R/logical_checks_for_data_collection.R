@@ -157,7 +157,7 @@ if(exists("df_c_logic_okay_girl_get_married_agree_reach_puberty")){
   }
 }
 
-# okay_father_mother_to_hit_his_child_agree_but_disagree_reasons
+# okay_father_mother_to_hit_his_child_agree_but_disagree_reasons_6
 father_to_hit_his_child_agree <- df_tool_data %>% 
   filter((okay_father_to_hit_his_child %in% c("agrees", "strongly_agrees") | 
             okay_mother_to_hit_her_child %in% c("agrees", "strongly_agrees")) &
@@ -197,7 +197,7 @@ if(exists("df_c_logic_hit_child_agree_but_disagree_reasons")){
   }
 }
 
-# okay_father_to_hit_his_child_disagree_agree_reasons
+# okay_father_mother_to_hit_his_child_disagree_but_agree_reasons_7
 father_to_hit_his_child_disagree <- df_tool_data %>% 
   filter((okay_father_to_hit_his_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree") |
             okay_mother_to_hit_her_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree")) &
@@ -235,7 +235,7 @@ if(exists("df_c_logic_hit_child_disagree_but_agree_reasons")){
     logic_output$df_c_logic_hit_child_disagree_but_agree_reasons <- df_c_logic_hit_child_disagree_but_agree_reasons
   }
 }
-# parents_responsible_to_provide_child_contradict
+# parents_responsible_to_provide_child_8
 df_c_logic_parents_responsible_to_provide_child_contradict <- df_tool_data %>% 
   filter((parents_responsible_to_provide_child_enough_food %in% c("strongly_agree", "agree") &
             parents_responsible_to_provide_all_child_needs %in% c("strongly_disagree", "disagree")) |
@@ -264,3 +264,73 @@ if(exists("df_c_logic_parents_responsible_to_provide_child_contradict")){
     logic_output$df_c_logic_parents_responsible_to_provide_child_contradict <- df_c_logic_parents_responsible_to_provide_child_contradict
   }
 }
+
+# child_labour_reponse_contradiction_13
+df_c_logic_child_labour_reponse_contradiction <- df_tool_data %>% 
+  filter((child_labour_economic_types %in% c("bonded_labour_or_slavery", "construction", "charcoal_burning", "handling_of_heavy_loads", 
+                                             "mining", "sand_mining", "producing_and_or_trafficking_or_selling_drugs", 
+                                             "sale_or_trafficking_of_children_for_labour_purposes", "sexual_exploitation", 
+                                             "stone_quarrying", "working_with_armed_groups")|
+            work_type_children_involved_in_community %in% c("bonded_labour_or_slavery", "construction", "charcoal_burning", 
+                                                            "handling_of_heavy_loads", "mining", "sand_mining", 
+                                                            "producing_and_or_trafficking_or_selling_drugs", 
+                                                            "sale_or_trafficking_of_children_for_labour_purposes", "sexual_exploitation", 
+                                                            "stone_quarrying", "working_with_armed_groups")), 
+         frequency_child_involved_in_harsh_work == "never"
+  ) %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "frequency_child_involved_in_harsh_work",
+         i.check.current_value = frequency_child_involved_in_harsh_work,
+         i.check.value = "",
+         i.check.issue_id = "child_labour_reponse_contradiction_13",
+         i.check.issue = glue("child_labour_economic_types: {child_labour_economic_types},
+         work_type_children_involved_in_community: {work_type_children_involved_in_community}, 
+                              frequency_child_involved_in_harsh_work: {frequency_child_involved_in_harsh_work}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check"))%>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_child_labour_reponse_contradiction")){
+  if(nrow(df_c_logic_child_labour_reponse_contradiction) > 0){
+    logic_output$df_c_logic_child_labour_reponse_contradiction <- df_c_logic_child_labour_reponse_contradiction
+  }
+}
+# work_type_children_involved_14
+df_c_logic_work_type_children_involved <- df_tool_data %>% 
+  filter(!work_type_children_involved_in_community %in% c("bonded_labour_or_slavery", "construction", "charcoal_burning", "handling_of_heavy_loads", 
+                                                          "mining", "sand_mining", "producing_and_or_trafficking_or_selling_drugs", 
+                                                          "sale_or_trafficking_of_children_for_labour_purposes", "sexual_exploitation", 
+                                                          "stone_quarrying", "working_with_armed_groups"), 
+         frequency_child_involved_in_harsh_work != "never"
+  ) %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "frequency_child_involved_in_harsh_work",
+         i.check.current_value = frequency_child_involved_in_harsh_work,
+         i.check.value = "",
+         i.check.issue_id = "work_type_children_involved_14",
+         i.check.issue = glue("work_type_children_involved_in_community: {work_type_children_involved_in_community},
+                              frequency_child_involved_in_harsh_work: {frequency_child_involved_in_harsh_work}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check"))%>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_work_type_children_involved")){
+  if(nrow(df_c_logic_work_type_children_involved) > 0){
+    logic_output$df_c_logic_work_type_children_involved <- df_c_logic_work_type_children_involved
+  }
+}
+# 
