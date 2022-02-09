@@ -747,3 +747,32 @@ if(exists("df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected")
     logic_output$df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected <- df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected
   }
 }
+# okay_parents_arrange_child_marriage_37
+df_c_logic_okay_parents_arrange_child_marriage_mismatch <- df_tool_data %>% 
+  filter(
+    okay_parents_arrange_child_marriage %in% c("agree", "strongly_agree"),
+    okay_girl_less_18_years_get_married %in% c("disagree", "strongly_disagree", "neither_agree_nor_agree")
+  ) %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "okay_parents_arrange_child_marriage",
+         i.check.current_value = okay_parents_arrange_child_marriage,
+         i.check.value = "",
+         i.check.issue_id = "okay_parents_arrange_child_marriage_37",
+         i.check.issue = glue("okay_parents_arrange_child_marriage: {okay_parents_arrange_child_marriage},
+                              okay_girl_less_18_years_get_married: {okay_girl_less_18_years_get_married}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check")) %>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_okay_parents_arrange_child_marriage_mismatch")){
+  if(nrow(df_c_logic_okay_parents_arrange_child_marriage_mismatch) > 0){
+    logic_output$df_c_logic_okay_parents_arrange_child_marriage_mismatch <- df_c_logic_okay_parents_arrange_child_marriage_mismatch
+  }
+}
