@@ -30,6 +30,16 @@ df_sample_data <- sf::st_read("inputs/cpa_caregiver_settlement_host_samples.gpkg
 
 logic_output <- list()
 
+# check duplicate uuids ---------------------------------------------------
+
+df_c_duplicate_uuid <-  check_duplicates_by_uuid(input_tool_data = df_tool_data)
+
+if(exists("df_c_duplicate_uuid")){
+  if(nrow(df_c_duplicate_uuid) > 0){
+    logic_output$df_c_duplicate_uuid <- df_c_duplicate_uuid
+  }
+}
+
 # Time checks -------------------------------------------------------------
 
 # Time interval for the survey
