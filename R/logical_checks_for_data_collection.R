@@ -637,3 +637,32 @@ if(exists("df_c_logic_frequency_unaccompanied_children_occurrence")){
     logic_output$df_c_logic_frequency_unaccompanied_children_occurrence <- df_c_logic_frequency_unaccompanied_children_occurrence
   }
 }
+# frequency_unaccompanied_children_occurrence_29
+df_c_logic_frequency_unaccompanied_children_occurrence <- df_tool_data %>% 
+  filter(child_protection_risks_witnessed %in% c("separation_from_family_members"), 
+         (frequency_children_separate_from_parents != "none"|
+            frequency_unaccompanied_children_occurrence != "none")) %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "frequency_unaccompanied_children_occurrence",
+         i.check.current_value = frequency_unaccompanied_children_occurrence,
+         i.check.value = "",
+         i.check.issue_id = "frequency_unaccompanied_children_occurrence_29",
+         i.check.issue = glue("child_protection_risks_witnessed: {child_protection_risks_witnessed},
+                              frequency_children_separate_from_parents: {frequency_children_separate_from_parents},
+                              frequency_unaccompanied_children_occurrence: {frequency_unaccompanied_children_occurrence}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check"))%>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_frequency_unaccompanied_children_occurrence")){
+  if(nrow(df_c_logic_frequency_unaccompanied_children_occurrence) > 0){
+    logic_output$df_c_logic_frequency_unaccompanied_children_occurrence <- df_c_logic_frequency_unaccompanied_children_occurrence
+  }
+}
