@@ -363,6 +363,33 @@ if(exists("df_c_logic_action_taken_by_caretaker_for_child_harsh_work")){
     logic_output$df_c_logic_action_taken_by_caretaker_for_child_harsh_work <- df_c_logic_action_taken_by_caretaker_for_child_harsh_work
   }
 }
+# protection_services_for_child_16
+df_c_logic_protection_services_for_child_a <- df_tool_data %>% 
+  filter(protection_services_for_child_violence == "no", protection_services_for_child_physical_harm == "yes"
+  ) %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "protection_services_for_child_violence",
+         i.check.current_value = protection_services_for_child_violence,
+         i.check.value = "",
+         i.check.issue_id = "protection_services_for_child_16",
+         i.check.issue = glue("protection_services_for_child_violence: {protection_services_for_child_violence},
+                              protection_services_for_child_physical_harm: {protection_services_for_child_physical_harm}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check")) %>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_protection_services_for_child_a")){
+  if(nrow(df_c_logic_protection_services_for_child_a) > 0){
+    logic_output$df_c_logic_protection_services_for_child_a <- df_c_logic_protection_services_for_child_a
+  }
+}
 # protection_services_for_child_17
 df_c_logic_protection_services_for_child <- df_tool_data %>% 
   filter(protection_services_for_child_violence == "yes", protection_services_for_child_physical_harm == "no"
