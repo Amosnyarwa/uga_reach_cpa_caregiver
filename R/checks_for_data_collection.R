@@ -40,6 +40,17 @@ if(exists("df_c_duplicate_uuid")){
   }
 }
 
+# check outliers ---------------------------------------------------
+# check household size
+df_c_outliers_hh_size_children <-  check_outliers(input_tool_data = df_tool_data,
+                                                  input_column = "hh_size_children", 
+                                                  input_lower_limit = quantile(df_tool_data$hh_size_children, 0.025),
+                                                  input_upper_limit = quantile(df_tool_data$hh_size_children, 0.97))
+if(exists("df_c_outliers_hh_size_children")){
+  if(nrow(df_c_outliers_hh_size_children) > 0){
+    logic_output$df_c_outliers_hh_size_children <- df_c_outliers_hh_size_children
+  }
+}
 # Time checks -------------------------------------------------------------
 
 # Time interval for the survey
