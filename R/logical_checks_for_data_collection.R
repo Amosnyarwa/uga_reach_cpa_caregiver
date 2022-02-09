@@ -445,8 +445,37 @@ if(exists("df_c_logic_demographics_and_seperated_children")){
     logic_output$df_c_logic_demographics_and_seperated_children <- df_c_logic_demographics_and_seperated_children
   }
 }
-
-
+# demographics_and_unaccompanied_children_19 ------------------------------
+df_c_logic_demographics_and_unaccompanied_children <- df_tool_data %>% 
+  filter(
+    ((children_provide_foster > 0 & current_giving_care_to_unaccompanied_children == "no") |
+       (((children_provide_foster == 0 | children_biological_parent == "yes") &
+           current_giving_care_to_unaccompanied_children == "yes")))
+       ) %>% 
+       mutate(i.check.type = "change_response",
+              i.check.name = "current_giving_care_to_unaccompanied_children",
+              i.check.current_value = current_giving_care_to_unaccompanied_children,
+              i.check.value = "",
+              i.check.issue_id = "demographics_and_unaccompanied_children_19",
+              i.check.issue = glue("(children_provide_foster: {(children_provide_foster}, 
+         current_giving_care_to_unaccompanied_children: {current_giving_care_to_unaccompanied_children}, 
+         children_biological_parent: {children_biological_parent}"),
+              i.check.other_text = "",
+              i.check.checked_by = "",
+              i.check.checked_date = as_date(today()),
+              i.check.comment = "", 
+              i.check.reviewed = "",
+              i.check.adjust_log = "",
+              i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+              i.check.so_sm_choices = "") %>% 
+       dplyr::select(starts_with("i.check"))%>% 
+       rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+     
+     if(exists("df_c_logic_demographics_and_unaccompanied_children")){
+       if(nrow(df_c_logic_demographics_and_unaccompanied_children) > 0){
+         logic_output$df_c_logic_demographics_and_unaccompanied_children <- df_c_logic_demographics_and_unaccompanied_children
+       }
+     }
 # frequency_children_separate_from_parents_20 -----------------------------
 df_c_logic_frequency_children_separate_from_parents <- df_tool_data %>% 
   filter(current_giving_care_to_separated_children == "yes" &
