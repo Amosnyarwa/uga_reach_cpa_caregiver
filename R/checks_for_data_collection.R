@@ -40,8 +40,6 @@ if(exists("df_c_duplicate_uuid")){
   }
 }
 
-
-
 # check outliers ---------------------------------------------------
 # check respondent_age
 df_c_outliers_respondent_age <-  check_outliers(input_tool_data = df_tool_data,
