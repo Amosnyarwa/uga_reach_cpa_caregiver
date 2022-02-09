@@ -562,7 +562,7 @@ df_c_logic_frequency_children_experience_sexual_violence <- df_tool_data %>%
          i.check.name = "frequency_children_experience_sexual_violence",
          i.check.current_value = frequency_children_experience_sexual_violence,
          i.check.value = "",
-         i.check.issue_id = "frequency_children_experience_sexual_violence_25",
+         i.check.issue_id = "frequency_children_experience_sexual_violence_26",
          i.check.issue = glue("child_protection_risks_witnessed: {child_protection_risks_witnessed},  
                               frequency_children_experience_sexual_violence: {frequency_children_experience_sexual_violence}"),
          i.check.other_text = "",
