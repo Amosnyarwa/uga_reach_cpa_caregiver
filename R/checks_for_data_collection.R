@@ -114,7 +114,7 @@ if(exists("df_c_outliers_hrs_child_perfoms_econ_labour")){
 # Time checks -------------------------------------------------------------
 
 # Time interval for the survey
-min_time_of_survey <- 20
+min_time_of_survey <- 25
 max_time_of_survey <- 120
 
 df_c_survey_time <-  check_survey_time(input_tool_data = df_tool_data, 
