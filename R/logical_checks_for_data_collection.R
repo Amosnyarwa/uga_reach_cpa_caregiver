@@ -554,3 +554,30 @@ if(exists("df_c_logic_frequency_child_involved_in_harsh_work_b")){
     logic_output$df_c_logic_frequency_child_involved_in_harsh_work_b <- df_c_logic_frequency_child_involved_in_harsh_work_b
   }
 }
+# frequency_children_experience_sexual_violence_26
+df_c_logic_frequency_children_experience_sexual_violence <- df_tool_data %>% 
+  filter(child_protection_risks_witnessed %in% c("sexual_violence_and_exploitation"), 
+         frequency_children_experience_sexual_violence == "never") %>% 
+  mutate(i.check.type = "change_response",
+         i.check.name = "frequency_children_experience_sexual_violence",
+         i.check.current_value = frequency_children_experience_sexual_violence,
+         i.check.value = "",
+         i.check.issue_id = "frequency_children_experience_sexual_violence_25",
+         i.check.issue = glue("child_protection_risks_witnessed: {child_protection_risks_witnessed},  
+                              frequency_children_experience_sexual_violence: {frequency_children_experience_sexual_violence}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check"))%>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_frequency_children_experience_sexual_violence")){
+  if(nrow(df_c_logic_frequency_children_experience_sexual_violence) > 0){
+    logic_output$df_c_logic_frequency_children_experience_sexual_violence <- df_c_logic_frequency_children_experience_sexual_violence
+  }
+}
