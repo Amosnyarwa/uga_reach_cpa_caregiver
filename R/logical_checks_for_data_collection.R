@@ -24,7 +24,7 @@ df_c_logic_okay_parents_arrange_child_marriage_not_agree <- df_tool_data %>%
 
 if(exists("df_c_logic_okay_parents_arrange_child_marriage_not_agree")){
   if(nrow(df_c_logic_okay_parents_arrange_child_marriage_not_agree) > 0){
-    logic_output$df_c_logic_okay_parents_arrange_child_marriage_not_agree <- df_c_logic_okay_parents_arrange_child_marriage_not_agree
+    logic_seperate_output$df_c_logic_okay_parents_arrange_child_marriage_not_agree <- df_c_logic_okay_parents_arrange_child_marriage_not_agree
   }
 }
 # okay_parents_arrange_child_marriage_agree_2 -----------------------------
@@ -52,7 +52,7 @@ df_c_logic_okay_parents_arrange_child_marriage_agree <- df_tool_data %>%
 
 if(exists("df_c_logic_okay_parents_arrange_child_marriage_agree")){
   if(nrow(df_c_logic_okay_parents_arrange_child_marriage_agree) > 0){
-    logic_output$df_c_logic_okay_parents_arrange_child_marriage_agree <- df_c_logic_okay_parents_arrange_child_marriage_agree
+    logic_seperate_output$df_c_logic_okay_parents_arrange_child_marriage_agree <- df_c_logic_okay_parents_arrange_child_marriage_agree
   }
 }
 # okay_girl_less_18_years_get_married_not_agree_3 -------------------------
@@ -86,7 +86,7 @@ df_c_logic_okay_girl_get_married_stop_school_once_married <- bind_rows(girl_less
 
 if(exists("df_c_logic_okay_girl_get_married_stop_school_once_married")){
   if(nrow(df_c_logic_okay_girl_get_married_stop_school_once_married) > 0){
-    logic_output$df_c_logic_okay_girl_get_married_stop_school_once_married <- df_c_logic_okay_girl_get_married_stop_school_once_married
+    logic_seperate_output$df_c_logic_okay_girl_get_married_stop_school_once_married <- df_c_logic_okay_girl_get_married_stop_school_once_married
   }
 }
 # okay_girl_less_18_years_get_married_not_agree_4 -------------------------
@@ -120,7 +120,7 @@ df_c_logic_okay_girl_get_married_reach_puberty <- bind_rows(girl_less_18_years_g
 
 if(exists("df_c_logic_okay_girl_get_married_reach_puberty")){
   if(nrow(df_c_logic_okay_girl_get_married_reach_puberty) > 0){
-    logic_output$df_c_logic_okay_girl_get_married_reach_puberty <- df_c_logic_okay_girl_get_married_reach_puberty
+    logic_seperate_output$df_c_logic_okay_girl_get_married_reach_puberty <- df_c_logic_okay_girl_get_married_reach_puberty
   }
 }
 # okay_girl_less_18_years_get_married_agree_5 -----------------------------
@@ -154,7 +154,7 @@ df_c_logic_okay_girl_get_married_agree_reach_puberty <- bind_rows(girl_less_18_y
 
 if(exists("df_c_logic_okay_girl_get_married_agree_reach_puberty")){
   if(nrow(df_c_logic_okay_girl_get_married_agree_reach_puberty) > 0){
-    logic_output$df_c_logic_okay_girl_get_married_agree_reach_puberty <- df_c_logic_okay_girl_get_married_agree_reach_puberty
+    logic_seperate_output$df_c_logic_okay_girl_get_married_agree_reach_puberty <- df_c_logic_okay_girl_get_married_agree_reach_puberty
   }
 }
 # okay_father_mother_to_hit_his_child_agree_but_disagree_reasons_6 --------
@@ -192,7 +192,7 @@ df_c_logic_hit_child_agree_but_disagree_reasons <- bind_rows(father_to_hit_his_c
 
 if(exists("df_c_logic_hit_child_agree_but_disagree_reasons")){
   if(nrow(df_c_logic_hit_child_agree_but_disagree_reasons) > 0){
-    logic_output$df_c_logic_hit_child_agree_but_disagree_reasons <- df_c_logic_hit_child_agree_but_disagree_reasons
+    logic_seperate_output$df_c_logic_hit_child_agree_but_disagree_reasons <- df_c_logic_hit_child_agree_but_disagree_reasons
   }
 }
 # okay_father_mother_to_hit_his_child_disagree_but_agree_reasons_7 --------
@@ -230,7 +230,7 @@ df_c_logic_hit_child_disagree_but_agree_reasons <- bind_rows(father_to_hit_his_c
 
 if(exists("df_c_logic_hit_child_disagree_but_agree_reasons")){
   if(nrow(df_c_logic_hit_child_disagree_but_agree_reasons) > 0){
-    logic_output$df_c_logic_hit_child_disagree_but_agree_reasons <- df_c_logic_hit_child_disagree_but_agree_reasons
+    logic_seperate_output$df_c_logic_hit_child_disagree_but_agree_reasons <- df_c_logic_hit_child_disagree_but_agree_reasons
   }
 }
 # parents_responsible_to_provide_child_8 ----------------------------------
@@ -259,7 +259,7 @@ df_c_logic_parents_responsible_to_provide_child_contradict <- df_tool_data %>%
 
 if(exists("df_c_logic_parents_responsible_to_provide_child_contradict")){
   if(nrow(df_c_logic_parents_responsible_to_provide_child_contradict) > 0){
-    logic_output$df_c_logic_parents_responsible_to_provide_child_contradict <- df_c_logic_parents_responsible_to_provide_child_contradict
+    logic_seperate_output$df_c_logic_parents_responsible_to_provide_child_contradict <- df_c_logic_parents_responsible_to_provide_child_contradict
   }
 }
 # child_labour_reponse_contradiction_13 -----------------------------------
@@ -296,7 +296,7 @@ df_c_logic_child_labour_reponse_contradiction <- df_tool_data %>%
 
 if(exists("df_c_logic_child_labour_reponse_contradiction")){
   if(nrow(df_c_logic_child_labour_reponse_contradiction) > 0){
-    logic_output$df_c_logic_child_labour_reponse_contradiction <- df_c_logic_child_labour_reponse_contradiction
+    logic_seperate_output$df_c_logic_child_labour_reponse_contradiction <- df_c_logic_child_labour_reponse_contradiction
   }
 }
 # work_type_children_involved_14 ------------------------------------------
@@ -327,7 +327,7 @@ df_c_logic_work_type_children_involved <- df_tool_data %>%
 
 if(exists("df_c_logic_work_type_children_involved")){
   if(nrow(df_c_logic_work_type_children_involved) > 0){
-    logic_output$df_c_logic_work_type_children_involved <- df_c_logic_work_type_children_involved
+    logic_seperate_output$df_c_logic_work_type_children_involved <- df_c_logic_work_type_children_involved
   }
 }
 # action_taken_by_caretaker_for_child_harsh_work_15 -----------------------
@@ -357,7 +357,7 @@ df_c_logic_action_taken_by_caretaker_for_child_harsh_work <- df_tool_data %>%
 
 if(exists("df_c_logic_action_taken_by_caretaker_for_child_harsh_work")){
   if(nrow(df_c_logic_action_taken_by_caretaker_for_child_harsh_work) > 0){
-    logic_output$df_c_logic_action_taken_by_caretaker_for_child_harsh_work <- df_c_logic_action_taken_by_caretaker_for_child_harsh_work
+    logic_seperate_output$df_c_logic_action_taken_by_caretaker_for_child_harsh_work <- df_c_logic_action_taken_by_caretaker_for_child_harsh_work
   }
 }
 # protection_services_for_child_16 ----------------------------------------
@@ -384,7 +384,7 @@ df_c_logic_protection_services_for_child_a <- df_tool_data %>%
 
 if(exists("df_c_logic_protection_services_for_child_a")){
   if(nrow(df_c_logic_protection_services_for_child_a) > 0){
-    logic_output$df_c_logic_protection_services_for_child_a <- df_c_logic_protection_services_for_child_a
+    logic_seperate_output$df_c_logic_protection_services_for_child_a <- df_c_logic_protection_services_for_child_a
   }
 }
 # protection_services_for_child_17 ----------------------------------------
@@ -411,7 +411,7 @@ df_c_logic_protection_services_for_child <- df_tool_data %>%
 
 if(exists("df_c_logic_protection_services_for_child")){
   if(nrow(df_c_logic_protection_services_for_child) > 0){
-    logic_output$df_c_logic_protection_services_for_child <- df_c_logic_protection_services_for_child
+    logic_seperate_output$df_c_logic_protection_services_for_child <- df_c_logic_protection_services_for_child
   }
 }
 # demographics_and_seperated_children_18 ----------------------------------
@@ -442,7 +442,7 @@ df_c_logic_demographics_and_seperated_children <- df_tool_data %>%
 
 if(exists("df_c_logic_demographics_and_seperated_children")){
   if(nrow(df_c_logic_demographics_and_seperated_children) > 0){
-    logic_output$df_c_logic_demographics_and_seperated_children <- df_c_logic_demographics_and_seperated_children
+    logic_seperate_output$df_c_logic_demographics_and_seperated_children <- df_c_logic_demographics_and_seperated_children
   }
 }
 # demographics_and_unaccompanied_children_19 ------------------------------
@@ -473,7 +473,7 @@ df_c_logic_demographics_and_unaccompanied_children <- df_tool_data %>%
      
      if(exists("df_c_logic_demographics_and_unaccompanied_children")){
        if(nrow(df_c_logic_demographics_and_unaccompanied_children) > 0){
-         logic_output$df_c_logic_demographics_and_unaccompanied_children <- df_c_logic_demographics_and_unaccompanied_children
+         logic_seperate_output$df_c_logic_demographics_and_unaccompanied_children <- df_c_logic_demographics_and_unaccompanied_children
        }
      }
 # frequency_children_separate_from_parents_20 -----------------------------
@@ -500,7 +500,7 @@ df_c_logic_frequency_children_separate_from_parents <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_children_separate_from_parents")){
   if(nrow(df_c_logic_frequency_children_separate_from_parents) > 0){
-    logic_output$df_c_logic_frequency_children_separate_from_parents <- df_c_logic_frequency_children_separate_from_parents
+    logic_seperate_output$df_c_logic_frequency_children_separate_from_parents <- df_c_logic_frequency_children_separate_from_parents
   }
 }
 # frequency_unaccompanied_children_occurence_21 ---------------------------
@@ -527,7 +527,7 @@ df_c_logic_frequency_unaccompanied_children_occurence <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_unaccompanied_children_occurence")){
   if(nrow(df_c_logic_frequency_unaccompanied_children_occurence) > 0){
-    logic_output$df_c_logic_frequency_unaccompanied_children_occurence <- df_c_logic_frequency_unaccompanied_children_occurence
+    logic_seperate_output$df_c_logic_frequency_unaccompanied_children_occurence <- df_c_logic_frequency_unaccompanied_children_occurence
   }
 }
 # frequency_of_child_violence_occurrence_22 -------------------------------
@@ -554,7 +554,7 @@ df_c_logic_frequency_of_child_violence_occurrence <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_of_child_violence_occurrence")){
   if(nrow(df_c_logic_frequency_of_child_violence_occurrence) > 0){
-    logic_output$df_c_logic_frequency_of_child_violence_occurrence <- df_c_logic_frequency_of_child_violence_occurrence
+    logic_seperate_output$df_c_logic_frequency_of_child_violence_occurrence <- df_c_logic_frequency_of_child_violence_occurrence
   }
 }
 # frequency_children_experience_sexual_violence_23 ------------------------
@@ -581,7 +581,7 @@ df_c_logic_frequency_children_experience_sexual_violence <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_children_experience_sexual_violence")){
   if(nrow(df_c_logic_frequency_children_experience_sexual_violence) > 0){
-    logic_output$df_c_logic_frequency_children_experience_sexual_violence <- df_c_logic_frequency_children_experience_sexual_violence
+    logic_seperate_output$df_c_logic_frequency_children_experience_sexual_violence <- df_c_logic_frequency_children_experience_sexual_violence
   }
 }
 # frequency_child_involved_in_harsh_work_24 -------------------------------
@@ -608,7 +608,7 @@ df_c_logic_frequency_child_involved_in_harsh_work <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_child_involved_in_harsh_work")){
   if(nrow(df_c_logic_frequency_child_involved_in_harsh_work) > 0){
-    logic_output$df_c_logic_frequency_child_involved_in_harsh_work <- df_c_logic_frequency_child_involved_in_harsh_work
+    logic_seperate_output$df_c_logic_frequency_child_involved_in_harsh_work <- df_c_logic_frequency_child_involved_in_harsh_work
   }
 }
 # frequency_child_involved_in_harsh_work_25 -------------------------------
@@ -635,7 +635,7 @@ df_c_logic_frequency_child_involved_in_harsh_work_b <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_child_involved_in_harsh_work_b")){
   if(nrow(df_c_logic_frequency_child_involved_in_harsh_work_b) > 0){
-    logic_output$df_c_logic_frequency_child_involved_in_harsh_work_b <- df_c_logic_frequency_child_involved_in_harsh_work_b
+    logic_seperate_output$df_c_logic_frequency_child_involved_in_harsh_work_b <- df_c_logic_frequency_child_involved_in_harsh_work_b
   }
 }
 # frequency_children_experience_sexual_violence_26 ------------------------
@@ -662,7 +662,7 @@ df_c_logic_frequency_children_experience_sexual_violence <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_children_experience_sexual_violence")){
   if(nrow(df_c_logic_frequency_children_experience_sexual_violence) > 0){
-    logic_output$df_c_logic_frequency_children_experience_sexual_violence <- df_c_logic_frequency_children_experience_sexual_violence
+    logic_seperate_output$df_c_logic_frequency_children_experience_sexual_violence <- df_c_logic_frequency_children_experience_sexual_violence
   }
 }
 # frequency_children_experience_sexual_violence_27 ------------------------
@@ -689,7 +689,7 @@ df_c_logic_frequency_children_experience_sexual_violence_b <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_children_experience_sexual_violence_b")){
   if(nrow(df_c_logic_frequency_children_experience_sexual_violence_b) > 0){
-    logic_output$df_c_logic_frequency_children_experience_sexual_violence_b <- df_c_logic_frequency_children_experience_sexual_violence_b
+    logic_seperate_output$df_c_logic_frequency_children_experience_sexual_violence_b <- df_c_logic_frequency_children_experience_sexual_violence_b
   }
 }
 # frequency_unaccompanied_children_occurrence_28 --------------------------
@@ -718,7 +718,7 @@ df_c_logic_frequency_unaccompanied_children_occurrence <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_unaccompanied_children_occurrence")){
   if(nrow(df_c_logic_frequency_unaccompanied_children_occurrence) > 0){
-    logic_output$df_c_logic_frequency_unaccompanied_children_occurrence <- df_c_logic_frequency_unaccompanied_children_occurrence
+    logic_seperate_output$df_c_logic_frequency_unaccompanied_children_occurrence <- df_c_logic_frequency_unaccompanied_children_occurrence
   }
 }
 # frequency_unaccompanied_children_occurrence_29 --------------------------
@@ -747,7 +747,7 @@ df_c_logic_frequency_unaccompanied_children_occurrence <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_unaccompanied_children_occurrence")){
   if(nrow(df_c_logic_frequency_unaccompanied_children_occurrence) > 0){
-    logic_output$df_c_logic_frequency_unaccompanied_children_occurrence <- df_c_logic_frequency_unaccompanied_children_occurrence
+    logic_seperate_output$df_c_logic_frequency_unaccompanied_children_occurrence <- df_c_logic_frequency_unaccompanied_children_occurrence
   }
 }
 # frequency_of_child_violence_occurrence_risk_witnessed_30 ----------------
@@ -774,7 +774,7 @@ df_c_logic_frequency_of_child_violence_occurrence_risk <- df_tool_data %>%
 
 if(exists("df_c_logic_frequency_of_child_violence_occurrence_risk")){
   if(nrow(df_c_logic_frequency_of_child_violence_occurrence_risk) > 0){
-    logic_output$df_c_logic_frequency_of_child_violence_occurrence_risk <- df_c_logic_frequency_of_child_violence_occurrence_risk
+    logic_seperate_output$df_c_logic_frequency_of_child_violence_occurrence_risk <- df_c_logic_frequency_of_child_violence_occurrence_risk
   }
 }
 # frequency_of_child_violence_occurrence_risk_not_selected_31 -------------
@@ -801,7 +801,7 @@ df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected <- df_tool_d
 
 if(exists("df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected")){
   if(nrow(df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected) > 0){
-    logic_output$df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected <- df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected
+    logic_seperate_output$df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected <- df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected
   }
 }
 # okay_parents_arrange_child_marriage_37 ----------------------------------
@@ -830,7 +830,7 @@ df_c_logic_okay_parents_arrange_child_marriage_mismatch <- df_tool_data %>%
 
 if(exists("df_c_logic_okay_parents_arrange_child_marriage_mismatch")){
   if(nrow(df_c_logic_okay_parents_arrange_child_marriage_mismatch) > 0){
-    logic_output$df_c_logic_okay_parents_arrange_child_marriage_mismatch <- df_c_logic_okay_parents_arrange_child_marriage_mismatch
+    logic_seperate_output$df_c_logic_okay_parents_arrange_child_marriage_mismatch <- df_c_logic_okay_parents_arrange_child_marriage_mismatch
   }
 }
 # okay_parents_arrange_child_marriage_38 ----------------------------------
@@ -859,7 +859,7 @@ df_c_logic_okay_parents_arrange_child_marriage_mismatch_38 <- df_tool_data %>%
 
 if(exists("df_c_logic_okay_parents_arrange_child_marriage_mismatch_38")){
   if(nrow(df_c_logic_okay_parents_arrange_child_marriage_mismatch_38) > 0){
-    logic_output$df_c_logic_okay_parents_arrange_child_marriage_mismatch_38 <- df_c_logic_okay_parents_arrange_child_marriage_mismatch_38
+    logic_seperate_output$df_c_logic_okay_parents_arrange_child_marriage_mismatch_38 <- df_c_logic_okay_parents_arrange_child_marriage_mismatch_38
   }
 }
 # child_protection_risks_witnessed_reported_in_particular_39 --------------
@@ -887,7 +887,7 @@ df_c_logic_child_protection_risks_witnessed_reported_in_particular <- df_tool_da
 
 if(exists("df_c_logic_child_protection_risks_witnessed_reported_in_particular")){
   if(nrow(df_c_logic_child_protection_risks_witnessed_reported_in_particular) > 0){
-    logic_output$df_c_logic_child_protection_risks_witnessed_reported_in_particular <- df_c_logic_child_protection_risks_witnessed_reported_in_particular
+    logic_seperate_output$df_c_logic_child_protection_risks_witnessed_reported_in_particular <- df_c_logic_child_protection_risks_witnessed_reported_in_particular
   }
 }
 # children_experienced_sexual_violence_freq_mismatch_40 -------------------
@@ -914,6 +914,6 @@ df_c_logic_children_experienced_sexual_violence <- df_tool_data %>%
 
 if(exists("df_c_logic_children_experienced_sexual_violence")){
   if(nrow(df_c_logic_children_experienced_sexual_violence) > 0){
-    logic_output$df_c_logic_children_experienced_sexual_violence <- df_c_logic_children_experienced_sexual_violence
+    logic_seperate_output$df_c_logic_children_experienced_sexual_violence <- df_c_logic_children_experienced_sexual_violence
   }
 }
