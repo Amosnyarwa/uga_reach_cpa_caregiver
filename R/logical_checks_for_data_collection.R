@@ -920,3 +920,10 @@ if(exists("df_c_logic_children_experienced_sexual_violence")){
     logic_seperate_output$df_c_logic_children_experienced_sexual_violence <- df_c_logic_children_experienced_sexual_violence
   }
 }
+
+# combined seperate logical checks ----------------------------------------------------------
+
+df_logic_seperate_checks <- bind_rows(logic_seperate_output)
+
+# output the resulting data frame
+write_csv(x = df_logic_seperate_checks, file = paste0("outputs/", butteR::date_file_prefix(), "_logical_checks_caregiver.csv"), na = "")
