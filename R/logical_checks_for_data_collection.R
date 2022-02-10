@@ -161,7 +161,7 @@ if(exists("df_c_logic_okay_girl_get_married_agree_reach_puberty")){
   }
 }
 # okay_father_mother_to_hit_his_child_agree_but_disagree_reasons_6 --------
-# okay_parents_hit_child_to_discipline:okay_parents_hit_child_to_displine
+# correction: (okay_parents_hit_child_to_discipline:okay_parents_hit_child_to_displine)
 father_to_hit_his_child_agree <- df_tool_data %>%
   filter((okay_father_to_hit_his_child %in% c("agrees", "strongly_agrees") |
             okay_mother_to_hit_her_child %in% c("agrees", "strongly_agrees")) &
@@ -200,7 +200,7 @@ if(exists("df_c_logic_hit_child_agree_but_disagree_reasons")){
   }
 }
 # okay_father_mother_to_hit_his_child_disagree_but_agree_reasons_7 --------
-# okay_parents_hit_child_to_discipline:okay_parents_hit_child_to_displine
+# correction: (okay_parents_hit_child_to_discipline:okay_parents_hit_child_to_displine)
 father_to_hit_his_child_disagree <- df_tool_data %>%
   filter((okay_father_to_hit_his_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree") |
             okay_mother_to_hit_her_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree")) &
@@ -336,7 +336,7 @@ if(exists("df_c_logic_work_type_children_involved")){
   }
 }
 # action_taken_by_caretaker_for_child_harsh_work_15 -----------------------
-# services_available_to_protect_child_from_harsh_labour:services_availiable_to_protect_child_from_harsh_labour
+# correction: (services_available_to_protect_child_from_harsh_labour:services_availiable_to_protect_child_from_harsh_labour)
 df_c_logic_action_taken_by_caretaker_for_child_harsh_work <- df_tool_data %>%
   filter(action_taken_by_caretaker_when_sees_child_doing_harsh_work %in% c("i_engage_the_child_protection_committees", "I_report_it_to_ngo_staff",
                                                                            "i_report_it_to_rwc", "i_report_it_to_the_police"),
