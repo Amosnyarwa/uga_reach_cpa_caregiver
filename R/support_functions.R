@@ -238,7 +238,7 @@ check_shortest_path <- function(input_tool_data) {
     rowwise() %>% 
     mutate(i.total_path_checks = sum(across(starts_with("int.test_path")), na.rm = TRUE)) %>%
     ungroup() %>%
-    filter(i.total_path_checks > 10) %>%
+    filter(i.total_path_checks >= 10) %>%
     mutate(
       i.check.type = "remove_survey",
       i.check.name = "",
