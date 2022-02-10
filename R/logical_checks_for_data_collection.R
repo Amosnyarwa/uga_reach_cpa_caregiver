@@ -1,3 +1,6 @@
+# output holder -----------------------------------------------------------
+
+logic_seperate_output <- list()
 
 # okay_parents_arrange_child_marriage_not_agree_1 -------------------------
 df_c_logic_okay_parents_arrange_child_marriage_not_agree <- df_tool_data %>% 
