@@ -140,6 +140,14 @@ if(exists("df_c_time_btn_survey")){
 }
 
 # Logical checks ----------------------------------------------------------
+# check_shortest_path
+df_c_short_path <- check_shortest_path(input_tool_data = df_tool_data)
+
+if(exists("df_c_short_path")){
+  if(nrow(df_c_short_path) > 0){
+    logic_output$df_c_short_path <- df_c_short_path
+  }
+}
 
 
 # spatial checks ----------------------------------------------------------
