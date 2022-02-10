@@ -509,17 +509,18 @@ if(exists("df_c_logic_frequency_children_separate_from_parents")){
     logic_seperate_output$df_c_logic_frequency_children_separate_from_parents <- df_c_logic_frequency_children_separate_from_parents
   }
 }
-# frequency_unaccompanied_children_occurence_21 ---------------------------
+# frequency_unaccompanied_children_occurrence_21 ---------------------------
+# correction: frequency_unaccompanied_children_occurence:frequency_unaccompanied_children_occurrence
 df_c_logic_frequency_unaccompanied_children_occurence <- df_tool_data %>% 
   filter(current_giving_care_to_unaccompanied_children == "yes" &
            frequency_unaccompanied_children_occurence == "none") %>% 
   mutate(i.check.type = "change_response",
-         i.check.name = "frequency_unaccompanied_children_occurence",
-         i.check.current_value = frequency_unaccompanied_children_occurence,
+         i.check.name = "frequency_unaccompanied_children_occurrence",
+         i.check.current_value = frequency_unaccompanied_children_occurrence,
          i.check.value = "",
-         i.check.issue_id = "frequency_unaccompanied_children_occurence_21",
+         i.check.issue_id = "frequency_unaccompanied_children_occurrence_21",
          i.check.issue = glue("current_giving_care_to_unaccompanied_children: {current_giving_care_to_unaccompanied_children},  
-                              frequency_unaccompanied_children_occurence: {frequency_unaccompanied_children_occurence}"),
+                              frequency_unaccompanied_children_occurrence: {frequency_unaccompanied_children_occurrence}"),
          i.check.other_text = "",
          i.check.checked_by = "",
          i.check.checked_date = as_date(today()),
@@ -531,9 +532,9 @@ df_c_logic_frequency_unaccompanied_children_occurence <- df_tool_data %>%
   dplyr::select(starts_with("i.check"))%>% 
   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 
-if(exists("df_c_logic_frequency_unaccompanied_children_occurence")){
-  if(nrow(df_c_logic_frequency_unaccompanied_children_occurence) > 0){
-    logic_seperate_output$df_c_logic_frequency_unaccompanied_children_occurence <- df_c_logic_frequency_unaccompanied_children_occurence
+if(exists("df_c_logic_frequency_unaccompanied_children_occurrence")){
+  if(nrow(df_c_logic_frequency_unaccompanied_children_occurrence) > 0){
+    logic_seperate_output$df_c_logic_frequency_unaccompanied_children_occurrence <- df_c_logic_frequency_unaccompanied_children_occurrence
   }
 }
 # frequency_of_child_violence_occurrence_22 -------------------------------
