@@ -213,6 +213,51 @@ check_outliers <- function(input_tool_data, input_column, input_lower_limit, inp
     rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 }
 
+# short path checks -------------------------------------------------------
+
+check_shortest_path <- function(input_tool_data) {
+  input_tool_data %>% 
+    mutate(
+      int.test_path_children_biological_parent = ifelse(children_biological_parent %in% c("no"), 1, 0),
+      int.test_path_suffering_chronic_or_disability = ifelse(suffering_chronic_or_disability %in% c("no"), 1, 0),
+      int.test_path_child_protection_risks_witnessed = ifelse(child_protection_risks_witnessed %in% c("no_particular_risk", "no_answer"), 1, 0),
+      int.test_path_children_perform_domestic_chores = ifelse(children_perform_domestic_chores %in% c("no", "no_answer"), 1, 0),
+      int.test_path_children_perform_econ_labour = ifelse(children_perform_econ_labour %in% c("no", "no_answer"), 1, 0),
+      int.test_path_frequency_child_involved_in_harsh_work = ifelse(frequency_child_involved_in_harsh_work %in% c("never"), 1, 0),
+      int.test_path_services_availiable_to_protect_child_from_harsh_labour = ifelse(services_availiable_to_protect_child_from_harsh_labour %in% c("no", "no_answer"), 1, 0),
+      int.test_path_frequency_children_experience_sexual_violence = ifelse(frequency_children_experience_sexual_violence %in% c("never"), 1, 0),
+      int.test_path_services_for_proctecting_child_against_sexual_violence = ifelse(services_for_proctecting_child_against_sexual_violence %in% c("no", "no_answer"), 1, 0),
+      int.test_path_frequency_children_separate_from_parents = ifelse(frequency_children_separate_from_parents %in% c("none"), 1, 0),
+      int.test_path_frequency_unaccompanied_children_occurrence = ifelse(frequency_unaccompanied_children_occurrence %in% c("none"), 1, 0),
+      int.test_path_protection_services_for_separated_and_unaccompanied_children = ifelse(protection_services_for_separated_and_unaccompanied_children %in% c("no", "no_answer"), 1, 0),
+      int.test_path_protection_services_for_child_violence = ifelse(protection_services_for_child_violence %in% c("no", "no_answer"), 1, 0),
+      int.test_path_other_risks_children_face_in_community = ifelse(other_risks_children_face_in_community %in% c("none"), 1, 0),
+      int.test_path_protection_services_for_child_physical_harm = ifelse(protection_services_for_child_physical_harm %in% c("no", "no_answer"), 1, 0),
+      int.test_path_protection_services_for_caregivers = ifelse(protection_services_for_caregivers %in% c("no", "no_answer"), 1, 0)
+    ) %>% 
+    rowwise() %>% 
+    mutate(i.total_path_checks = sum(across(starts_with("int.test_path")), na.rm = TRUE)) %>%
+    ungroup() %>%
+    filter(i.total_path_checks > 10) %>%
+    mutate(
+      i.check.type = "remove_survey",
+      i.check.name = "",
+      i.check.current_value = "",
+      i.check.value = "",
+      i.check.issue_id = "logic_c_short_path",
+      i.check.issue = glue("Detected : {i.total_path_checks} tests, out of 15 tests checked."),
+      i.check.other_text = "",
+      i.check.checked_by = "",
+      i.check.checked_date = as_date(today()),
+      i.check.comment = "", 
+      i.check.reviewed = "",
+      i.check.adjust_log = "",
+      i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+      i.check.so_sm_choices = "") %>%
+    dplyr::select(starts_with("i.check"))%>% 
+    rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+}
+
 # spatial checks ----------------------------------------------------------
 
 # check for duplicate point numbers
