@@ -510,10 +510,10 @@ if(exists("df_c_logic_frequency_children_separate_from_parents")){
   }
 }
 # frequency_unaccompanied_children_occurrence_21 ---------------------------
-# correction: frequency_unaccompanied_children_occurence:frequency_unaccompanied_children_occurrence
-df_c_logic_frequency_unaccompanied_children_occurence <- df_tool_data %>% 
+# correction: (frequency_unaccompanied_children_occurence:frequency_unaccompanied_children_occurrence)
+df_c_logic_frequency_unaccompanied_children_occurrence <- df_tool_data %>% 
   filter(current_giving_care_to_unaccompanied_children == "yes" &
-           frequency_unaccompanied_children_occurence == "none") %>% 
+           frequency_unaccompanied_children_occurrence == "none") %>% 
   mutate(i.check.type = "change_response",
          i.check.name = "frequency_unaccompanied_children_occurrence",
          i.check.current_value = frequency_unaccompanied_children_occurrence,
