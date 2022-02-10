@@ -160,82 +160,84 @@ if(exists("df_c_logic_okay_girl_get_married_agree_reach_puberty")){
     logic_seperate_output$df_c_logic_okay_girl_get_married_agree_reach_puberty <- df_c_logic_okay_girl_get_married_agree_reach_puberty
   }
 }
-# # okay_father_mother_to_hit_his_child_agree_but_disagree_reasons_6 --------
-# father_to_hit_his_child_agree <- df_tool_data %>% 
-#   filter((okay_father_to_hit_his_child %in% c("agrees", "strongly_agrees") | 
-#             okay_mother_to_hit_her_child %in% c("agrees", "strongly_agrees")) &
-#            (okay_parents_hit_child_to_discipline %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree") &
-# okay_parents_hit_child_to_set_example %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree"))) %>% 
-#   mutate(i.check.type = "change_response",
-#          i.check.name = "okay_father_to_hit_his_child",
-#          i.check.current_value = okay_father_to_hit_his_child,
-#          i.check.value = "",
-#          i.check.issue_id = "okay_father_mother_to_hit_his_child_agree_but_disagree_reasons_6",
-#          i.check.issue = glue("okay_father_to_hit_his_child: {okay_father_to_hit_his_child},
-#                              okay_mother_to_hit_her_child : {okay_mother_to_hit_her_child},
-#                              okay_parents_hit_child_to_discipline : {okay_parents_hit_child_to_discipline}"),
-#          i.check.other_text = "",
-#          i.check.checked_by = "",
-#          i.check.checked_date = as_date(today()),
-#          i.check.comment = "", 
-#          i.check.reviewed = "",
-#          i.check.adjust_log = "",
-#          i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
-#          i.check.so_sm_choices = "")
-# 
-# mother_to_hit_his_child_agree <- father_to_hit_his_child_agree %>% 
-#   mutate(i.check.name = "okay_mother_to_hit_her_child",
-#          i.check.current_value = okay_mother_to_hit_her_child
-#   )
-# 
-# df_c_logic_hit_child_agree_but_disagree_reasons <- bind_rows(father_to_hit_his_child_agree, 
-#                                                              mother_to_hit_his_child_agree) %>% 
-#   dplyr::select(starts_with("i.check"))%>% 
-#   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
-# 
-# if(exists("df_c_logic_hit_child_agree_but_disagree_reasons")){
-#   if(nrow(df_c_logic_hit_child_agree_but_disagree_reasons) > 0){
-#     logic_seperate_output$df_c_logic_hit_child_agree_but_disagree_reasons <- df_c_logic_hit_child_agree_but_disagree_reasons
-#   }
-# }
-# # okay_father_mother_to_hit_his_child_disagree_but_agree_reasons_7 --------
-# father_to_hit_his_child_disagree <- df_tool_data %>% 
-#   filter((okay_father_to_hit_his_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree") |
-#             okay_mother_to_hit_her_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree")) &
-#            (okay_parents_hit_child_to_discipline %in% c("agrees", "strongly_agrees") |
-#               okay_parents_hit_child_to_set_example %in% c("agrees", "strongly_agrees"))) %>% 
-#   mutate(i.check.type = "change_response",
-#          i.check.name = "okay_father_to_hit_his_child",
-#          i.check.current_value = okay_father_to_hit_his_child,
-#          i.check.value = "",
-#          i.check.issue_id = "okay_father_mother_to_hit_his_child_disagree_but_agree_reasons_7",
-#          i.check.issue = glue("okay_father_to_hit_his_child: {okay_father_to_hit_his_child},
-#                              okay_mother_to_hit_her_child : {okay_mother_to_hit_her_child},
-#                              okay_parents_hit_child_to_discipline : {okay_parents_hit_child_to_discipline}"),
-#          i.check.other_text = "",
-#          i.check.checked_by = "",
-#          i.check.checked_date = as_date(today()),
-#          i.check.comment = "", 
-#          i.check.reviewed = "",
-#          i.check.adjust_log = "",
-#          i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
-#          i.check.so_sm_choices = "")
-# 
-# mother_to_hit_his_child_disagree <- father_to_hit_his_child_disagree %>% 
-#   mutate(i.check.name = "okay_mother_to_hit_her_child",
-#          i.check.current_value = okay_mother_to_hit_her_child
-#   )
-# 
-# df_c_logic_hit_child_disagree_but_agree_reasons <- bind_rows(father_to_hit_his_child_disagree, 
-#                                                              mother_to_hit_his_child_disagree) %>% 
-#   dplyr::select(starts_with("i.check"))%>% 
-#   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
-# 
-# if(exists("df_c_logic_hit_child_disagree_but_agree_reasons")){
-#   if(nrow(df_c_logic_hit_child_disagree_but_agree_reasons) > 0){
-#     logic_seperate_output$df_c_logic_hit_child_disagree_but_agree_reasons <- df_c_logic_hit_child_disagree_but_agree_reasons
-#   }
-# }
+# okay_father_mother_to_hit_his_child_agree_but_disagree_reasons_6 --------
+# okay_parents_hit_child_to_discipline:okay_parents_hit_child_to_displine
+father_to_hit_his_child_agree <- df_tool_data %>%
+  filter((okay_father_to_hit_his_child %in% c("agrees", "strongly_agrees") |
+            okay_mother_to_hit_her_child %in% c("agrees", "strongly_agrees")) &
+           (okay_parents_hit_child_to_displine %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree") &
+okay_parents_hit_child_to_set_example %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree"))) %>%
+  mutate(i.check.type = "change_response",
+         i.check.name = "okay_father_to_hit_his_child",
+         i.check.current_value = okay_father_to_hit_his_child,
+         i.check.value = "",
+         i.check.issue_id = "okay_father_mother_to_hit_his_child_agree_but_disagree_reasons_6",
+         i.check.issue = glue("okay_father_to_hit_his_child: {okay_father_to_hit_his_child},
+                             okay_mother_to_hit_her_child : {okay_mother_to_hit_her_child},
+                             okay_parents_hit_child_to_displine : {okay_parents_hit_child_to_displine}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "",
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "")
+
+mother_to_hit_his_child_agree <- father_to_hit_his_child_agree %>%
+  mutate(i.check.name = "okay_mother_to_hit_her_child",
+         i.check.current_value = okay_mother_to_hit_her_child
+  )
+
+df_c_logic_hit_child_agree_but_disagree_reasons <- bind_rows(father_to_hit_his_child_agree,
+                                                             mother_to_hit_his_child_agree) %>%
+  dplyr::select(starts_with("i.check"))%>%
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_hit_child_agree_but_disagree_reasons")){
+  if(nrow(df_c_logic_hit_child_agree_but_disagree_reasons) > 0){
+    logic_seperate_output$df_c_logic_hit_child_agree_but_disagree_reasons <- df_c_logic_hit_child_agree_but_disagree_reasons
+  }
+}
+# okay_father_mother_to_hit_his_child_disagree_but_agree_reasons_7 --------
+# okay_parents_hit_child_to_discipline:okay_parents_hit_child_to_displine
+father_to_hit_his_child_disagree <- df_tool_data %>%
+  filter((okay_father_to_hit_his_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree") |
+            okay_mother_to_hit_her_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree")) &
+           (okay_parents_hit_child_to_displine %in% c("agrees", "strongly_agrees") |
+              okay_parents_hit_child_to_set_example %in% c("agrees", "strongly_agrees"))) %>%
+  mutate(i.check.type = "change_response",
+         i.check.name = "okay_father_to_hit_his_child",
+         i.check.current_value = okay_father_to_hit_his_child,
+         i.check.value = "",
+         i.check.issue_id = "okay_father_mother_to_hit_his_child_disagree_but_agree_reasons_7",
+         i.check.issue = glue("okay_father_to_hit_his_child: {okay_father_to_hit_his_child},
+                             okay_mother_to_hit_her_child : {okay_mother_to_hit_her_child},
+                             okay_parents_hit_child_to_displine : {okay_parents_hit_child_to_displine}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "",
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+         i.check.so_sm_choices = "")
+
+mother_to_hit_his_child_disagree <- father_to_hit_his_child_disagree %>%
+  mutate(i.check.name = "okay_mother_to_hit_her_child",
+         i.check.current_value = okay_mother_to_hit_her_child
+  )
+
+df_c_logic_hit_child_disagree_but_agree_reasons <- bind_rows(father_to_hit_his_child_disagree,
+                                                             mother_to_hit_his_child_disagree) %>%
+  dplyr::select(starts_with("i.check"))%>%
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_hit_child_disagree_but_agree_reasons")){
+  if(nrow(df_c_logic_hit_child_disagree_but_agree_reasons) > 0){
+    logic_seperate_output$df_c_logic_hit_child_disagree_but_agree_reasons <- df_c_logic_hit_child_disagree_but_agree_reasons
+  }
+}
 # parents_responsible_to_provide_child_8 ----------------------------------
 df_c_logic_parents_responsible_to_provide_child_contradict <- df_tool_data %>% 
   filter((parents_responsible_to_provide_child_enough_food %in% c("strongly_agree", "agree") &
