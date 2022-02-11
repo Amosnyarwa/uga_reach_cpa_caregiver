@@ -41,12 +41,24 @@ df_settlement_samples_required <- df_settlement_samples %>%
          refugee_settlement = str_replace_all(string = refugee_settlement, pattern = " ", replacement = "_")
          )
 
-df_host_samples_required <- readr::read_csv("../inputs/Host_community_caregiver_survey_samples_definition.csv")%>% 
+df_host_samples <- readr::read_csv("../inputs/Host_community_caregiver_survey_samples_definition.csv")
+
+df_for_host_colnames <- df_host_samples %>% 
+  rename(sub_county_div =  Sub_county ) %>%
+  mutate(district_name = str_to_lower(District),
+         district_name = str_replace_all(string = district_name, pattern = " ", replacement = "_"),
+    sub_county_div = str_to_lower(sub_county_div),
+         sub_county_div = str_replace_all(string = sub_county_div, pattern = " ", replacement = "_")
+  ) %>% 
+  select(district_name, sub_county_div) %>% 
+  unique()
+
+df_host_samples_required <- df_host_samples %>% 
   rename(sub_county_div =  Sub_county ) %>%
   select(sub_county_div, sample_size) %>% 
   mutate(sub_county_div = str_to_lower(sub_county_div),
          sub_county_div = str_replace_all(string = sub_county_div, pattern = " ", replacement = "_")
-         )
+  )
 
 df_tool_data <- readxl::read_excel("../inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx") %>% 
   mutate(uuid = `_uuid`,
