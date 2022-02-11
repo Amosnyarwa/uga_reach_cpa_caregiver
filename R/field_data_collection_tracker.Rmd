@@ -21,8 +21,20 @@ library(lubridate)
 library(glue)
 library(leaflet)
 
-# read data 
-df_settlement_samples_required <- readr::read_csv("../inputs/Refugee_caregiver_survey_samples_definition.csv") %>% 
+# read data
+
+df_settlement_samples <- readr::read_csv("../inputs/Refugee_child_survey_samples_definition.csv") %>% 
+  filter(!is.na(settlement))
+
+df_for_colnames <- df_settlement_samples %>% 
+  mutate(district_name = str_to_lower(District),
+         district_name = str_replace_all(string = district_name, pattern = " ", replacement = "_"),
+         refugee_settlement = str_to_lower(settlement),
+         refugee_settlement = str_replace_all(string = refugee_settlement, pattern = " ", replacement = "_")) %>% 
+  select(district_name, refugee_settlement) %>% 
+  unique()
+
+df_settlement_samples_required <- df_settlement_samples %>% 
   rename(refugee_settlement = settlement) %>% 
   select(refugee_settlement, sample_size) %>% 
   mutate(refugee_settlement = str_to_lower(refugee_settlement),
