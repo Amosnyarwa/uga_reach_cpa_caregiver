@@ -23,7 +23,7 @@ library(leaflet)
 
 # read data
 
-df_settlement_samples <- readr::read_csv("../inputs/Refugee_child_survey_samples_definition.csv") %>% 
+df_settlement_samples <- readr::read_csv("../inputs/Refugee_caregiver_survey_samples_definition.csv") %>% 
   filter(!is.na(settlement))
 
 df_for_colnames <- df_settlement_samples %>% 
