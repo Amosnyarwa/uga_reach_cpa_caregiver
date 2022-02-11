@@ -227,11 +227,16 @@ df_updated_tool_data %>%
   group_by(district_name, sub_county_div) %>% 
   summarise(number_of_surveys = n()) %>% 
   arrange(district_name) %>% 
-  left_join(df_host_samp_per_sub_county, by = "sub_county_div") %>% 
+  right_join(df_host_samp_per_sub_county, by = "sub_county_div") %>% 
   left_join(df_cl_surveys_for_deletion, by = "sub_county_div") %>% 
-  mutate(int.surveys_and_deletion = ifelse(is.na(surveys_for_deletion), number_of_surveys, number_of_surveys - surveys_for_deletion),
+  mutate(number_of_surveys = ifelse(is.na(number_of_surveys), 0, number_of_surveys),
+         surveys_for_deletion = ifelse(is.na(surveys_for_deletion), 0, surveys_for_deletion),
+         int.surveys_and_deletion = number_of_surveys - surveys_for_deletion,
          remaining_surveys = required_samples - int.surveys_and_deletion ) %>% 
-  select(-int.surveys_and_deletion) %>% 
+  left_join(df_for_host_colnames, by = "sub_county_div") %>% 
+  rename(district_name = district_name.x) %>%
+  mutate(district_name = district_name.y) %>%
+  select(-c(int.surveys_and_deletion, district_name.y)) %>% 
   dt_with_modified_options()
 
 ```
