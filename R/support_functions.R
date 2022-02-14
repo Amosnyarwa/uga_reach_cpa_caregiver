@@ -196,7 +196,7 @@ check_outliers <- function(input_tool_data, input_column, input_lower_limit, inp
     filter(!!sym(input_column) < input_lower_limit | !!sym(input_column) > input_upper_limit) %>% 
     mutate(i.check.type = "remove_survey",
            i.check.name = input_column,
-           i.check.current_value = !!sym({{input_column}}),
+           i.check.current_value = as.character(!!sym({{input_column}})),
            i.check.value = "",
            i.check.issue_id = "logic_c_outlier",
            i.check.issue = paste(input_column,": ",!!sym({{input_column}}), "seems to be an outlier, needs engagement with enumerator"),
