@@ -71,45 +71,45 @@ if(exists("df_c_outliers_hh_size_children")){
     logic_output$df_c_outliers_hh_size_children <- df_c_outliers_hh_size_children
   }
 }
-# check children_provide_kinship_care
-df_c_outliers_children_provide_kinship_care <-  check_outliers(input_tool_data = df_tool_data,
-                                                  input_column = "children_provide_kinship_care", 
-                                                  input_lower_limit = quantile(df_tool_data$children_provide_kinship_care, 0.025),
-                                                  input_upper_limit = quantile(df_tool_data$children_provide_kinship_care, 0.97))
-if(exists("df_c_outliers_children_provide_kinship_care")){
-  if(nrow(df_c_outliers_children_provide_kinship_care) > 0){
-    logic_output$df_c_outliers_children_provide_kinship_care <- df_c_outliers_children_provide_kinship_care
-  }
-}
-# check children_provide_foster
-df_c_outliers_children_provide_foster <-  check_outliers(input_tool_data = df_tool_data,
-                                                  input_column = "children_provide_foster", 
-                                                  input_lower_limit = quantile(df_tool_data$children_provide_foster, 0.025),
-                                                  input_upper_limit = quantile(df_tool_data$children_provide_foster, 0.97))
-if(exists("df_c_outliers_children_provide_foster")){
-  if(nrow(df_c_outliers_children_provide_foster) > 0){
-    logic_output$df_c_outliers_children_provide_foster <- df_c_outliers_children_provide_foster
-  }
-}
-# check hrs_child_perfoms_domestic_chores
-df_c_outliers_hrs_child_perfoms_domestic_chores <-  check_outliers(input_tool_data = df_tool_data,
-                                                  input_column = "hrs_child_perfoms_domestic_chores", 
-                                                  input_lower_limit = quantile(df_tool_data$hrs_child_perfoms_domestic_chores, 0.025),
-                                                  input_upper_limit = quantile(df_tool_data$hrs_child_perfoms_domestic_chores, 0.97))
-if(exists("df_c_outliers_hrs_child_perfoms_domestic_chores")){
-  if(nrow(df_c_outliers_hrs_child_perfoms_domestic_chores) > 0){
-    logic_output$df_c_outliers_hrs_child_perfoms_domestic_chores <- df_c_outliers_hrs_child_perfoms_domestic_chores
-  }
-}
-# check hrs_child_perfoms_econ_labour
-df_c_outliers_hrs_child_perfoms_econ_labour <-  check_outliers(input_tool_data = df_tool_data,
-                                                  input_column = "hrs_child_perfoms_econ_labour", 
-                                                  input_lower_limit = quantile(df_tool_data$hrs_child_perfoms_econ_labour, 0.025),
-                                                  input_upper_limit = quantile(df_tool_data$hrs_child_perfoms_econ_labour, 0.97))
-if(exists("df_c_outliers_hrs_child_perfoms_econ_labour")){
-  if(nrow(df_c_outliers_hrs_child_perfoms_econ_labour) > 0){
-    logic_output$df_c_outliers_hrs_child_perfoms_econ_labour <- df_c_outliers_hrs_child_perfoms_econ_labour
-  }
+# # check children_provide_kinship_care
+# df_c_outliers_children_provide_kinship_care <-  check_outliers(input_tool_data = df_tool_data,
+#                                                   input_column = "children_provide_kinship_care", 
+#                                                   input_lower_limit = quantile(df_tool_data$children_provide_kinship_care, 0.025),
+#                                                   input_upper_limit = quantile(df_tool_data$children_provide_kinship_care, 0.97))
+# if(exists("df_c_outliers_children_provide_kinship_care")){
+#   if(nrow(df_c_outliers_children_provide_kinship_care) > 0){
+#     logic_output$df_c_outliers_children_provide_kinship_care <- df_c_outliers_children_provide_kinship_care
+#   }
+# }
+# # check children_provide_foster
+# df_c_outliers_children_provide_foster <-  check_outliers(input_tool_data = df_tool_data,
+#                                                   input_column = "children_provide_foster", 
+#                                                   input_lower_limit = quantile(df_tool_data$children_provide_foster, 0.025),
+#                                                   input_upper_limit = quantile(df_tool_data$children_provide_foster, 0.97))
+# if(exists("df_c_outliers_children_provide_foster")){
+#   if(nrow(df_c_outliers_children_provide_foster) > 0){
+#     logic_output$df_c_outliers_children_provide_foster <- df_c_outliers_children_provide_foster
+#   }
+# }
+# # check hrs_child_perfoms_domestic_chores
+# df_c_outliers_hrs_child_perfoms_domestic_chores <-  check_outliers(input_tool_data = df_tool_data,
+#                                                   input_column = "hrs_child_perfoms_domestic_chores", 
+#                                                   input_lower_limit = quantile(df_tool_data$hrs_child_perfoms_domestic_chores, 0.025),
+#                                                   input_upper_limit = quantile(df_tool_data$hrs_child_perfoms_domestic_chores, 0.97))
+# if(exists("df_c_outliers_hrs_child_perfoms_domestic_chores")){
+#   if(nrow(df_c_outliers_hrs_child_perfoms_domestic_chores) > 0){
+#     logic_output$df_c_outliers_hrs_child_perfoms_domestic_chores <- df_c_outliers_hrs_child_perfoms_domestic_chores
+#   }
+# }
+# # check hrs_child_perfoms_econ_labour
+# df_c_outliers_hrs_child_perfoms_econ_labour <-  check_outliers(input_tool_data = df_tool_data,
+#                                                   input_column = "hrs_child_perfoms_econ_labour", 
+#                                                   input_lower_limit = quantile(df_tool_data$hrs_child_perfoms_econ_labour, 0.025),
+#                                                   input_upper_limit = quantile(df_tool_data$hrs_child_perfoms_econ_labour, 0.97))
+# if(exists("df_c_outliers_hrs_child_perfoms_econ_labour")){
+#   if(nrow(df_c_outliers_hrs_child_perfoms_econ_labour) > 0){
+#     logic_output$df_c_outliers_hrs_child_perfoms_econ_labour <- df_c_outliers_hrs_child_perfoms_econ_labour
+#   }
 }
 # Time checks -------------------------------------------------------------
 
