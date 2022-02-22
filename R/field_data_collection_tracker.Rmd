@@ -39,7 +39,8 @@ df_settlement_samples_required <- df_settlement_samples %>%
   rename(refugee_settlement = settlement) %>% 
   select(refugee_settlement, sample_size) %>% 
   mutate(refugee_settlement = str_to_lower(refugee_settlement),
-         refugee_settlement = str_replace_all(string = refugee_settlement, pattern = " ", replacement = "_")
+         refugee_settlement = str_replace_all(string = refugee_settlement, pattern = " ", replacement = "_"),
+         refugee_settlement = ifelse(refugee_settlement == "mungula_2", "mungula_ii", refugee_settlement)
          )
 
 df_host_samples <- readr::read_csv("../inputs/Host_community_caregiver_survey_samples_definition.csv")
