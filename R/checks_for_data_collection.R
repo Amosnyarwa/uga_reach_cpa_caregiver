@@ -110,7 +110,7 @@ if(exists("df_c_outliers_hh_size_children")){
 #   if(nrow(df_c_outliers_hrs_child_perfoms_econ_labour) > 0){
 #     logic_output$df_c_outliers_hrs_child_perfoms_econ_labour <- df_c_outliers_hrs_child_perfoms_econ_labour
 #   }
-}
+# }
 # Time checks -------------------------------------------------------------
 
 # Time interval for the survey
