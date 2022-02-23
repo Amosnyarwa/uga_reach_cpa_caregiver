@@ -109,7 +109,7 @@ if(exists("df_c_logic_okay_girl_get_married_reach_puberty")){
   }
 }
 # okay_girl_less_18_years_get_married_agree_5 -----------------------------
-girl_less_18_years_get_married_agree_reach_puberty <- df_tool_data %>% 
+df_c_logic_okay_girl_get_married_agree_reach_puberty <- df_tool_data %>% 
   filter(okay_girl_less_18_years_get_married %in% c("agree", "strongly_agree") & 
            okay_girl_get_married_once_reach_puberty %in% c("disagree", "strongly_disagree", "neither_agree_nor_agree")) %>% 
   mutate(i.check.type = "change_response",
@@ -125,15 +125,7 @@ girl_less_18_years_get_married_agree_reach_puberty <- df_tool_data %>%
          i.check.reviewed = "",
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
-         i.check.so_sm_choices = "")
-
-girl_less_18_years_get_married_agree_reach_puberty_b <- girl_less_18_years_get_married_agree_reach_puberty %>% 
-  mutate(i.check.name = "okay_girl_get_married_once_reach_puberty",
-         i.check.current_value = okay_girl_get_married_once_reach_puberty
-  )
-
-df_c_logic_okay_girl_get_married_agree_reach_puberty <- bind_rows(girl_less_18_years_get_married_agree_reach_puberty, 
-                                                                  girl_less_18_years_get_married_agree_reach_puberty_b) %>% 
+         i.check.so_sm_choices = "") %>% 
   dplyr::select(starts_with("i.check")) %>% 
   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 
@@ -144,7 +136,7 @@ if(exists("df_c_logic_okay_girl_get_married_agree_reach_puberty")){
 }
 # okay_father_mother_to_hit_his_child_agree_but_disagree_reasons_6 --------
 # correction: (okay_parents_hit_child_to_discipline:okay_parents_hit_child_to_displine)
-father_to_hit_his_child_agree <- df_tool_data %>%
+df_c_logic_hit_child_agree_but_disagree_reasons <- df_tool_data %>%
   filter((okay_father_to_hit_his_child %in% c("agree", "strongly_agrees") |
             okay_mother_to_hit_her_child %in% c("agree", "strongly_agrees")) &
            (okay_parents_hit_child_to_displine %in% c("disagree", "strongly_disagree", "neither_agree_nor_agree") &
@@ -162,15 +154,7 @@ okay_parents_hit_child_to_set_example %in% c("disagree", "strongly_disagree", "n
          i.check.reviewed = "",
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
-         i.check.so_sm_choices = "")
-
-mother_to_hit_his_child_agree <- father_to_hit_his_child_agree %>%
-  mutate(i.check.name = "okay_mother_to_hit_her_child",
-         i.check.current_value = okay_mother_to_hit_her_child
-  )
-
-df_c_logic_hit_child_agree_but_disagree_reasons <- bind_rows(father_to_hit_his_child_agree,
-                                                             mother_to_hit_his_child_agree) %>%
+         i.check.so_sm_choices = "") %>%
   dplyr::select(starts_with("i.check")) %>%
   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 
@@ -181,7 +165,7 @@ if(exists("df_c_logic_hit_child_agree_but_disagree_reasons")){
 }
 # okay_father_mother_to_hit_his_child_disagree_but_agree_reasons_7 --------
 # correction: (okay_parents_hit_child_to_discipline:okay_parents_hit_child_to_displine)
-father_to_hit_his_child_disagree <- df_tool_data %>%
+df_c_logic_hit_child_disagree_but_agree_reasons <- df_tool_data %>%
   filter((okay_father_to_hit_his_child %in% c("disagree", "strongly_disagree", "neither_agree_nor_agree") |
             okay_mother_to_hit_her_child %in% c("disagree", "strongly_disagree", "neither_agree_nor_agree")) &
            (okay_parents_hit_child_to_displine %in% c("agree", "strongly_agrees") |
@@ -199,15 +183,7 @@ father_to_hit_his_child_disagree <- df_tool_data %>%
          i.check.reviewed = "",
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
-         i.check.so_sm_choices = "")
-
-mother_to_hit_his_child_disagree <- father_to_hit_his_child_disagree %>%
-  mutate(i.check.name = "okay_mother_to_hit_her_child",
-         i.check.current_value = okay_mother_to_hit_her_child
-  )
-
-df_c_logic_hit_child_disagree_but_agree_reasons <- bind_rows(father_to_hit_his_child_disagree,
-                                                             mother_to_hit_his_child_disagree) %>%
+         i.check.so_sm_choices = "") %>%
   dplyr::select(starts_with("i.check")) %>%
   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 
