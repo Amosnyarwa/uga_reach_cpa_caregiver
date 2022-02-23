@@ -161,8 +161,8 @@ if(exists("df_c_logic_okay_girl_get_married_agree_reach_puberty")){
 # okay_father_mother_to_hit_his_child_agree_but_disagree_reasons_6 --------
 # correction: (okay_parents_hit_child_to_discipline:okay_parents_hit_child_to_displine)
 father_to_hit_his_child_agree <- df_tool_data %>%
-  filter((okay_father_to_hit_his_child %in% c("agrees", "strongly_agrees") |
-            okay_mother_to_hit_her_child %in% c("agrees", "strongly_agrees")) &
+  filter((okay_father_to_hit_his_child %in% c("agree", "strongly_agrees") |
+            okay_mother_to_hit_her_child %in% c("agree", "strongly_agrees")) &
            (okay_parents_hit_child_to_displine %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree") &
 okay_parents_hit_child_to_set_example %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree"))) %>%
   mutate(i.check.type = "change_response",
@@ -200,8 +200,8 @@ if(exists("df_c_logic_hit_child_agree_but_disagree_reasons")){
 father_to_hit_his_child_disagree <- df_tool_data %>%
   filter((okay_father_to_hit_his_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree") |
             okay_mother_to_hit_her_child %in% c("disagrees", "strongly_disagrees", "neither_agree_nor_agree")) &
-           (okay_parents_hit_child_to_displine %in% c("agrees", "strongly_agrees") |
-              okay_parents_hit_child_to_set_example %in% c("agrees", "strongly_agrees"))) %>%
+           (okay_parents_hit_child_to_displine %in% c("agree", "strongly_agrees") |
+              okay_parents_hit_child_to_set_example %in% c("agree", "strongly_agrees"))) %>%
   mutate(i.check.type = "change_response",
          i.check.name = "okay_father_to_hit_his_child",
          i.check.current_value = okay_father_to_hit_his_child,
