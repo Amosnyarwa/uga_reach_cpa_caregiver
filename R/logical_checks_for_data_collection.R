@@ -16,7 +16,7 @@ df_c_logic_okay_parents_arrange_child_marriage_not_agree <- df_tool_data %>%
          i.check.other_text = "",
          i.check.checked_by = "",
          i.check.checked_date = as_date(today()),
-         i.check.comment = "", 
+         i.check.comment = "accept", 
          i.check.reviewed = "",
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
