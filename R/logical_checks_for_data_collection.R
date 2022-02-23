@@ -194,10 +194,8 @@ if(exists("df_c_logic_hit_child_disagree_but_agree_reasons")){
 }
 # parents_responsible_to_provide_child_8 ----------------------------------
 df_c_logic_parents_responsible_to_provide_child_contradict <- df_tool_data %>% 
-  filter((parents_responsible_to_provide_child_enough_food %in% c("strongly_agree", "agree") &
-            parents_responsible_to_provide_all_child_needs %in% c("strongly_disagree", "disagree")) |
-           (parents_responsible_to_provide_child_enough_food %in% c("strongly_disagree", "disagree") &
-              parents_responsible_to_provide_all_child_needs %in% c("strongly_agree", "agree"))) %>% 
+  filter(parents_responsible_to_provide_child_enough_food %in% c("strongly_disagree", "disagree"),
+              parents_responsible_to_provide_all_child_needs %in% c("strongly_agree", "agree")) %>% 
   mutate(i.check.type = "change_response",
          i.check.name = "parents_responsible_to_provide_child_enough_food",
          i.check.current_value = parents_responsible_to_provide_child_enough_food,
@@ -212,6 +210,12 @@ df_c_logic_parents_responsible_to_provide_child_contradict <- df_tool_data %>%
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
          i.check.so_sm_choices = "") %>% 
+  slice(rep(1:n(), each = 2)) %>% 
+  group_by(i.check.uuid, i.check.start_date, i.check.enumerator_id, i.check.district_name, 
+           i.check.point_number, i.check.type,  i.check.name,  i.check.current_value) %>% 
+  mutate(rank = row_number(),
+         i.check.name = ifelse(rank == 2, "parents_responsible_to_provide_all_child_needs", i.check.name),
+         i.check.current_value = ifelse(rank == 2, parents_responsible_to_provide_all_child_needs, i.check.current_value)) %>% 
   dplyr::select(starts_with("i.check")) %>% 
   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 
