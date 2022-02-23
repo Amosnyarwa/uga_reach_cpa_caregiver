@@ -674,7 +674,7 @@ if(exists("df_c_logic_frequency_children_experience_sexual_violence_b")){
   }
 }
 # frequency_unaccompanied_children_occurrence_28 --------------------------
-df_c_logic_frequency_unaccompanied_children_occurrence <- df_tool_data %>% 
+df_c_logic_frequency_unaccompanied_children_occurrence_28 <- df_tool_data %>% 
   filter(child_protection_risks_witnessed %in% c("sexual_violence_and_exploitation"), 
          frequency_children_separate_from_parents == "none",
          frequency_unaccompanied_children_occurrence != "never") %>% 
@@ -695,13 +695,13 @@ df_c_logic_frequency_unaccompanied_children_occurrence <- df_tool_data %>%
   dplyr::select(starts_with("i.check"))%>% 
   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 
-if(exists("df_c_logic_frequency_unaccompanied_children_occurrence")){
-  if(nrow(df_c_logic_frequency_unaccompanied_children_occurrence) > 0){
-    logic_seperate_output$df_c_logic_frequency_unaccompanied_children_occurrence <- df_c_logic_frequency_unaccompanied_children_occurrence
+if(exists("df_c_logic_frequency_unaccompanied_children_occurrence_28")){
+  if(nrow(df_c_logic_frequency_unaccompanied_children_occurrence_28) > 0){
+    logic_seperate_output$df_c_logic_frequency_unaccompanied_children_occurrence_28 <- df_c_logic_frequency_unaccompanied_children_occurrence_28
   }
 }
 # frequency_unaccompanied_children_occurrence_29 --------------------------
-df_c_logic_frequency_unaccompanied_children_occurrence <- df_tool_data %>% 
+df_c_logic_frequency_unaccompanied_children_occurrence_29 <- df_tool_data %>% 
   filter(child_protection_risks_witnessed %in% c("separation_from_family_members"), 
          (frequency_children_separate_from_parents != "none"|
             frequency_unaccompanied_children_occurrence != "none")) %>% 
@@ -722,9 +722,9 @@ df_c_logic_frequency_unaccompanied_children_occurrence <- df_tool_data %>%
   dplyr::select(starts_with("i.check"))%>% 
   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 
-if(exists("df_c_logic_frequency_unaccompanied_children_occurrence")){
-  if(nrow(df_c_logic_frequency_unaccompanied_children_occurrence) > 0){
-    logic_seperate_output$df_c_logic_frequency_unaccompanied_children_occurrence <- df_c_logic_frequency_unaccompanied_children_occurrence
+if(exists("df_c_logic_frequency_unaccompanied_children_occurrence_29")){
+  if(nrow(df_c_logic_frequency_unaccompanied_children_occurrence_29) > 0){
+    logic_seperate_output$df_c_logic_frequency_unaccompanied_children_occurrence_29 <- df_c_logic_frequency_unaccompanied_children_occurrence_29
   }
 }
 # frequency_of_child_violence_occurrence_risk_witnessed_30 ----------------
