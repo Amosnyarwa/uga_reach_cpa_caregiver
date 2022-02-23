@@ -43,7 +43,7 @@ df_c_logic_okay_parents_arrange_child_marriage_agree <- df_tool_data %>%
          i.check.other_text = "",
          i.check.checked_by = "",
          i.check.checked_date = as_date(today()),
-         i.check.comment = "", 
+         i.check.comment = "accept", 
          i.check.reviewed = "",
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
@@ -57,7 +57,7 @@ if(exists("df_c_logic_okay_parents_arrange_child_marriage_agree")){
   }
 }
 # okay_girl_less_18_years_get_married_not_agree_3 -------------------------
-girl_less_18_years_get_married_not_agree_stop_school_once_married <- df_tool_data %>% 
+df_c_logic_okay_girl_get_married_stop_school_once_married <- df_tool_data %>% 
   filter(okay_girl_less_18_years_get_married %in% c("disagree", "strongly_disagree") & 
            okay_girl_stay_home_and_stop_school_once_married %in% c("agree", "strongly_agree", "neither_agree_nor_agree")) %>% 
   mutate(i.check.type = "change_response",
@@ -69,19 +69,11 @@ girl_less_18_years_get_married_not_agree_stop_school_once_married <- df_tool_dat
          i.check.other_text = "",
          i.check.checked_by = "",
          i.check.checked_date = as_date(today()),
-         i.check.comment = "", 
+         i.check.comment = "accept", 
          i.check.reviewed = "",
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
-         i.check.so_sm_choices = "")
-
-girl_less_18_years_get_married_not_agree_stop_school_once_married_b <- girl_less_18_years_get_married_not_agree_stop_school_once_married %>% 
-  mutate(i.check.name = "okay_girl_stay_home_and_stop_school_once_married",
-         i.check.current_value = okay_girl_stay_home_and_stop_school_once_married
-  )
-
-df_c_logic_okay_girl_get_married_stop_school_once_married <- bind_rows(girl_less_18_years_get_married_not_agree_stop_school_once_married, 
-                                                                       girl_less_18_years_get_married_not_agree_stop_school_once_married_b) %>% 
+         i.check.so_sm_choices = "") %>% 
   dplyr::select(starts_with("i.check"))%>% 
   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 
