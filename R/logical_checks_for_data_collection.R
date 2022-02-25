@@ -95,7 +95,7 @@ df_c_logic_okay_girl_get_married_reach_puberty <- df_tool_data %>%
          i.check.other_text = "",
          i.check.checked_by = "",
          i.check.checked_date = as_date(today()),
-         i.check.comment = "", 
+         i.check.comment = "accept", 
          i.check.reviewed = "",
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
@@ -121,7 +121,7 @@ df_c_logic_okay_girl_get_married_agree_reach_puberty <- df_tool_data %>%
          i.check.other_text = "",
          i.check.checked_by = "",
          i.check.checked_date = as_date(today()),
-         i.check.comment = "", 
+         i.check.comment = "accept", 
          i.check.reviewed = "",
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
@@ -140,7 +140,7 @@ df_c_logic_hit_child_agree_but_disagree_reasons <- df_tool_data %>%
   filter((okay_father_to_hit_his_child %in% c("agree", "strongly_agrees") |
             okay_mother_to_hit_her_child %in% c("agree", "strongly_agrees")) &
            (okay_parents_hit_child_to_displine %in% c("disagree", "strongly_disagree", "neither_agree_nor_agree") &
-okay_parents_hit_child_to_set_example %in% c("disagree", "strongly_disagree", "neither_agree_nor_agree"))) %>%
+              okay_parents_hit_child_to_set_example %in% c("disagree", "strongly_disagree", "neither_agree_nor_agree"))) %>%
   mutate(i.check.type = "change_response",
          i.check.name = "okay_father_to_hit_his_child",
          i.check.current_value = okay_father_to_hit_his_child,
@@ -150,7 +150,7 @@ okay_parents_hit_child_to_set_example %in% c("disagree", "strongly_disagree", "n
          i.check.other_text = "",
          i.check.checked_by = "",
          i.check.checked_date = as_date(today()),
-         i.check.comment = "",
+         i.check.comment = "accept",
          i.check.reviewed = "",
          i.check.adjust_log = "",
          i.check.uuid_cl = "",
@@ -195,7 +195,7 @@ if(exists("df_c_logic_hit_child_disagree_but_agree_reasons")){
 # parents_responsible_to_provide_child_8 ----------------------------------
 df_c_logic_parents_responsible_to_provide_child_contradict <- df_tool_data %>% 
   filter(parents_responsible_to_provide_child_enough_food %in% c("strongly_disagree", "disagree"),
-              parents_responsible_to_provide_all_child_needs %in% c("strongly_agree", "agree")) %>% 
+         parents_responsible_to_provide_all_child_needs %in% c("strongly_agree", "agree")) %>% 
   mutate(i.check.type = "change_response",
          i.check.name = "parents_responsible_to_provide_child_enough_food",
          i.check.current_value = parents_responsible_to_provide_child_enough_food,
@@ -226,15 +226,17 @@ if(exists("df_c_logic_parents_responsible_to_provide_child_contradict")){
 }
 # child_labour_reponse_contradiction_13 -----------------------------------
 df_c_logic_child_labour_reponse_contradiction <- df_tool_data %>% 
-  filter((child_labour_economic_types %in% c("bonded_labour_or_slavery", "construction", "charcoal_burning", "handling_of_heavy_loads", 
-                                             "mining", "sand_mining", "producing_and_or_trafficking_or_selling_drugs", 
-                                             "sale_or_trafficking_of_children_for_labour_purposes", "sexual_exploitation", 
-                                             "stone_quarrying", "working_with_armed_groups")|
-            work_type_children_involved_in_community %in% c("bonded_labour_or_slavery", "construction", "charcoal_burning", 
-                                                            "handling_of_heavy_loads", "mining", "sand_mining", 
-                                                            "producing_and_or_trafficking_or_selling_drugs", 
-                                                            "sale_or_trafficking_of_children_for_labour_purposes", "sexual_exploitation", 
-                                                            "stone_quarrying", "working_with_armed_groups")), 
+  filter((str_detect(string = str_c(c("bonded_labour_or_slavery", "construction", "charcoal_burning", "handling_of_heavy_loads", 
+                                      "mining", "sand_mining", "producing_and_or_trafficking_or_selling_drugs", 
+                                      "sale_or_trafficking_of_children_for_labour_purposes", "sexual_exploitation", 
+                                      "stone_quarrying", "working_with_armed_groups"), collapse = " "),
+                     pattern = str_replace_all(string = child_labour_economic_types, pattern = " ", replacement = "|"))|
+            str_detect(string = str_c(c("bonded_labour_or_slavery", "construction", "charcoal_burning", 
+                                        "handling_of_heavy_loads", "mining", "sand_mining", 
+                                        "producing_and_or_trafficking_or_selling_drugs", 
+                                        "sale_or_trafficking_of_children_for_labour_purposes", "sexual_exploitation", 
+                                        "stone_quarrying", "working_with_armed_groups"), collapse = " "),
+                       pattern = str_replace_all(string = work_type_children_involved_in_community, pattern = " ", replacement = "|"))), 
          frequency_child_involved_in_harsh_work == "never"
   ) %>% 
   mutate(i.check.type = "change_response",
@@ -261,10 +263,12 @@ if(exists("df_c_logic_child_labour_reponse_contradiction")){
 }
 # work_type_children_involved_14 ------------------------------------------
 df_c_logic_work_type_children_involved <- df_tool_data %>% 
-  filter(!work_type_children_involved_in_community %in% c("bonded_labour_or_slavery", "construction", "charcoal_burning", "handling_of_heavy_loads", 
-                                                          "mining", "sand_mining", "producing_and_or_trafficking_or_selling_drugs", 
-                                                          "sale_or_trafficking_of_children_for_labour_purposes", "sexual_exploitation", 
-                                                          "stone_quarrying", "working_with_armed_groups"), 
+  filter(!is.na(work_type_children_involved_in_community), 
+         !str_detect(string = str_c(c("bonded_labour_or_slavery", "construction", "charcoal_burning", "handling_of_heavy_loads", 
+                                      "mining", "sand_mining", "producing_and_or_trafficking_or_selling_drugs", 
+                                      "sale_or_trafficking_of_children_for_labour_purposes", "sexual_exploitation", 
+                                      "stone_quarrying", "working_with_armed_groups"), collapse = " "),
+                     pattern = str_replace_all(string = work_type_children_involved_in_community, pattern = " ", replacement = "|")), 
          frequency_child_involved_in_harsh_work != "never"
   ) %>% 
   mutate(i.check.type = "change_response",
@@ -292,11 +296,12 @@ if(exists("df_c_logic_work_type_children_involved")){
 # action_taken_by_caretaker_for_child_harsh_work_15 -----------------------
 # correction: (services_available_to_protect_child_from_harsh_labour:services_availiable_to_protect_child_from_harsh_labour)
 df_c_logic_action_taken_by_caretaker_for_child_harsh_work <- df_tool_data %>%
-  filter(action_taken_by_caretaker_when_sees_child_doing_harsh_work %in% c("i_engage_the_child_protection_committees", "I_report_it_to_ngo_staff",
-                                                                           "i_report_it_to_rwc", "i_report_it_to_the_police"),
+  filter(str_detect(string = str_c(c("i_engage_the_child_protection_committees", "I_report_it_to_ngo_staff",
+                                     "i_report_it_to_rwc", "i_report_it_to_the_police"), collapse = " "),
+                    pattern = str_replace_all(string = action_taken_by_caretaker_when_sees_child_doing_harsh_work, pattern = " ", replacement = "|")),
          (child_labour_protection_services_sought == "no" | services_availiable_to_protect_child_from_harsh_labour == "no")
   ) %>%
-  mutate(i.check.type = "change_response",
+  mutate(i.check.type = "remove_option",
          i.check.name = "action_taken_by_caretaker_when_sees_child_doing_harsh_work",
          i.check.current_value = action_taken_by_caretaker_when_sees_child_doing_harsh_work,
          i.check.value = "",
@@ -375,8 +380,8 @@ df_c_logic_demographics_and_seperated_children_a <- df_tool_data %>%
   filter(children_provide_kinship_care > 0 , current_giving_care_to_separated_children == "no") %>% 
   mutate(i.check.type = "change_response",
          i.check.name = "children_provide_kinship_care",
-         i.check.current_value = children_provide_kinship_care,
-         i.check.value = "NA",
+         i.check.current_value = as.character(children_provide_kinship_care),
+         i.check.value = "",
          i.check.issue_id = "demographics_and_seperated_children_18",
          i.check.issue = glue("current_giving_care_to_separated_children: {current_giving_care_to_separated_children}"),
          i.check.other_text = "",
@@ -402,8 +407,8 @@ df_c_logic_demographics_and_seperated_children_b <- df_tool_data %>%
          current_giving_care_to_separated_children == "yes" ) %>% 
   mutate(i.check.type = "change_response",
          i.check.name = "children_provide_kinship_care",
-         i.check.current_value = children_provide_kinship_care,
-         i.check.value = "NA",
+         i.check.current_value = as.character(children_provide_kinship_care),
+         i.check.value = "",
          i.check.issue_id = "demographics_and_seperated_children_18",
          # i.check.issue = glue("children_biological_parent: {children_biological_parent}, current_giving_care_to_separated_children: {current_giving_care_to_separated_children}"),
          i.check.issue = glue("current_giving_care_to_separated_children: {current_giving_care_to_separated_children}"),
@@ -426,56 +431,56 @@ if(exists("df_c_logic_demographics_and_seperated_children_b")){
 # demographics_and_unaccompanied_children_19 ------------------------------
 df_c_logic_demographics_and_unaccompanied_children_a <- df_tool_data %>% 
   filter(children_provide_foster > 0 , current_giving_care_to_unaccompanied_children == "no") %>% 
-       mutate(i.check.type = "change_response",
-              i.check.name = "children_provide_foster",
-              i.check.current_value = children_provide_foster,
-              i.check.value = "NA",
-              i.check.issue_id = "demographics_and_unaccompanied_children_19",
-              i.check.issue = glue("current_giving_care_to_unaccompanied_children: {current_giving_care_to_unaccompanied_children}"),
-              i.check.other_text = "",
-              i.check.checked_by = "",
-              i.check.checked_date = as_date(today()),
-              i.check.comment = "", 
-              i.check.reviewed = "",
-              i.check.adjust_log = "",
-              i.check.uuid_cl = "",
-              i.check.so_sm_choices = "") %>% 
-       dplyr::select(starts_with("i.check")) %>% 
-       rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
-     
-     if(exists("df_c_logic_demographics_and_unaccompanied_children_a")){
-       if(nrow(df_c_logic_demographics_and_unaccompanied_children_a) > 0){
-         logic_seperate_output$df_c_logic_demographics_and_unaccompanied_children_a <- df_c_logic_demographics_and_unaccompanied_children_a
-       }
-     }
+  mutate(i.check.type = "change_response",
+         i.check.name = "children_provide_foster",
+         i.check.current_value = as.character(children_provide_foster),
+         i.check.value = "",
+         i.check.issue_id = "demographics_and_unaccompanied_children_19",
+         i.check.issue = glue("current_giving_care_to_unaccompanied_children: {current_giving_care_to_unaccompanied_children}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = "",
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check")) %>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_demographics_and_unaccompanied_children_a")){
+  if(nrow(df_c_logic_demographics_and_unaccompanied_children_a) > 0){
+    logic_seperate_output$df_c_logic_demographics_and_unaccompanied_children_a <- df_c_logic_demographics_and_unaccompanied_children_a
+  }
+}
 df_c_logic_demographics_and_unaccompanied_children_b <- df_tool_data %>% 
   # filter( (children_provide_foster == 0 | children_biological_parent == "yes") , 
   #         current_giving_care_to_unaccompanied_children == "yes" ) %>% 
   filter( children_provide_foster == 0 , 
           current_giving_care_to_unaccompanied_children == "yes" ) %>% 
-       mutate(i.check.type = "change_response",
-              i.check.name = "children_provide_foster",
-              i.check.current_value = children_provide_foster,
-              i.check.value = "NA",
-              i.check.issue_id = "demographics_and_unaccompanied_children_19",
-              # i.check.issue = glue("children_provide_foster: {children_provide_foster}, current_giving_care_to_unaccompanied_children: {current_giving_care_to_unaccompanied_children}, children_biological_parent: {children_biological_parent}"),
-              i.check.issue = glue("current_giving_care_to_unaccompanied_children: {current_giving_care_to_unaccompanied_children}"),
-              i.check.other_text = "",
-              i.check.checked_by = "",
-              i.check.checked_date = as_date(today()),
-              i.check.comment = "", 
-              i.check.reviewed = "",
-              i.check.adjust_log = "",
-              i.check.uuid_cl = "",
-              i.check.so_sm_choices = "") %>% 
-       dplyr::select(starts_with("i.check")) %>% 
-       rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
-     
-     if(exists("df_c_logic_demographics_and_unaccompanied_children_b")){
-       if(nrow(df_c_logic_demographics_and_unaccompanied_children_b) > 0){
-         logic_seperate_output$df_c_logic_demographics_and_unaccompanied_children_b <- df_c_logic_demographics_and_unaccompanied_children_b
-       }
-     }
+  mutate(i.check.type = "change_response",
+         i.check.name = "children_provide_foster",
+         i.check.current_value = as.character(children_provide_foster),
+         i.check.value = "",
+         i.check.issue_id = "demographics_and_unaccompanied_children_19",
+         # i.check.issue = glue("children_provide_foster: {children_provide_foster}, current_giving_care_to_unaccompanied_children: {current_giving_care_to_unaccompanied_children}, children_biological_parent: {children_biological_parent}"),
+         i.check.issue = glue("current_giving_care_to_unaccompanied_children: {current_giving_care_to_unaccompanied_children}"),
+         i.check.other_text = "",
+         i.check.checked_by = "",
+         i.check.checked_date = as_date(today()),
+         i.check.comment = "", 
+         i.check.reviewed = "",
+         i.check.adjust_log = "",
+         i.check.uuid_cl = "",
+         i.check.so_sm_choices = "") %>% 
+  dplyr::select(starts_with("i.check")) %>% 
+  rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
+
+if(exists("df_c_logic_demographics_and_unaccompanied_children_b")){
+  if(nrow(df_c_logic_demographics_and_unaccompanied_children_b) > 0){
+    logic_seperate_output$df_c_logic_demographics_and_unaccompanied_children_b <- df_c_logic_demographics_and_unaccompanied_children_b
+  }
+}
 # frequency_children_separate_from_parents_20 -----------------------------
 df_c_logic_frequency_children_separate_from_parents <- df_tool_data %>% 
   filter(current_giving_care_to_separated_children == "yes" &
@@ -583,7 +588,8 @@ if(exists("df_c_logic_frequency_children_experience_sexual_violence")){
 }
 # frequency_child_involved_in_harsh_work_24 -------------------------------
 df_c_logic_frequency_child_involved_in_harsh_work <- df_tool_data %>% 
-  filter(child_protection_risks_witnessed %in% c("child_labour"), 
+  filter(str_detect(string = str_c(c("child_labour"), collapse = " "),
+                    pattern = str_replace_all(string = child_protection_risks_witnessed, pattern = " ", replacement = "|")), 
          frequency_child_involved_in_harsh_work == "never") %>% 
   mutate(i.check.type = "change_response",
          i.check.name = "frequency_child_involved_in_harsh_work",
@@ -608,9 +614,10 @@ if(exists("df_c_logic_frequency_child_involved_in_harsh_work")){
   }
 }
 # # frequency_child_involved_in_harsh_work_25 -------------------------------
-# df_c_logic_frequency_child_involved_in_harsh_work_b <- df_tool_data %>% 
-#   filter(!child_protection_risks_witnessed %in% c("child_labour"), 
-#          frequency_child_involved_in_harsh_work != "never") %>% 
+# df_c_logic_frequency_child_involved_in_harsh_work_b <- df_tool_data %>%
+#   filter(!str_detect(string = str_c(c("child_labour"), collapse = " "),
+#                      pattern = str_replace_all(string = child_protection_risks_witnessed, pattern = " ", replacement = "|")),
+#          frequency_child_involved_in_harsh_work != "never") %>%
 #   mutate(i.check.type = "change_response",
 #          i.check.name = "frequency_child_involved_in_harsh_work",
 #          i.check.current_value = frequency_child_involved_in_harsh_work,
@@ -620,12 +627,12 @@ if(exists("df_c_logic_frequency_child_involved_in_harsh_work")){
 #          i.check.other_text = "",
 #          i.check.checked_by = "",
 #          i.check.checked_date = as_date(today()),
-#          i.check.comment = "", 
+#          i.check.comment = "",
 #          i.check.reviewed = "",
 #          i.check.adjust_log = "",
 #          i.check.uuid_cl = "",
-#          i.check.so_sm_choices = "") %>% 
-#   dplyr::select(starts_with("i.check")) %>% 
+#          i.check.so_sm_choices = "") %>%
+#   dplyr::select(starts_with("i.check")) %>%
 #   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 # 
 # if(exists("df_c_logic_frequency_child_involved_in_harsh_work_b")){
@@ -635,7 +642,8 @@ if(exists("df_c_logic_frequency_child_involved_in_harsh_work")){
 # }
 # frequency_children_experience_sexual_violence_26 ------------------------
 df_c_logic_frequency_children_experience_sexual_violence <- df_tool_data %>% 
-  filter(child_protection_risks_witnessed %in% c("sexual_violence_and_exploitation"), 
+  filter(str_detect(string = str_c(c("sexual_violence_and_exploitation"), collapse = " "),
+                    pattern = str_replace_all(string = child_protection_risks_witnessed, pattern = " ", replacement = "|")), 
          frequency_children_experience_sexual_violence == "never") %>% 
   mutate(i.check.type = "change_response",
          i.check.name = "frequency_children_experience_sexual_violence",
@@ -660,9 +668,10 @@ if(exists("df_c_logic_frequency_children_experience_sexual_violence")){
   }
 }
 # # frequency_children_experience_sexual_violence_27 ------------------------
-# df_c_logic_frequency_children_experience_sexual_violence_b <- df_tool_data %>% 
-#   filter(!child_protection_risks_witnessed %in% c("sexual_violence_and_exploitation"), 
-#          frequency_children_experience_sexual_violence != "never") %>% 
+# df_c_logic_frequency_children_experience_sexual_violence_b <- df_tool_data %>%
+#   filter(!str_detect(string = str_c(c("sexual_violence_and_exploitation"), collapse = " "),
+#                      pattern = str_replace_all(string = child_protection_risks_witnessed, pattern = " ", replacement = "|")),
+#          frequency_children_experience_sexual_violence != "never") %>%
 #   mutate(i.check.type = "change_response",
 #          i.check.name = "frequency_children_experience_sexual_violence",
 #          i.check.current_value = frequency_children_experience_sexual_violence,
@@ -672,12 +681,12 @@ if(exists("df_c_logic_frequency_children_experience_sexual_violence")){
 #          i.check.other_text = "",
 #          i.check.checked_by = "",
 #          i.check.checked_date = as_date(today()),
-#          i.check.comment = "", 
+#          i.check.comment = "",
 #          i.check.reviewed = "",
 #          i.check.adjust_log = "",
 #          i.check.uuid_cl = "",
-#          i.check.so_sm_choices = "") %>% 
-#   dplyr::select(starts_with("i.check")) %>% 
+#          i.check.so_sm_choices = "") %>%
+#   dplyr::select(starts_with("i.check")) %>%
 #   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 # 
 # if(exists("df_c_logic_frequency_children_experience_sexual_violence_b")){
@@ -687,7 +696,8 @@ if(exists("df_c_logic_frequency_children_experience_sexual_violence")){
 # }
 # frequency_unaccompanied_children_occurrence_28 --------------------------
 df_c_logic_frequency_unaccompanied_children_occurrence_28 <- df_tool_data %>% 
-  filter(child_protection_risks_witnessed %in% c("separation_from_family_members"), 
+  filter(str_detect(string = str_c(c("separation_from_family_members"), collapse = " "),
+                    pattern = str_replace_all(string = child_protection_risks_witnessed, pattern = " ", replacement = "|")), 
          frequency_children_separate_from_parents == "none",
          frequency_unaccompanied_children_occurrence != "never") %>% 
   mutate(i.check.type = "change_response",
@@ -713,10 +723,11 @@ if(exists("df_c_logic_frequency_unaccompanied_children_occurrence_28")){
   }
 }
 # # frequency_unaccompanied_children_occurrence_29 --------------------------
-# df_c_logic_frequency_unaccompanied_children_occurrence_29 <- df_tool_data %>% 
-#   filter(child_protection_risks_witnessed %in% c("separation_from_family_members"), 
+# df_c_logic_frequency_unaccompanied_children_occurrence_29 <- df_tool_data %>%
+#   filter(str_detect(string = str_c(c("separation_from_family_members"), collapse = " "),
+#                     pattern = str_replace_all(string = child_protection_risks_witnessed, pattern = " ", replacement = "|")),
 #          (frequency_children_separate_from_parents != "none"|
-#             frequency_unaccompanied_children_occurrence != "none")) %>% 
+#             frequency_unaccompanied_children_occurrence != "none")) %>%
 #   mutate(i.check.type = "change_response",
 #          i.check.name = "frequency_unaccompanied_children_occurrence",
 #          i.check.current_value = frequency_unaccompanied_children_occurrence,
@@ -726,12 +737,12 @@ if(exists("df_c_logic_frequency_unaccompanied_children_occurrence_28")){
 #          i.check.other_text = "",
 #          i.check.checked_by = "",
 #          i.check.checked_date = as_date(today()),
-#          i.check.comment = "", 
+#          i.check.comment = "",
 #          i.check.reviewed = "",
 #          i.check.adjust_log = "",
 #          i.check.uuid_cl = "",
-#          i.check.so_sm_choices = "") %>% 
-#   dplyr::select(starts_with("i.check")) %>% 
+#          i.check.so_sm_choices = "") %>%
+#   dplyr::select(starts_with("i.check")) %>%
 #   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 # 
 # if(exists("df_c_logic_frequency_unaccompanied_children_occurrence_29")){
@@ -741,7 +752,8 @@ if(exists("df_c_logic_frequency_unaccompanied_children_occurrence_28")){
 # }
 # frequency_of_child_violence_occurrence_risk_witnessed_30 ----------------
 df_c_logic_frequency_of_child_violence_occurrence_risk <- df_tool_data %>% 
-  filter(child_protection_risks_witnessed %in% c("physical_violence"),
+  filter(str_detect(string = str_c(c("physical_violence"), collapse = " "),
+                    pattern = str_replace_all(string = child_protection_risks_witnessed, pattern = " ", replacement = "|")),
          frequency_of_child_violence_occurrence == "never") %>% 
   mutate(i.check.type = "change_response",
          i.check.name = "frequency_of_child_violence_occurrence",
@@ -766,9 +778,10 @@ if(exists("df_c_logic_frequency_of_child_violence_occurrence_risk")){
   }
 }
 # # frequency_of_child_violence_occurrence_risk_not_selected_31 -------------
-# df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected <- df_tool_data %>% 
-#   filter(!child_protection_risks_witnessed %in% c("physical_violence"),
-#          frequency_of_child_violence_occurrence != "never") %>% 
+# df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected <- df_tool_data %>%
+#   filter(!str_detect(string = str_c(c("physical_violence"), collapse = " "),
+#                      pattern = str_replace_all(string = child_protection_risks_witnessed, pattern = " ", replacement = "|")),
+#          frequency_of_child_violence_occurrence != "never") %>%
 #   mutate(i.check.type = "change_response",
 #          i.check.name = "frequency_of_child_violence_occurrence",
 #          i.check.current_value = frequency_of_child_violence_occurrence,
@@ -778,12 +791,12 @@ if(exists("df_c_logic_frequency_of_child_violence_occurrence_risk")){
 #          i.check.other_text = "",
 #          i.check.checked_by = "",
 #          i.check.checked_date = as_date(today()),
-#          i.check.comment = "", 
+#          i.check.comment = "",
 #          i.check.reviewed = "",
 #          i.check.adjust_log = "",
 #          i.check.uuid_cl = "",
-#          i.check.so_sm_choices = "") %>% 
-#   dplyr::select(starts_with("i.check")) %>% 
+#          i.check.so_sm_choices = "") %>%
+#   dplyr::select(starts_with("i.check")) %>%
 #   rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
 # 
 # if(exists("df_c_logic_frequency_of_child_violence_occurrence_risk_not_selected")){
@@ -849,8 +862,11 @@ if(exists("df_c_logic_okay_parents_arrange_child_marriage_mismatch_38")){
 }
 # child_protection_risks_witnessed_reported_in_particular_39 --------------
 df_c_logic_child_protection_risks_witnessed_reported_in_particular <- df_tool_data %>% 
-  filter(child_protection_risks_witnessed %in% c("no_particular_risk") & 
-           (!boys_protection_risks %in%("no_particular_risk")&!girls_protection_risks %in%("no_particular_risk")) ) %>% 
+  filter(child_protection_risks_witnessed == c("no_particular_risk"),
+         (!str_detect(string = str_c(c("no_particular_risk"), collapse = " "),
+                      pattern = str_replace_all(string = boys_protection_risks, pattern = " ", replacement = "|")) &
+          !str_detect(string = str_c(c("no_particular_risk"), collapse = " "),
+                      pattern = str_replace_all(string = girls_protection_risks, pattern = " ", replacement = "|"))) ) %>% 
   mutate(i.check.type = "change_response",
          i.check.name = "child_protection_risks_witnessed",
          i.check.current_value = child_protection_risks_witnessed,
