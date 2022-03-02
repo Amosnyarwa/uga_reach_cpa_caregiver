@@ -33,3 +33,16 @@ df_choices <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_T
 df_grouped_choices<- df_choices %>% 
   group_by(list_name) %>% 
   summarise(choice_options = paste(name, collapse = " : "))
+
+# get new name and choice pairs to add to the choices sheet
+new_vars <- df_cleaning_log %>% 
+  filter(type %in% c("change_response", "add_option")) %>% 
+  left_join(df_survey, by = "name") %>% 
+  filter(str_detect(string = type.y, pattern = "select_one|select one|select_multiple|select multiple")) %>% 
+  separate(col = type.y, into = c("select_type", "list_name"), sep =" ", remove = TRUE, extra = "drop") %>% 
+  left_join(df_grouped_choices, by = "list_name") %>%
+  filter(!str_detect(string = choice_options, pattern = value ) ) %>%
+  rename(choice = value ) %>%
+  select(name, choice) %>%
+  distinct() %>% # to make sure there are no duplicates
+  arrange(name)
