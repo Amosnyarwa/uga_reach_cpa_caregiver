@@ -63,3 +63,9 @@ df_survey_sm <- df_survey %>%
                             str_detect(string = type, pattern = "select_one|select one") ~ "so",
                             TRUE ~ type)) %>% 
   select(name, q_type)
+
+# construct new columns for select multiple
+new_vars_sm <- new_vars %>% 
+  left_join(df_survey_sm, by = "name") %>% 
+  filter(q_type == "sm") %>% 
+  mutate(new_cols = paste0(name,"/",choice))
