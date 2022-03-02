@@ -6,7 +6,7 @@ library(glue)
 # read data ---------------------------------------------------------------
 
 # tool data
-df_tool_data <- readxl::read_excel("inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx") %>% 
+df_raw_data <- readxl::read_excel("inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx") %>% 
   mutate(i.check.uuid = `_uuid`,
          i.check.start_date = as_date(start),
          i.check.enumerator_id = enumerator_id,
