@@ -56,3 +56,10 @@ kbo <- kobold::kobold(survey = df_survey,
 
 # modified choices for the survey tool --------------------------------------
 df_choises_modified <- butteR:::xlsform_add_choices(kobold = kbo, new_choices = new_vars)
+
+# special treat for variables for select_multiple, we need to add the columns to the data itself
+df_survey_sm <- df_survey %>% 
+  mutate(q_type = case_when(str_detect(string = type, pattern = "select_multiple|select multiple") ~ "sm",
+                            str_detect(string = type, pattern = "select_one|select one") ~ "so",
+                            TRUE ~ type)) %>% 
+  select(name, q_type)
