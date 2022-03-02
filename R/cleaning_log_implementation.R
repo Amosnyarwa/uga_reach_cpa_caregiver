@@ -26,3 +26,10 @@ df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv") %>%
 # survey tool
 df_survey <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "survey")
 df_choices <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "choices")
+
+# find all new choices to add to choices sheet ----------------------------
+
+# gather choice options based on unique choices list
+df_grouped_choices<- df_choices %>% 
+  group_by(list_name) %>% 
+  summarise(choice_options = paste(name, collapse = " : "))
