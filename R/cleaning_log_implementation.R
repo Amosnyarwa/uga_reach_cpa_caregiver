@@ -82,5 +82,14 @@ kbo_modified <- kobold::kobold(survey = df_survey %>% filter(name %in% colnames(
 kbo_cleaned <- kobold::kobold_cleaner(kbo_modified)
 
 # handling Personally Identifiable Information(PII)
+input_vars_to_remove_from_data <- c("complainant_name",
+                                    "respondent_telephone",
+                                    "name_pers_recording",
+                                    "geopoint",
+                                    "_geopoint_latitude",
+                                    "_geopoint_longitude",
+                                    "_geopoint_altitude",
+                                    "_geopoint_precision")
+
 df_handle_pii <- kbo_cleaned$data %>% 
   mutate(across(any_of(input_vars_to_remove_from_data), .fns = ~na_if(., .)))
