@@ -6,7 +6,10 @@ library(glue)
 # read data ---------------------------------------------------------------
 
 # tool data
-df_raw_data <- readxl::read_excel("inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx") %>% 
+data_nms <- names(readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "UGA2109_Cross-Sectoral Child...", n_max = 100))
+c_types <- ifelse(str_detect(string = data_nms, pattern = "_other$"), "text", "guess")
+
+df_raw_data <- readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "UGA2109_Cross-Sectoral Child...", col_types = c_types) %>%
   mutate(i.check.uuid = `_uuid`,
          i.check.start_date = as_date(start),
          i.check.enumerator_id = enumerator_id,
@@ -48,11 +51,18 @@ new_vars <- df_cleaning_log %>%
   arrange(name)
 
 # create kobold object ----------------------------------------------------
-
+children_perform_domestic_chores_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_domestic_ch...")
+protection_risky_places = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "protection_risky_places")
+children_perform_economic_labour_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_economic_la...")
+  
 kbo <- kobold::kobold(survey = df_survey, 
                       choices = df_choices, 
                       data = df_raw_data, 
-                      cleaning = df_cleaning_log)
+                      cleaning = df_cleaning_log,
+                      children_perform_domestic_chores_info,
+                      protection_risky_places,
+                      children_perform_economic_labour_info
+                      )
 
 # modified choices for the survey tool
 df_choises_modified <- butteR:::xlsform_add_choices(kobold = kbo, new_choices = new_vars)
@@ -78,7 +88,10 @@ df_raw_data_modified <- df_raw_data %>%
 kbo_modified <- kobold::kobold(survey = df_survey %>% filter(name %in% colnames(df_raw_data_modified)), 
                                choices = df_choises_modified, 
                                data = df_raw_data_modified, 
-                               cleaning = df_cleaning_log )
+                               cleaning = df_cleaning_log,
+                               children_perform_domestic_chores_info,
+                               protection_risky_places,
+                               children_perform_economic_labour_info )
 kbo_cleaned <- kobold::kobold_cleaner(kbo_modified)
 
 # handling Personally Identifiable Information(PII)
@@ -112,3 +125,10 @@ for (cur_sm_col in sm_colnames) {
     )
   df_handle_sm_data <- df_updated_data
 }
+
+df_final_cleaned_data <- df_handle_sm_data
+
+# write final modified data
+
+write_csv(df_final_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_caregiver.csv"))
+write_csv(df_final_cleaned_data, file = paste0("inputs/", "clean_data_caregiver.csv"))
