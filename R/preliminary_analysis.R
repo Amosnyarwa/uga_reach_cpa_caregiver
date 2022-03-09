@@ -38,3 +38,17 @@ df_ref <- df_with_composites %>%
 
 df_host <- df_with_composites %>% 
   filter(status == "host_community")
+
+# create weights ----------------------------------------------------------
+
+# refugee weights
+ref_weight_table <- make_refugee_weight_table(input_df_ref = df_ref, 
+                                              input_refugee_pop = df_ref_pop)
+df_ref_with_weights <- df_ref %>% 
+  left_join(ref_weight_table, by = "strata")
+
+# host weights
+host_weight_table <- make_host_weight_table(input_df_host = df_host, 
+                                            input_host_pop = df_host_pop)
+df_host_with_weights <- df_host %>% 
+  left_join(host_weight_table, by = "strata")
