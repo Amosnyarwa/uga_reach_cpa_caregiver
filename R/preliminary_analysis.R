@@ -10,6 +10,10 @@ source("R/make_weights.R")
 # load data ---------------------------------------------------------------
 
 df_cleaned <- read_csv("inputs/clean_data_caregiver.csv")
+df_children_perform_domestic_chores_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_domestic_chores_info") 
+df_protection_risky_places = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "protection_risky_places")
+df_children_perform_economic_labour_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_economic_labour_info")
+
 
 dap <- read_csv("inputs/r_dap.csv") %>% 
   janitor::clean_names()
