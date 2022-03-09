@@ -30,3 +30,11 @@ df_with_composites <- create_composite_indicators_dfa(input_df = df_cleaned) %>%
                             status == "host_community" ~ paste0(i.region,"_host"),
                             TRUE ~ status
   ))
+
+# split data into host and refugee ----------------------------------------
+
+df_ref <- df_with_composites %>% 
+  filter(status == "refugee")
+
+df_host <- df_with_composites %>% 
+  filter(status == "host_community")
