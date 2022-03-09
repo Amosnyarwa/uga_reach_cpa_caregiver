@@ -52,3 +52,8 @@ host_weight_table <- make_host_weight_table(input_df_host = df_host,
                                             input_host_pop = df_host_pop)
 df_host_with_weights <- df_host %>% 
   left_join(host_weight_table, by = "strata")
+
+# set up design objects ---------------------------------------------------
+
+ref_svy <- as_survey(.data = df_ref_with_weights, strata = strata, weights = weights )
+host_svy <- as_survey(.data = df_host_with_weights, strata = strata, weights = weights )
