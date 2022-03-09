@@ -22,3 +22,11 @@ start<- Sys.time()
 # load in individual level population data sets
 df_ref_pop <- read_csv("inputs/refugee_population.csv")
 df_host_pop <- read_csv("inputs/host_population.csv")
+
+# make composite indicator ------------------------------------------------
+
+df_with_composites <- create_composite_indicators_dfa(input_df = df_cleaned) %>% 
+  mutate(strata = case_when(status == "refugee" ~ paste0(i.refugee_settlement, "_refugee"),
+                            status == "host_community" ~ paste0(i.region,"_host"),
+                            TRUE ~ status
+  ))
