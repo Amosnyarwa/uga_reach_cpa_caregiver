@@ -19,6 +19,5 @@ create_composite_indicators_dfa <- function(input_df) {
                                     hh_member_education %in% c("other") ~ "other",
                                     TRUE ~ hh_member_education
                                     )
-    ) %>% 
-    select(-starts_with("int."))
+    )
 }
