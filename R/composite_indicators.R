@@ -1,6 +1,6 @@
 # function for creating composite indicators
 
-create_composite_indicators_dfa <- function(input_df) {
+create_composite_indicators_cpa_caregiver <- function(input_df) {
   input_df %>% 
     mutate(
       i.refugee_settlement = case_when(district_name == "adjumani" & status == "refugee" ~ "adjumani", 
