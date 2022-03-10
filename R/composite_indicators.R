@@ -10,7 +10,15 @@ create_composite_indicators_dfa <- function(input_df) {
                            district_name %in% c("isingiro", "kamwenge", "kikuube", "kyegegwa") ~ "south_west"
                            TRUE ~ "west_nile"),
       i.location_type = case_when(district_name %in% c("kampala") ~ "urban",
-                                  TRUE ~ "rural")
+                                  TRUE ~ "rural"),
+      i.education_level = case_when(hh_member_education %in% c("no_formal_education") ~ "none",
+                                    hh_member_education %in% c("completed_primary", "incomplete_primary", "incomplete_secondary") ~ "low",
+                                    hh_member_education %in% c("completed_secondary", "incomplete_university", "incomplete_prof_degree", 
+                                                               "incomplete_voc_training", "completed_voc_training") ~ "middle",
+                                    hh_member_education %in% c("completed_university", "completed_prof_degree") ~ "higher",
+                                    hh_member_education %in% c("other") ~ "other",
+                                    TRUE ~ hh_member_education
+                                    )
     ) %>% 
     select(-starts_with("int."))
 }
