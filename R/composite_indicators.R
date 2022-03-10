@@ -8,7 +8,9 @@ create_composite_indicators_dfa <- function(input_df) {
                                        TRUE ~ settlement_name),
       i.region = case_when(district_name %in% c("kampala") ~ "central",
                            district_name %in% c("isingiro", "kamwenge", "kikuube", "kyegegwa") ~ "south_west"
-                           TRUE ~ "west_nile")
+                           TRUE ~ "west_nile"),
+      i.location_type = case_when(district_name %in% c("kampala") ~ "urban",
+                                  TRUE ~ "rural")
     ) %>% 
     select(-starts_with("int."))
 }
