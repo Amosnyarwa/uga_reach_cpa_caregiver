@@ -20,8 +20,8 @@ dap <- read_csv("inputs/r_dap.csv") %>%
 start<- Sys.time() 
 
 # load in individual level population data sets
-df_ref_pop <- read_csv("inputs/refugee_population.csv")
-df_host_pop <- read_csv("inputs/host_population.csv")
+df_ref_pop <- read_csv("inputs/refugee_population_caregiver.csv")
+df_host_pop <- read_csv("inputs/host_population_caregiver.csv")
 
 # make composite indicator ------------------------------------------------
 
