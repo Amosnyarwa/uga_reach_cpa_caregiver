@@ -74,7 +74,11 @@ df_tool_data <- readxl::read_excel("../inputs/UGA2109_Cross_Sectoral_Child_Prote
   filter(consent_two == "yes",  respondent_age >= 12,
          start_date > as_date("2022-01-30"), 
          !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
-         )
+         ) %>% 
+  mutate(
+    refugee_settlement = ifelse(district_name == "kampala" & status == "refugee", district_name, refugee_settlement),
+    refugee_settlement_zone = ifelse(district_name == "kampala" & status == "refugee", sub_county_div, refugee_settlement_zone)
+  )
   
 # days that contain data
 df_days_for_data_collection <- df_tool_data %>% select(start_date) %>% unique() %>% arrange(start_date) %>% pull()
