@@ -25,7 +25,7 @@ df_raw_data <- readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Pr
     refugee_settlement = ifelse(district_name == "kampala" & status == "refugee", district_name, refugee_settlement),
     refugee_settlement_zone = ifelse(district_name == "kampala" & status == "refugee", sub_county_div, refugee_settlement_zone)
   ) %>% 
-  select(-c(starts_with("...15")))
+  select(-c(starts_with("...21")))
 # cleaning log
 df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv") %>% 
   mutate(adjust_log = ifelse(is.na(adjust_log), "apply_suggested_change", adjust_log)) %>%
@@ -105,6 +105,7 @@ kbo_cleaned <- kobold::kobold_cleaner(kbo_modified)
 
 # handling Personally Identifiable Information(PII)
 input_vars_to_remove_from_data <- c("complainant_name",
+                                    "complainant_id",
                                     "respondent_telephone",
                                     "name_pers_recording",
                                     "geopoint",
