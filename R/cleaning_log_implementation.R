@@ -29,9 +29,11 @@ df_raw_data <- readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Pr
   mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
 # cleaning log
 df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv") %>% 
-  mutate(adjust_log = ifelse(is.na(adjust_log), "apply_suggested_change", adjust_log)) %>%
+  mutate(adjust_log = ifelse(is.na(adjust_log), "apply_suggested_change", adjust_log),
+         value = ifelse(is.na(value) & comment == "implement_logical_change", "blank", value)) %>%
   filter(adjust_log != "delete_log", !is.na(value), !is.na(uuid)) %>% 
-  mutate(sheet = NA, index = NA, relevant = NA) %>% 
+  mutate(value = ifelse(value == "blank" & comment == "implement_logical_change", NA, value),
+         sheet = NA, index = NA, relevant = NA) %>% 
   select(uuid, type, name, value, issue_id, sheet, index, relevant, issue)
 # survey tool
 df_survey <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "survey")
@@ -64,7 +66,7 @@ new_vars <- df_cleaning_log %>%
 children_perform_domestic_chores_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_domestic_ch...")
 protection_risky_places = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "protection_risky_places")
 children_perform_economic_labour_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_economic_la...")
-  
+
 kbo <- kobold::kobold(survey = df_survey, 
                       choices = df_choices, 
                       data = df_raw_data, 
@@ -72,7 +74,7 @@ kbo <- kobold::kobold(survey = df_survey,
                       children_perform_domestic_chores_info,
                       protection_risky_places,
                       children_perform_economic_labour_info
-                      )
+)
 
 # modified choices for the survey tool
 df_choises_modified <- butteR:::xlsform_add_choices(kobold = kbo, new_choices = new_vars)
