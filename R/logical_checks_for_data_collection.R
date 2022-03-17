@@ -822,7 +822,7 @@ add_checks_data_to_list(input_list_name = "logic_seperate_output", input_df_name
 # combined seperate logical checks ----------------------------------------------------------
 
 df_logic_seperate_checks <- bind_rows(logic_seperate_output) %>% 
-  mutate(reviewed = "1")
+  mutate(reviewed = ifelse(comment =="implement_logical_change", "1", reviewed))
 
 # output the resulting data frame
 write_csv(x = df_logic_seperate_checks, file = paste0("outputs/", butteR::date_file_prefix(), "_logical_checks_caregiver.csv"), na = "NA")
