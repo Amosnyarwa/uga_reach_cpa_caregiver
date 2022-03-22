@@ -6,27 +6,49 @@ library(glue)
 # read data ---------------------------------------------------------------
 
 # tool data
+# sheets
+data_cols_to_remove <- c("_index",	"_parent_table_name",	"_submission__id", "_submission__uuid",	"_submission__submission_time",	"_submission__validation_status", 
+                         "_submission__notes",	"_submission__status",	"_submission__submitted_by",	"_submission__tags")
+
+children_perform_domestic_chores_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_domestic_ch...") %>% 
+  select(-all_of(data_cols_to_remove)) %>% 
+  mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
+
+protection_risky_places = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "protection_risky_places") %>% 
+  select(-all_of(data_cols_to_remove)) %>% 
+  mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
+
+children_perform_economic_labour_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_economic_la...") %>% 
+  select(-all_of(data_cols_to_remove)) %>% 
+  mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
+
+# main dataset
 data_nms <- names(readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "UGA2109_Cross-Sectoral Child...", n_max = 100))
 c_types <- ifelse(str_detect(string = data_nms, pattern = "_other$"), "text", "guess")
 
 df_raw_data <- readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "UGA2109_Cross-Sectoral Child...", col_types = c_types) %>%
   filter(consent_two == "yes", respondent_age >= 12, as_date(start) > as_date("2022-01-30"), 
-         !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
-  ) %>% 
+         !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))  ) %>% 
   rename(`if_selected_ngo_or_un_agency/medecins_sans_frontieres` = `if_selected_ngo_or_un_agency/médecins_sans_frontières`,
          `causes_of_stress_among_caregivers/childrens_safety` = `causes_of_stress_among_caregivers/children’s_safety`,
-         `action_child_takes_when_told_to_do_harsh_work/i_tell_the_person_i_wont_do_it` = `action_child_takes_when_told_to_do_harsh_work/i_tell_the_person_i_won't_do_it`
-  ) %>% 
+         `action_child_takes_when_told_to_do_harsh_work/i_tell_the_person_i_wont_do_it` = `action_child_takes_when_told_to_do_harsh_work/i_tell_the_person_i_won't_do_it`  ) %>% 
   mutate(if_selected_ngo_or_un_agency = str_replace(string = if_selected_ngo_or_un_agency, pattern = "médecins_sans_frontières", replacement = "medecins_sans_frontieres"),
          causes_of_stress_among_caregivers = str_replace(string = causes_of_stress_among_caregivers, pattern = "children’s_safety", replacement = "childrens_safety"),
-         action_child_takes_when_told_to_do_harsh_work = str_replace(string = action_child_takes_when_told_to_do_harsh_work, pattern = "i_tell_the_person_i_won't_do_it", replacement = "i_tell_the_person_i_wont_do_it")
-  ) %>% 
-  mutate(
-    refugee_settlement = ifelse(district_name == "kampala" & status == "refugee", district_name, refugee_settlement),
-    refugee_settlement_zone = ifelse(district_name == "kampala" & status == "refugee", sub_county_div, refugee_settlement_zone)
-  ) %>% 
-  select(-c(starts_with("...21"))) %>% 
+         action_child_takes_when_told_to_do_harsh_work = str_replace(string = action_child_takes_when_told_to_do_harsh_work, pattern = "i_tell_the_person_i_won't_do_it", replacement = "i_tell_the_person_i_wont_do_it")  ) %>% 
+  mutate(refugee_settlement = ifelse(district_name == "kampala" & status == "refugee", district_name, refugee_settlement),
+         refugee_settlement_zone = ifelse(district_name == "kampala" & status == "refugee", sub_county_div, refugee_settlement_zone)  ) %>% 
+  select(-c(starts_with("...21")), -c("end_note":"children_category_facing_difficulty_accessing_social_activities_other")) %>% 
   mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
+
+df_children_perform_economic_labour_info <- df_raw_data %>% 
+  left_join(children_perform_domestic_chores_info, by = c("_index" = "_parent_index") ) 
+
+df_protection_risky_places <- df_raw_data %>% 
+  left_join(protection_risky_places, by = c("_index" = "_parent_index") ) 
+
+df_children_perform_economic_labour_info <- df_raw_data %>% 
+  left_join(children_perform_economic_labour_info, by = c("_index" = "_parent_index") )
+
 # cleaning log
 df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv") %>% 
   mutate(adjust_log = ifelse(is.na(adjust_log), "apply_suggested_change", adjust_log),
@@ -35,6 +57,7 @@ df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv") %>%
   mutate(value = ifelse(value == "blank" & comment == "implement_logical_change", NA, value),
          sheet = NA, index = NA, relevant = NA) %>% 
   select(uuid, type, name, value, issue_id, sheet, index, relevant, issue)
+
 # survey tool
 df_survey <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "survey")
 df_choices <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "choices") %>% 
@@ -63,9 +86,6 @@ new_vars <- df_cleaning_log %>%
   arrange(name)
 
 # create kobold object ----------------------------------------------------
-children_perform_domestic_chores_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_domestic_ch...")
-protection_risky_places = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "protection_risky_places")
-children_perform_economic_labour_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_economic_la...")
 
 kbo <- kobold::kobold(survey = df_survey, 
                       choices = df_choices, 
@@ -73,8 +93,7 @@ kbo <- kobold::kobold(survey = df_survey,
                       cleaning = df_cleaning_log,
                       children_perform_domestic_chores_info,
                       protection_risky_places,
-                      children_perform_economic_labour_info
-)
+                      children_perform_economic_labour_info)
 
 # modified choices for the survey tool
 df_choises_modified <- butteR:::xlsform_add_choices(kobold = kbo, new_choices = new_vars)
