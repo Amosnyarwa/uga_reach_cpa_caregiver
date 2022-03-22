@@ -10,7 +10,7 @@ source("R/support_functions.R")
 
 # load data ---------------------------------------------------------------
 
-df_cleaned <- read_csv("inputs/clean_main_data_caregiver.csv")
+df_cleaned <- read_csv("inputs/clean_data_caregiver.csv")
 df_children_perform_domestic_chores_info = read_csv(path = "inputs/clean_children_perform_domestic_chores_info_data_caregiver.csv") 
 df_protection_risky_places = read_csv(path = "inputs/clean_protection_risky_places_data_caregiver.csv")
 df_children_perform_economic_labour_info = read_csv(path = "inputs/clean_children_perform_economic_labour_info_data_caregiver.csv")
