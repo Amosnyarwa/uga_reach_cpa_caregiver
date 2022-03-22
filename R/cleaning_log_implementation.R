@@ -40,13 +40,13 @@ df_raw_data <- readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Pr
   select(-c(starts_with("...21")), -c("end_note":"children_category_facing_difficulty_accessing_social_activities_other")) %>% 
   mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
 
-df_children_perform_economic_labour_info <- df_raw_data %>% 
+df_raw_data_children_perform_domestic_chores_info <- df_raw_data %>% 
   left_join(children_perform_domestic_chores_info, by = c("_index" = "_parent_index") ) 
 
-df_protection_risky_places <- df_raw_data %>% 
+df_raw_data_protection_risky_places <- df_raw_data %>% 
   left_join(protection_risky_places, by = c("_index" = "_parent_index") ) 
 
-df_children_perform_economic_labour_info <- df_raw_data %>% 
+df_raw_data_children_perform_economic_labour_info <- df_raw_data %>% 
   left_join(children_perform_economic_labour_info, by = c("_index" = "_parent_index") )
 
 # cleaning log
@@ -65,102 +65,29 @@ df_choices <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_T
           name = str_replace(string = name, pattern = "children’s_safety", replacement = "childrens_safety"),
           name = str_replace(string = name, pattern = "i_tell_the_person_i_won't_do_it", replacement = "i_tell_the_person_i_wont_do_it") )
 
-# find all new choices to add to choices sheet ----------------------------
+# handle datasets ---------------------------------------------------------
 
-# gather choice options based on unique choices list
-df_grouped_choices<- df_choices %>% 
-  group_by(list_name) %>% 
-  summarise(choice_options = paste(name, collapse = " : "))
-
-# get new name and choice pairs to add to the choices sheet
-new_vars <- df_cleaning_log %>% 
-  filter(type %in% c("change_response", "add_option")) %>% 
-  left_join(df_survey, by = "name") %>% 
-  filter(str_detect(string = type.y, pattern = "select_one|select one|select_multiple|select multiple")) %>% 
-  separate(col = type.y, into = c("select_type", "list_name"), sep =" ", remove = TRUE, extra = "drop") %>% 
-  left_join(df_grouped_choices, by = "list_name") %>%
-  filter(!str_detect(string = choice_options, pattern = value ) ) %>%
-  rename(choice = value ) %>%
-  select(name, choice) %>%
-  distinct() %>% # to make sure there are no duplicates
-  arrange(name)
-
-# create kobold object ----------------------------------------------------
-
-kbo <- kobold::kobold(survey = df_survey, 
-                      choices = df_choices, 
-                      data = df_raw_data, 
-                      cleaning = df_cleaning_log,
-                      children_perform_domestic_chores_info,
-                      protection_risky_places,
-                      children_perform_economic_labour_info)
-
-# modified choices for the survey tool
-df_choises_modified <- butteR:::xlsform_add_choices(kobold = kbo, new_choices = new_vars)
-
-# special treat for variables for select_multiple, we need to add the columns to the data itself
-df_survey_sm <- df_survey %>% 
-  mutate(q_type = case_when(str_detect(string = type, pattern = "select_multiple|select multiple") ~ "sm",
-                            str_detect(string = type, pattern = "select_one|select one") ~ "so",
-                            TRUE ~ type)) %>% 
-  select(name, q_type)
-
-# construct new columns for select multiple
-new_vars_sm <- new_vars %>% 
-  left_join(df_survey_sm, by = "name") %>% 
-  filter(q_type == "sm") %>% 
-  mutate(new_cols = paste0(name,"/",choice))
-
-# add new columns to the raw data
-df_raw_data_modified <- df_raw_data %>% 
-  butteR:::mutate_batch(nm = new_vars_sm$new_cols, value = F )
-
-# make some cleanup
-kbo_modified <- kobold::kobold(survey = df_survey %>% filter(name %in% colnames(df_raw_data_modified)), 
-                               choices = df_choises_modified, 
-                               data = df_raw_data_modified, 
-                               cleaning = df_cleaning_log,
-                               children_perform_domestic_chores_info,
-                               protection_risky_places,
-                               children_perform_economic_labour_info )
-kbo_cleaned <- kobold::kobold_cleaner(kbo_modified)
-
-# handling Personally Identifiable Information(PII)
-input_vars_to_remove_from_data <- c("complainant_name",
-                                    "complainant_id",
-                                    "respondent_telephone",
-                                    "name_pers_recording",
-                                    "geopoint",
-                                    "_geopoint_latitude",
-                                    "_geopoint_longitude",
-                                    "_geopoint_altitude",
-                                    "_geopoint_precision")
-
-df_handle_pii <- kbo_cleaned$data %>% 
-  mutate(across(any_of(input_vars_to_remove_from_data), .fns = ~na_if(., .)))
-
-# handling added responses after starting data collection and added responses in the cleaning process
-
-sm_colnames <-  df_handle_pii %>% 
-  select(contains("/")) %>% 
-  colnames() %>% 
-  str_replace_all(pattern = "/.+", replacement = "") %>% 
-  unique()
-
-df_handle_sm_data <- df_handle_pii
-
-for (cur_sm_col in sm_colnames) {
-  df_updated_data <- df_handle_sm_data %>% 
-    mutate(
-      across(contains(paste0(cur_sm_col, "/")), .fns = ~ifelse(!is.na(!!sym(cur_sm_col)) & is.na(.) , FALSE, .)),
-      across(contains(paste0(cur_sm_col, "/")), .fns = ~ifelse(is.na(!!sym(cur_sm_col)), NA, .))
-    )
-  df_handle_sm_data <- df_updated_data
-}
-
-df_final_cleaned_data <- df_handle_sm_data
-
-# write final modified data
-
-write_csv(df_final_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_caregiver.csv"))
-write_csv(df_final_cleaned_data, file = paste0("inputs/", "clean_data_caregiver.csv"))
+# main dataset
+implement_cleaning_support(input_df_raw_data = df_raw_data, 
+                           input_df_survey = df_survey, 
+                           input_df_choices = df_choices, 
+                           input_df_cleaning_log = df_cleaning_log,
+                           input_post_fix = "main_data_caregiver")
+# children_perform_domestic_chores_info
+implement_cleaning_support(input_df_raw_data = df_raw_data_children_perform_domestic_chores_info, 
+                           input_df_survey = df_survey, 
+                           input_df_choices = df_choices, 
+                           input_df_cleaning_log = df_cleaning_log,
+                           input_post_fix = "children_perform_domestic_chores_info_data_caregiver")
+# protection_risky_places
+implement_cleaning_support(input_df_raw_data = df_raw_data_protection_risky_places, 
+                           input_df_survey = df_survey, 
+                           input_df_choices = df_choices, 
+                           input_df_cleaning_log = df_cleaning_log,
+                           input_post_fix = "protection_risky_places_data_caregiver")
+# children_perform_economic_labour_info
+implement_cleaning_support(input_df_raw_data = df_raw_data_children_perform_economic_labour_info, 
+                           input_df_survey = df_survey, 
+                           input_df_choices = df_choices, 
+                           input_df_cleaning_log = df_cleaning_log,
+                           input_post_fix = "children_perform_economic_labour_info_data_caregiver")
