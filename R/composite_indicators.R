@@ -15,7 +15,7 @@ create_composite_indicators_cpa_caregiver <- function(input_df) {
       i.education_level = case_when(hh_member_education %in% c("no_formal_education") ~ "none",
                                     hh_member_education %in% c("completed_primary", "incomplete_primary", "incomplete_secondary") ~ "low",
                                     hh_member_education %in% c("completed_secondary", "incomplete_university", "incomplete_prof_degree", 
-                                                               "incomplete_voc_training", "completed_voc_training") ~ "middle",
+                                                               "incomplete_voc_training", "completed_voc_training", "incomplete_tertiary") ~ "middle",
                                     hh_member_education %in% c("completed_university", "completed_prof_degree") ~ "higher",
                                     hh_member_education %in% c("other") ~ "other",
                                     TRUE ~ hh_member_education
