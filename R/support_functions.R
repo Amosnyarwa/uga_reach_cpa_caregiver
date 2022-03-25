@@ -506,10 +506,6 @@ implement_cleaning_support <- function(input_df_raw_data, input_df_survey, input
   }
   
   df_final_cleaned_data <- df_handle_sm_data
-  
-  # write final modified data
-  
-  write_csv(df_final_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_", input_post_fix, ".csv"))
 }
 
 # analysis support --------------------------------------------------------
