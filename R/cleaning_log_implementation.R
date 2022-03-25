@@ -7,6 +7,9 @@ source("R/support_functions.R")
 # read data ---------------------------------------------------------------
 
 # tool data
+cols_from_main_dataset <- c("start",   "end", "today", "instruction_note", "consent_one", "consent_two", "district_name", "enumerator_id", "point_number", "status", 
+                            "refugee_settlement", "refugee_settlement_zone", "sub_county_div", "hoh_equivalent", "primary_caregiver", "responent_sex", "respondent_age", "nationality", "nationality_other",    "_id",   "uuid",  "index")
+
 # sheets
 data_cols_to_remove <- c("_index",	"_parent_table_name",	"_submission__id", "_submission__uuid",	"_submission__submission_time",	"_submission__validation_status", 
                          "_submission__notes",	"_submission__status",	"_submission__submitted_by",	"_submission__tags")
@@ -72,26 +75,36 @@ df_choices <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_T
 # handle datasets ---------------------------------------------------------
 
 # main dataset
-implement_cleaning_support(input_df_raw_data = df_raw_data, 
-                           input_df_survey = df_survey, 
-                           input_df_choices = df_choices, 
-                           input_df_cleaning_log = df_cleaning_log,
-                           input_post_fix = "data_caregiver")
+df_cleaned_data <- implement_cleaning_support(input_df_raw_data = df_raw_data, 
+                                              input_df_survey = df_survey, 
+                                              input_df_choices = df_choices, 
+                                              input_df_cleaning_log = df_cleaning_log)
+
+write_csv(df_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_caregiver.csv"))
+
 # children_perform_domestic_chores_info
-implement_cleaning_support(input_df_raw_data = df_raw_data_children_perform_domestic_chores_info, 
-                           input_df_survey = df_survey, 
-                           input_df_choices = df_choices, 
-                           input_df_cleaning_log = df_cleaning_log,
-                           input_post_fix = "children_perform_domestic_chores_info_data_caregiver")
+df_cleaned_children_perform_domestic_chores_info_data <- implement_cleaning_support(input_df_raw_data = df_raw_data_children_perform_domestic_chores_info, 
+                                                                                    input_df_survey = df_survey, 
+                                                                                    input_df_choices = df_choices, 
+                                                                                    input_df_cleaning_log = df_cleaning_log) %>% 
+  select(cols_from_main_dataset, any_of(colnames(children_perform_domestic_chores_info)))
+
+write_csv(df_cleaned_children_perform_domestic_chores_info_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_domestic_chores_info_data_caregiver.csv"))
+
 # protection_risky_places
-implement_cleaning_support(input_df_raw_data = df_raw_data_protection_risky_places, 
-                           input_df_survey = df_survey, 
-                           input_df_choices = df_choices, 
-                           input_df_cleaning_log = df_cleaning_log,
-                           input_post_fix = "protection_risky_places_data_caregiver")
+df_cleaned_protection_risky_places_data <- implement_cleaning_support(input_df_raw_data = df_raw_data_protection_risky_places, 
+                                                                      input_df_survey = df_survey, 
+                                                                      input_df_choices = df_choices, 
+                                                                      input_df_cleaning_log = df_cleaning_log) %>% 
+  select(cols_from_main_dataset, any_of(colnames(protection_risky_places)))
+
+write_csv(df_cleaned_protection_risky_places_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_protection_risky_places_data_caregiver.csv"))
+
 # children_perform_economic_labour_info
-implement_cleaning_support(input_df_raw_data = df_raw_data_children_perform_economic_labour_info, 
-                           input_df_survey = df_survey, 
-                           input_df_choices = df_choices, 
-                           input_df_cleaning_log = df_cleaning_log,
-                           input_post_fix = "children_perform_economic_labour_info_data_caregiver")
+df_cleaned_children_perform_economic_labour_info_data <- implement_cleaning_support(input_df_raw_data = df_raw_data_children_perform_economic_labour_info, 
+                                                                                    input_df_survey = df_survey, 
+                                                                                    input_df_choices = df_choices, 
+                                                                                    input_df_cleaning_log = df_cleaning_log) %>% 
+  select(cols_from_main_dataset, any_of(colnames(children_perform_economic_labour_info)))
+
+write_csv(df_cleaned_children_perform_economic_labour_info_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_economic_labour_info_data_caregiver.csv"))
