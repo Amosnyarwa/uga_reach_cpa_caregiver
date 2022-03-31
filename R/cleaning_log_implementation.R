@@ -59,7 +59,8 @@ df_raw_data_children_perform_economic_labour_info <- df_raw_data %>%
 # cleaning log
 df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv") %>% 
   mutate(adjust_log = ifelse(is.na(adjust_log), "apply_suggested_change", adjust_log),
-         value = ifelse(is.na(value) & comment == "implement_logical_change", "blank", value)) %>%
+         value = ifelse(is.na(value) & comment == "implement_logical_change", "blank", value),
+         value = ifelse(is.na(value) & type == "remove_survey", "blank", value)) %>%
   filter(adjust_log != "delete_log", !is.na(value), !is.na(uuid)) %>% 
   mutate(value = ifelse(value == "blank" & comment == "implement_logical_change", NA, value),
          sheet = NA, index = NA, relevant = NA) %>% 
