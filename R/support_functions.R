@@ -305,7 +305,7 @@ check_time_interval_btn_surveys <- function(input_tool_data, input_min_time) {
 check_outliers <- function(input_tool_data, input_column, input_lower_limit, input_upper_limit) {
   input_tool_data %>% 
     filter(!!sym(input_column) < input_lower_limit | !!sym(input_column) > input_upper_limit) %>% 
-    mutate(i.check.type = "remove_survey",
+    mutate(i.check.type = "change_response",
            i.check.name = input_column,
            i.check.current_value = as.character(!!sym({{input_column}})),
            i.check.value = "",
@@ -327,7 +327,7 @@ check_outliers_repeats <- function(input_tool_data, input_column, input_lower_li
   input_tool_data %>% 
     filter(!!sym(input_column) < input_lower_limit | !!sym(input_column) > input_upper_limit) %>% 
     mutate(i.check.sheet = input_sheet_name,
-           i.check.type = "remove_survey",
+           i.check.type = "change_response",
            i.check.name = input_column,
            i.check.current_value = as.character(!!sym({{input_column}})),
            i.check.value = "",
