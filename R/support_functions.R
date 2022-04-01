@@ -108,14 +108,16 @@ extract_other_data <- function(input_tool_data, input_survey, input_choices) {
 extract_other_data_repeats <- function(input_repeat_data, input_survey, input_choices, input_sheet_name, input_repeat_cols) {
   
   # add and rename some columns
-  df_data <- input_tool_data %>% 
+  df_data <- input_repeat_data %>% 
     rename(uuid = `_uuid`) %>% 
+    filter(!is.na(start)) %>% 
     mutate(start_date = as_date(start))
+    
   
   # get questions with other
   others_colnames <-  df_data %>% 
     select(starts_with(input_repeat_cols)) %>% 
-    select(ends_with("_other"), -contains("/"), -c("okay_children_fight_each_other")) %>% 
+    select(ends_with("_other"), -contains("/")) %>% 
     colnames()
   
   # data.frame for holding _other response data
@@ -127,7 +129,8 @@ extract_other_data_repeats <- function(input_repeat_data, input_survey, input_ch
     
     df_filtered_data <- df_data %>% 
       select(-contains("/")) %>% 
-      select(uuid, start_date, enumerator_id, district_name, point_number, other_text = cln, current_value = current_parent_qn) %>% 
+      select(uuid, start_date, enumerator_id, district_name, point_number, 
+             other_text = cln, current_value = current_parent_qn, index = `_index.y`) %>% 
       filter(!is.na(other_text), !other_text %in% c(" ", "NA")) %>% 
       mutate( other_name = cln, 
               int.my_current_val_extract = ifelse(str_detect(current_value, "other\\b"), str_extract_all(string = current_value, pattern = "other\\b|[a-z]+._other\\b"), current_value),
@@ -158,7 +161,6 @@ extract_other_data_repeats <- function(input_repeat_data, input_survey, input_ch
     mutate(issue_id = "other_checks",
            issue = "",
            sheet = input_sheet_name,
-           index = `_index`,
            checked_by = "",
            checked_date = as_date(today()),
            comment = "",
