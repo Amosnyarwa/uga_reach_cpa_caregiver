@@ -63,8 +63,8 @@ add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_
 # check respondent_age
 df_c_outliers_respondent_age <-  check_outliers(input_tool_data = df_tool_data,
                                                   input_column = "respondent_age", 
-                                                  input_lower_limit = quantile(df_tool_data$respondent_age, 0.01),
-                                                  input_upper_limit = quantile(df_tool_data$respondent_age, 0.99))
+                                                  input_lower_limit = quantile(df_tool_data$respondent_age, 0.01, na.rm = TRUE),
+                                                  input_upper_limit = quantile(df_tool_data$respondent_age, 0.99, na.rm = TRUE))
 
 add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_respondent_age")
 
