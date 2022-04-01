@@ -52,11 +52,7 @@ logic_output <- list()
 
 df_c_duplicate_uuid <-  check_duplicates_by_uuid(input_tool_data = df_tool_data)
 
-if(exists("df_c_duplicate_uuid")){
-  if(nrow(df_c_duplicate_uuid) > 0){
-    logic_output$df_c_duplicate_uuid <- df_c_duplicate_uuid
-  }
-}
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_duplicate_uuid")
 
 # check outliers ---------------------------------------------------
 # check respondent_age
@@ -64,71 +60,57 @@ df_c_outliers_respondent_age <-  check_outliers(input_tool_data = df_tool_data,
                                                   input_column = "respondent_age", 
                                                   input_lower_limit = quantile(df_tool_data$respondent_age, 0.01),
                                                   input_upper_limit = quantile(df_tool_data$respondent_age, 0.99))
-if(exists("df_c_outliers_respondent_age")){
-  if(nrow(df_c_outliers_respondent_age) > 0){
-    logic_output$df_c_outliers_respondent_age <- df_c_outliers_respondent_age
-  }
-}
+
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_respondent_age")
+
 # check hh_size
 df_c_outliers_hh_size <-  check_outliers(input_tool_data = df_tool_data,
                                                   input_column = "hh_size", 
                                                   input_lower_limit = quantile(df_tool_data$hh_size, 0.01, na.rm = TRUE),
                                                   input_upper_limit = quantile(df_tool_data$hh_size, 0.99, na.rm = TRUE))
-if(exists("df_c_outliers_hh_size")){
-  if(nrow(df_c_outliers_hh_size) > 0){
-    logic_output$df_c_outliers_hh_size <- df_c_outliers_hh_size
-  }
-}
+
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_hh_size")
+
 # check household size children
 df_c_outliers_hh_size_children <-  check_outliers(input_tool_data = df_tool_data,
                                                   input_column = "hh_size_children", 
                                                   input_lower_limit = quantile(df_tool_data$hh_size_children, 0.01, na.rm = TRUE),
                                                   input_upper_limit = quantile(df_tool_data$hh_size_children, 0.99, na.rm = TRUE))
-if(exists("df_c_outliers_hh_size_children")){
-  if(nrow(df_c_outliers_hh_size_children) > 0){
-    logic_output$df_c_outliers_hh_size_children <- df_c_outliers_hh_size_children
-  }
-}
+
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_hh_size_children")
+
 # check children_provide_kinship_care
 df_c_outliers_children_provide_kinship_care <-  check_outliers(input_tool_data = df_tool_data,
                                                   input_column = "children_provide_kinship_care",
                                                   input_lower_limit = quantile(df_tool_data$children_provide_kinship_care, 0.01, na.rm = TRUE),
                                                   input_upper_limit = quantile(df_tool_data$children_provide_kinship_care, 0.99, na.rm = TRUE))
-if(exists("df_c_outliers_children_provide_kinship_care")){
-  if(nrow(df_c_outliers_children_provide_kinship_care) > 0){
-    logic_output$df_c_outliers_children_provide_kinship_care <- df_c_outliers_children_provide_kinship_care
-  }
-}
+
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_children_provide_kinship_care")
+
 # check children_provide_foster
 df_c_outliers_children_provide_foster <-  check_outliers(input_tool_data = df_tool_data,
                                                   input_column = "children_provide_foster",
                                                   input_lower_limit = quantile(df_tool_data$children_provide_foster, 0.01, na.rm = TRUE),
                                                   input_upper_limit = quantile(df_tool_data$children_provide_foster, 0.99, na.rm = TRUE))
-if(exists("df_c_outliers_children_provide_foster")){
-  if(nrow(df_c_outliers_children_provide_foster) > 0){
-    logic_output$df_c_outliers_children_provide_foster <- df_c_outliers_children_provide_foster
-  }
-}
+
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_children_provide_foster")
+
 # # check hrs_child_perfoms_domestic_chores
 # df_c_outliers_hrs_child_perfoms_domestic_chores <-  check_outliers(input_tool_data = df_tool_data,
 #                                                   input_column = "hrs_child_perfoms_domestic_chores", 
 #                                                   input_lower_limit = quantile(df_tool_data$hrs_child_perfoms_domestic_chores, 0.025, na.rm = TRUE),
 #                                                   input_upper_limit = quantile(df_tool_data$hrs_child_perfoms_domestic_chores, 0.975, na.rm = TRUE))
-# if(exists("df_c_outliers_hrs_child_perfoms_domestic_chores")){
-#   if(nrow(df_c_outliers_hrs_child_perfoms_domestic_chores) > 0){
-#     logic_output$df_c_outliers_hrs_child_perfoms_domestic_chores <- df_c_outliers_hrs_child_perfoms_domestic_chores
-#   }
-# }
+
+# add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_hrs_child_perfoms_domestic_chores")
+
 # # check hrs_child_perfoms_econ_labour
 # df_c_outliers_hrs_child_perfoms_econ_labour <-  check_outliers(input_tool_data = df_tool_data,
 #                                                   input_column = "hrs_child_perfoms_econ_labour", 
 #                                                   input_lower_limit = quantile(df_tool_data$hrs_child_perfoms_econ_labour, 0.025, na.rm = TRUE),
 #                                                   input_upper_limit = quantile(df_tool_data$hrs_child_perfoms_econ_labour, 0.975, na.rm = TRUE))
-# if(exists("df_c_outliers_hrs_child_perfoms_econ_labour")){
-#   if(nrow(df_c_outliers_hrs_child_perfoms_econ_labour) > 0){
-#     logic_output$df_c_outliers_hrs_child_perfoms_econ_labour <- df_c_outliers_hrs_child_perfoms_econ_labour
-#   }
-# }
+
+# add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_hrs_child_perfoms_econ_labour")
+
 # Time checks -------------------------------------------------------------
 
 # Time interval for the survey
@@ -139,11 +121,7 @@ df_c_survey_time <-  check_survey_time(input_tool_data = df_tool_data,
                                        input_min_time = min_time_of_survey, 
                                        input_max_time = max_time_of_survey)
 
-if(exists("df_c_survey_time")){
-  if(nrow(df_c_survey_time) > 0){
-    logic_output$df_c_survey_time <- df_c_survey_time
-  }
-}
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_survey_time")
 
 # check the time between surveys
 min_time_btn_surveys <- 5
@@ -151,21 +129,13 @@ min_time_btn_surveys <- 5
 df_c_time_btn_survey <- check_time_interval_btn_surveys(input_tool_data = df_tool_data,
                                                         input_min_time = min_time_btn_surveys)
 
-if(exists("df_c_time_btn_survey")){
-  if(nrow(df_c_time_btn_survey) > 0){
-    logic_output$df_c_time_btn_survey <- df_c_time_btn_survey
-  }
-}
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_time_btn_survey")
 
 # Logical checks ----------------------------------------------------------
 # check_shortest_path
 df_c_short_path <- check_shortest_path(input_tool_data = df_tool_data)
 
-if(exists("df_c_short_path")){
-  if(nrow(df_c_short_path) > 0){
-    logic_output$df_c_short_path <- df_c_short_path
-  }
-}
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_short_path")
 
 
 # spatial checks ----------------------------------------------------------
@@ -179,21 +149,13 @@ sample_pt_nos <- df_sample_data %>%
 df_c_duplicate_pt_nos <- check_duplicate_pt_numbers(input_tool_data = df_tool_data %>% filter(district_name != "kampala"),
                                                     input_sample_pt_nos_list = sample_pt_nos)
 
-if(exists("df_c_duplicate_pt_nos")){
-  if(nrow(df_c_duplicate_pt_nos) > 0){
-    logic_output$df_c_duplicate_pt_nos <- df_c_duplicate_pt_nos
-  }
-}
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_duplicate_pt_nos")
 
 # pt id does not exist in sample
 df_c_pt_not_in_sample <- check_pt_number_not_in_samples(input_tool_data = df_tool_data %>% filter(district_name != "kampala"), 
                                                         input_sample_pt_nos_list = sample_pt_nos)
 
-if(exists("df_c_pt_not_in_sample")){
-  if(nrow(df_c_pt_not_in_sample) > 0){
-    logic_output$df_c_pt_not_in_sample <- df_c_pt_not_in_sample
-  }
-}
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_pt_not_in_sample")
 
 # check for exceeded threshold distance
 
@@ -203,11 +165,7 @@ df_c_greater_thresh_distance <- check_threshold_distance(input_sample_data = df_
                                                          input_tool_data = df_tool_data %>% filter(!district_name %in% c("kampala")),
                                                          input_threshold_dist = threshold_dist)
 
-if(exists("df_c_greater_thresh_distance")){
-  if(nrow(df_c_greater_thresh_distance) > 0){
-    logic_output$df_c_greater_thresh_distance <- df_c_greater_thresh_distance
-  }
-}
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_greater_thresh_distance")
 
 # combined logical checks ----------------------------------------------------------
 
@@ -224,4 +182,3 @@ df_combined_checks <- bind_rows(df_logic_checks, df_others_data)
 
 # output the resulting data frame
 write_csv(x = df_combined_checks, file = paste0("outputs/", butteR::date_file_prefix(), "_combined_checks_caregiver.csv"), na = "")
-write_csv(x = df_logic_checks, file = paste0("outputs/", butteR::date_file_prefix(), "_outliers_checks_caregiver.csv"), na = "")
