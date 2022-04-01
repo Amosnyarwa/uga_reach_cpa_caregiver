@@ -34,10 +34,12 @@ df_tool_data_children_perform_domestic_chores_info <- df_tool_data %>%
   right_join(children_perform_domestic_chores_info, by = c("_uuid" = "_submission__uuid") ) 
 
 df_tool_data_protection_risky_places <- df_tool_data %>% 
-  right_join(protection_risky_places, by = c("_uuid" = "_submission__uuid") ) 
+  right_join(protection_risky_places, by = c("_uuid" = "_submission__uuid") ) %>% 
+  filter(is.na(`_uuid`))
 
 df_tool_data_children_perform_economic_labour_info <- df_tool_data %>% 
-  right_join(children_perform_economic_labour_info, by = c("_uuid" = "_submission__uuid") )
+  right_join(children_perform_economic_labour_info, by = c("_uuid" = "_submission__uuid") ) %>% 
+  filter(is.na(`_uuid`))
 
 # tool
 df_survey <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "survey")
@@ -97,21 +99,23 @@ df_c_outliers_children_provide_foster <-  check_outliers(input_tool_data = df_to
 
 add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_children_provide_foster")
 
-# # check hrs_child_perfoms_domestic_chores
-# df_c_outliers_hrs_child_perfoms_domestic_chores <-  check_outliers(input_tool_data = df_tool_data,
-#                                                   input_column = "hrs_child_perfoms_domestic_chores", 
-#                                                   input_lower_limit = quantile(df_tool_data$hrs_child_perfoms_domestic_chores, 0.025, na.rm = TRUE),
-#                                                   input_upper_limit = quantile(df_tool_data$hrs_child_perfoms_domestic_chores, 0.975, na.rm = TRUE))
+# check hrs_child_perfoms_domestic_chores
+df_c_outliers_hrs_child_perfoms_domestic_chores <-  check_outliers_repeats(input_tool_data = df_tool_data_children_perform_domestic_chores_info,
+                                                  input_column = "hrs_child_perfoms_domestic_chores",
+                                                  input_lower_limit = quantile(df_tool_data_children_perform_domestic_chores_info$hrs_child_perfoms_domestic_chores, 0.025, na.rm = TRUE),
+                                                  input_upper_limit = quantile(df_tool_data_children_perform_domestic_chores_info$hrs_child_perfoms_domestic_chores, 0.975, na.rm = TRUE),
+                                                  input_sheet_name = "children_perform_domestic_chores_info")
 
-# add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_hrs_child_perfoms_domestic_chores")
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_hrs_child_perfoms_domestic_chores")
 
-# # check hrs_child_perfoms_econ_labour
-# df_c_outliers_hrs_child_perfoms_econ_labour <-  check_outliers(input_tool_data = df_tool_data,
-#                                                   input_column = "hrs_child_perfoms_econ_labour", 
-#                                                   input_lower_limit = quantile(df_tool_data$hrs_child_perfoms_econ_labour, 0.025, na.rm = TRUE),
-#                                                   input_upper_limit = quantile(df_tool_data$hrs_child_perfoms_econ_labour, 0.975, na.rm = TRUE))
+# check hrs_child_perfoms_econ_labour
+df_c_outliers_hrs_child_perfoms_econ_labour <-  check_outliers_repeats(input_tool_data = df_tool_data_children_perform_economic_labour_info,
+                                                  input_column = "hrs_child_perfoms_econ_labour",
+                                                  input_lower_limit = quantile(df_tool_data_children_perform_economic_labour_info$hrs_child_perfoms_econ_labour, 0.025, na.rm = TRUE),
+                                                  input_upper_limit = quantile(df_tool_data_children_perform_economic_labour_info$hrs_child_perfoms_econ_labour, 0.975, na.rm = TRUE),
+                                                  input_sheet_name = "children_perform_economic_labour_info")
 
-# add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_hrs_child_perfoms_econ_labour")
+add_checks_data_to_list(input_list_name = "logic_output", input_df_name = "df_c_outliers_hrs_child_perfoms_econ_labour")
 
 # Time checks -------------------------------------------------------------
 
