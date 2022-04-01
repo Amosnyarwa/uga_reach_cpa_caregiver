@@ -21,9 +21,27 @@ df_tool_data <- readxl::read_excel("inputs/UGA2109_Cross_Sectoral_Child_Protecti
          !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
   )
 
+# repeats
+children_perform_domestic_chores_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_domestic_ch...") 
+
+protection_risky_places = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "protection_risky_places")
+
+children_perform_economic_labour_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_economic_la...")
+
+df_tool_data_children_perform_domestic_chores_info <- df_raw_data %>% 
+  right_join(children_perform_domestic_chores_info, by = c("_uuid" = "_submission__uuid") ) 
+
+df_tool_data_protection_risky_places <- df_raw_data %>% 
+  right_join(protection_risky_places, by = c("_uuid" = "_submission__uuid") ) 
+
+df_tool_data_children_perform_economic_labour_info <- df_raw_data %>% 
+  right_join(children_perform_economic_labour_info, by = c("_uuid" = "_submission__uuid") )
+
+# tool
 df_survey <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "survey")
 df_choices <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_Tool.xlsx", sheet = "choices")
 
+# GIS layer
 df_sample_data <- sf::st_read("inputs/cpa_caregiver_settlement_host_samples.gpkg", quiet = TRUE)
 
 # output holder -----------------------------------------------------------
