@@ -11,7 +11,7 @@ cols_from_main_dataset <- c("start",   "end", "today", "instruction_note", "cons
                             "refugee_settlement", "refugee_settlement_zone", "sub_county_div", "hoh_equivalent", "primary_caregiver", "responent_sex", "respondent_age", "nationality", "nationality_other",    "_id",   "uuid",  "index")
 
 # sheets
-data_cols_to_remove <- c("_index",	"_parent_table_name",	"_submission__id", "_submission__uuid",	"_submission__submission_time",	"_submission__validation_status", 
+data_cols_to_remove <- c("_parent_table_name",	"_submission__id", "_submission__uuid",	"_submission__submission_time",	"_submission__validation_status", 
                          "_submission__notes",	"_submission__status",	"_submission__submitted_by",	"_submission__tags")
 
 children_perform_domestic_chores_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_domestic_ch...") %>% 
