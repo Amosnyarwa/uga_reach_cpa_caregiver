@@ -19,7 +19,9 @@ df_tool_data <- readxl::read_excel("inputs/UGA2109_Cross_Sectoral_Child_Protecti
          end = as_datetime(end)) %>% 
   filter(consent_two == "yes", respondent_age >= 12, i.check.start_date > as_date("2022-01-30"), 
          !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))
-  )
+  ) %>% 
+  select(-c(starts_with("...21")), -c("end_note":"children_category_facing_difficulty_accessing_social_activities_other"))
+  
 
 # repeats
 children_perform_domestic_chores_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_domestic_ch...") 
@@ -28,13 +30,13 @@ protection_risky_places = readxl::read_excel(path = "inputs/UGA2109_Cross_Sector
 
 children_perform_economic_labour_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_economic_la...")
 
-df_tool_data_children_perform_domestic_chores_info <- df_raw_data %>% 
+df_tool_data_children_perform_domestic_chores_info <- df_tool_data %>% 
   right_join(children_perform_domestic_chores_info, by = c("_uuid" = "_submission__uuid") ) 
 
-df_tool_data_protection_risky_places <- df_raw_data %>% 
+df_tool_data_protection_risky_places <- df_tool_data %>% 
   right_join(protection_risky_places, by = c("_uuid" = "_submission__uuid") ) 
 
-df_tool_data_children_perform_economic_labour_info <- df_raw_data %>% 
+df_tool_data_children_perform_economic_labour_info <- df_tool_data %>% 
   right_join(children_perform_economic_labour_info, by = c("_uuid" = "_submission__uuid") )
 
 # tool
@@ -177,8 +179,14 @@ df_others_data <- extract_other_data(input_tool_data = df_tool_data,
                                      input_survey = df_survey, 
                                      input_choices = df_choices)
 
+df_others_data_repeats <- extract_other_data_repeats(input_repeat_data = df_tool_data_protection_risky_places, 
+                                     input_survey = df_survey, 
+                                     input_choices = df_choices, 
+                                     input_sheet_name = "protection_risky_places",
+                                     input_repeat_cols = c("places_where_children_are_mostly_at_risk"))
+
 # combine logic and others checks
-df_combined_checks <- bind_rows(df_logic_checks, df_others_data)
+df_combined_checks <- bind_rows(df_logic_checks, df_others_data, df_others_data_repeats)
 
 # output the resulting data frame
 write_csv(x = df_combined_checks, file = paste0("outputs/", butteR::date_file_prefix(), "_combined_checks_caregiver.csv"), na = "")
