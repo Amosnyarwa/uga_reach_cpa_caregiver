@@ -31,7 +31,8 @@ protection_risky_places = readxl::read_excel(path = "inputs/UGA2109_Cross_Sector
 children_perform_economic_labour_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_economic_la...")
 
 df_tool_data_children_perform_domestic_chores_info <- df_tool_data %>% 
-  right_join(children_perform_domestic_chores_info, by = c("_uuid" = "_submission__uuid") ) 
+  right_join(children_perform_domestic_chores_info, by = c("_uuid" = "_submission__uuid") ) %>% 
+  filter(is.na(`_uuid`)) 
 
 df_tool_data_protection_risky_places <- df_tool_data %>% 
   right_join(protection_risky_places, by = c("_uuid" = "_submission__uuid") ) %>% 
