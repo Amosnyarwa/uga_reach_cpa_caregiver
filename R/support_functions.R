@@ -266,7 +266,7 @@ check_survey_time <- function(input_tool_data, input_min_time, input_max_time) {
            i.check.comment = "", 
            i.check.reviewed = "",
            i.check.adjust_log = "",
-           i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+           i.check.uuid_cl = "",
            i.check.so_sm_choices = "")%>% 
     filter(i.check.issue_id %in% c("less_survey_time", "more_survey_time")) %>% 
     dplyr::select(starts_with("i.check"))%>% 
@@ -294,7 +294,7 @@ check_time_interval_btn_surveys <- function(input_tool_data, input_min_time) {
            i.check.comment = "", 
            i.check.reviewed = "",
            i.check.adjust_log = "",
-           i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+           i.check.uuid_cl = "",
            i.check.so_sm_choices = "") %>% 
     dplyr::select(starts_with("i.check"))%>% 
     rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
@@ -317,7 +317,7 @@ check_outliers <- function(input_tool_data, input_column, input_lower_limit, inp
            i.check.comment = "",
            i.check.reviewed = "",
            i.check.adjust_log = "",
-           i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+           i.check.uuid_cl = "",
            i.check.so_sm_choices = "") %>%
     ungroup() %>%
     dplyr::select(starts_with("i.check"))%>%
@@ -331,7 +331,7 @@ check_outliers_repeats <- function(input_tool_data, input_column, input_lower_li
            i.check.name = input_column,
            i.check.current_value = as.character(!!sym({{input_column}})),
            i.check.value = "",
-           i.check.index = `_index`,
+           i.check.index = `_index.y`,
            i.check.issue_id = "logic_c_outlier",
            i.check.issue = paste(input_column,": ",!!sym({{input_column}}), "seems to be an outlier, needs engagement with enumerator"),
            i.check.other_text = "",
@@ -340,7 +340,7 @@ check_outliers_repeats <- function(input_tool_data, input_column, input_lower_li
            i.check.comment = "",
            i.check.reviewed = "",
            i.check.adjust_log = "",
-           i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+           i.check.uuid_cl = "",
            i.check.so_sm_choices = "") %>%
     ungroup() %>%
     dplyr::select(starts_with("i.check"))%>%
@@ -386,7 +386,7 @@ check_shortest_path <- function(input_tool_data) {
       i.check.comment = "", 
       i.check.reviewed = "",
       i.check.adjust_log = "",
-      i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+      i.check.uuid_cl = "",
       i.check.so_sm_choices = "") %>%
     dplyr::select(starts_with("i.check"))%>% 
     rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
@@ -412,7 +412,7 @@ check_duplicate_pt_numbers <- function(input_tool_data, input_sample_pt_nos_list
            i.check.comment = "", 
            i.check.reviewed = "",
            i.check.adjust_log = "",
-           i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+           i.check.uuid_cl = "",
            i.check.so_sm_choices = "") %>% 
     ungroup() %>%
     dplyr::select(starts_with("i.check"))%>% 
@@ -436,7 +436,7 @@ check_pt_number_not_in_samples <- function(input_tool_data, input_sample_pt_nos_
            i.check.comment = "", 
            i.check.reviewed = "",
            i.check.adjust_log = "",
-           i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+           i.check.uuid_cl = "",
            i.check.so_sm_choices = "") %>% 
     dplyr::select(starts_with("i.check"))%>% 
     rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
@@ -500,7 +500,7 @@ check_threshold_distance <- function(input_sample_data, input_tool_data, input_t
              i.check.comment = "", 
              i.check.reviewed = "",
              i.check.adjust_log = "",
-             i.check.uuid_cl = paste0(i.check.uuid, "_", i.check.type, "_", i.check.name),
+             i.check.uuid_cl = "",
              i.check.so_sm_choices = "") %>% 
       dplyr::select(starts_with("i.check"))%>% 
       rename_with(~str_replace(string = .x, pattern = "i.check.", replacement = ""))
