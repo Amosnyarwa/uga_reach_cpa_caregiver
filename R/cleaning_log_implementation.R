@@ -15,17 +15,17 @@ data_cols_to_remove <- c("_parent_table_name",	"_submission__id",	"_submission__
                          "_submission__notes",	"_submission__status",	"_submission__submitted_by",	"_submission__tags")
 
 children_perform_domestic_chores_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_domestic_ch...") %>% 
-  filter(!is.na(age_gender_breakdown_domestic_chores_post)) %>% 
+  # filter(!is.na(age_gender_breakdown_domestic_chores_post)) %>% 
   select(-all_of(data_cols_to_remove)) %>% 
   mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
 
 protection_risky_places = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "protection_risky_places") %>% 
-  filter(!is.na(risky_protection_places_post)) %>%
+  # filter(!is.na(risky_protection_places_post)) %>%
   select(-all_of(data_cols_to_remove)) %>% 
   mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
 
 children_perform_economic_labour_info = readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "children_perform_economic_la...") %>% 
-  filter(!is.na(age_gender_breakdown_econ_labour_post)) %>%
+  # filter(!is.na(age_gender_breakdown_econ_labour_post)) %>%
   select(-all_of(data_cols_to_remove)) %>% 
   mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
 
