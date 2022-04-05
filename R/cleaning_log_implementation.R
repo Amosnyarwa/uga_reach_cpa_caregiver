@@ -49,15 +49,15 @@ df_raw_data <- readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Pr
 
 df_raw_data_children_perform_domestic_chores_info <- df_raw_data %>% 
   select(-`_index`) %>% 
-  inner_join(children_perform_domestic_chores_info, by = c("_index" = "_parent_index") ) 
+  inner_join(children_perform_domestic_chores_info, by = c("_uuid" = "_submission__uuid") ) 
 
 df_raw_data_protection_risky_places <- df_raw_data %>% 
   select(-`_index`) %>% 
-  inner_join(protection_risky_places, by = c("_index" = "_parent_index") ) 
+  inner_join(protection_risky_places, by = c("_uuid" = "_submission__uuid") ) 
 
 df_raw_data_children_perform_economic_labour_info <- df_raw_data %>% 
   select(-`_index`) %>% 
-  inner_join(children_perform_economic_labour_info, by = c("_index" = "_parent_index") )
+  inner_join(children_perform_economic_labour_info, by = c("_uuid" = "_submission__uuid") )
 
 # cleaning log
 df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv") %>% 
