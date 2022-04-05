@@ -34,7 +34,7 @@ data_nms <- names(readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child
 c_types <- ifelse(str_detect(string = data_nms, pattern = "_other$"), "text", "guess")
 
 df_raw_data <- readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Protection_Assessment_Caregiver_Data.xlsx", sheet = "UGA2109_Cross-Sectoral Child...", col_types = c_types) %>%
-  filter(consent_two == "yes", respondent_age >= 12, as_date(start) > as_date("2022-01-30"), 
+  filter(consent_two == "yes", respondent_age >= 12, as_date(as_datetime(start)) > as_date("2022-01-30"), 
          !str_detect(string = point_number, pattern = fixed('test', ignore_case = TRUE))  ) %>% 
   rename(`if_selected_ngo_or_un_agency/medecins_sans_frontieres` = `if_selected_ngo_or_un_agency/médecins_sans_frontières`,
          `causes_of_stress_among_caregivers/childrens_safety` = `causes_of_stress_among_caregivers/children’s_safety`,
