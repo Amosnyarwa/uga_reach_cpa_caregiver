@@ -66,7 +66,7 @@ df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv") %>%
          value = ifelse(is.na(value) & type == "remove_survey", "blank", value)) %>%
   filter(adjust_log != "delete_log", !is.na(value), !is.na(uuid)) %>% 
   mutate(value = ifelse(value == "blank" & comment == "implement_logical_change", NA, value),
-         sheet = NA, index = NA, relevant = NA) %>% 
+         relevant = NA) %>% 
   select(uuid, type, name, value, issue_id, sheet, index, relevant, issue)
 
 # survey tool
