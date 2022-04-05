@@ -61,7 +61,7 @@ df_raw_data_children_perform_economic_labour_info <- df_raw_data %>%
   inner_join(children_perform_economic_labour_info, by = c("_uuid" = "_submission__uuid") )
 
 # cleaning log
-df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv") %>% 
+df_cleaning_log <- read_csv("inputs/combined_checks_caregiver.csv", col_types = cols(sheet = "c", index = "i")) %>% 
   mutate(adjust_log = ifelse(is.na(adjust_log), "apply_suggested_change", adjust_log),
          value = ifelse(is.na(value) & comment == "implement_logical_change", "blank", value),
          value = ifelse(is.na(value) & issue_id %in% c("logic_c_outlier"), "blank", value),
@@ -89,28 +89,37 @@ df_cleaned_data <- implement_cleaning_support(input_df_raw_data = df_raw_data,
 write_csv(df_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_caregiver.csv"))
 
 # children_perform_domestic_chores_info
+df_cleaning_log_children_perform_domestic_chores_info <- df_cleaning_log %>% 
+  filter(uuid %in% df_raw_data_children_perform_domestic_chores_info$`_uuid`, name %in% colnames(df_raw_data_children_perform_domestic_chores_info))
+
 df_cleaned_children_perform_domestic_chores_info_data <- implement_cleaning_support(input_df_raw_data = df_raw_data_children_perform_domestic_chores_info, 
                                                                                     input_df_survey = df_survey, 
                                                                                     input_df_choices = df_choices, 
-                                                                                    input_df_cleaning_log = df_cleaning_log) %>% 
+                                                                                    input_df_cleaning_log = df_cleaning_log_children_perform_domestic_chores_info) %>% 
   select(cols_from_main_dataset, any_of(colnames(children_perform_domestic_chores_info)))
 
 write_csv(df_cleaned_children_perform_domestic_chores_info_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_domestic_chores_info_data_caregiver.csv"))
 
 # protection_risky_places
+df_cleaning_log_protection_risky_places <- df_cleaning_log %>% 
+  filter(uuid %in% df_raw_data_protection_risky_places$`_uuid`, name %in% colnames(df_raw_data_protection_risky_places))
+
 df_cleaned_protection_risky_places_data <- implement_cleaning_support(input_df_raw_data = df_raw_data_protection_risky_places, 
                                                                       input_df_survey = df_survey, 
                                                                       input_df_choices = df_choices, 
-                                                                      input_df_cleaning_log = df_cleaning_log) %>% 
+                                                                      input_df_cleaning_log = df_cleaning_log_protection_risky_places) %>% 
   select(cols_from_main_dataset, any_of(colnames(protection_risky_places)))
 
 write_csv(df_cleaned_protection_risky_places_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_protection_risky_places_data_caregiver.csv"))
 
 # children_perform_economic_labour_info
+df_cleaning_log_children_perform_economic_labour_info <- df_cleaning_log %>% 
+  filter(uuid %in% df_raw_data_children_perform_economic_labour_info$`_uuid`, name %in% colnames(df_raw_data_children_perform_economic_labour_info))
+
 df_cleaned_children_perform_economic_labour_info_data <- implement_cleaning_support(input_df_raw_data = df_raw_data_children_perform_economic_labour_info, 
                                                                                     input_df_survey = df_survey, 
                                                                                     input_df_choices = df_choices, 
-                                                                                    input_df_cleaning_log = df_cleaning_log) %>% 
+                                                                                    input_df_cleaning_log = df_cleaning_log_children_perform_economic_labour_info) %>% 
   select(cols_from_main_dataset, any_of(colnames(children_perform_economic_labour_info)))
 
 write_csv(df_cleaned_children_perform_economic_labour_info_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_economic_labour_info_data_caregiver.csv"))
