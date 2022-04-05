@@ -45,7 +45,8 @@ df_raw_data <- readxl::read_excel(path = "inputs/UGA2109_Cross_Sectoral_Child_Pr
   mutate(refugee_settlement = ifelse(district_name == "kampala" & status == "refugee", district_name, refugee_settlement),
          refugee_settlement_zone = ifelse(district_name == "kampala" & status == "refugee", sub_county_div, refugee_settlement_zone)  ) %>% 
   select(-c(starts_with("...21")), -c("end_note":"children_category_facing_difficulty_accessing_social_activities_other")) %>% 
-  mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .)))
+  mutate(across(.cols = everything(), .fns = ~ifelse(str_detect(string = ., pattern = fixed(pattern = "N/A", ignore_case = TRUE)), "NA", .))) %>% 
+  mutate(start = as_datetime(start), end = as_datetime(end), today = as_date(as_datetime(today)), date_arrival = as_date(as_datetime(date_arrival)))
 
 df_raw_data_children_perform_domestic_chores_info <- df_raw_data %>% 
   select(-`_index`) %>% 
