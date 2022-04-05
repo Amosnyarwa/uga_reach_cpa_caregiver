@@ -82,7 +82,7 @@ df_choices <- readxl::read_excel("inputs/Child_Protection_Assessment_Caregiver_T
 df_cleaned_data <- implement_cleaning_support(input_df_raw_data = df_raw_data, 
                                               input_df_survey = df_survey, 
                                               input_df_choices = df_choices, 
-                                              input_df_cleaning_log = df_cleaning_log)
+                                              input_df_cleaning_log = df_cleaning_log %>% filter(name %in% colnames(df_raw_data)))
 
 write_csv(df_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_caregiver.csv"))
 
