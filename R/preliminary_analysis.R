@@ -67,14 +67,14 @@ df_main_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_s
 
 # children_perform_domestic_chores: prepare data and create survey ------------------------------------------------
 
-df_with_composites_children_perform_domestic_chores <- create_composite_indicators_cpa_caregiver(input_df = df_cleaned)
+df_with_composites_children_perform_domestic_chores <- create_composite_indicators_cpa_caregiver(input_df = df_children_perform_domestic_chores_info)
 
 # split data into host and refugee
 
-df_ref_children_perform_domestic_chores <- df_with_composites %>% 
+df_ref_children_perform_domestic_chores <- df_with_composites_children_perform_domestic_chores %>% 
   filter(status == "refugee")
 
-df_host_children_perform_domestic_chores <- df_with_composites %>% 
+df_host_children_perform_domestic_chores <- df_with_composites_children_perform_domestic_chores %>% 
   filter(status == "host_community")
 
 # attach weights
@@ -138,7 +138,7 @@ df_protection_risky_places_analysis <- analysis_support(input_df_cleaned = df_pr
 
 # children_perform_economic_labour_info: prepare data and create survey ------------------------------------------------
 
-df_with_composites_children_perform_economic_labour_info <- create_composite_indicators_cpa_caregiver(input_df = df_cleaned)
+df_with_composites_children_perform_economic_labour_info <- create_composite_indicators_cpa_caregiver(input_df = df_children_perform_economic_labour_info)
 
 # split data into host and refugee
 
