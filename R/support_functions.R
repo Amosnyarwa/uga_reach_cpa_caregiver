@@ -780,7 +780,7 @@ analysis_support_after_survey_creation <- function(input_ref_svy, input_host_svy
     pull(variable) %>% unique()
   
   # refugee overall, no additional subset
-  outputs$ref_overall <- butteR::survey_collapse(df = ref_svy,
+  outputs$ref_overall <- butteR::survey_collapse(df = input_ref_svy,
                                                  vars_to_analyze = refugee_variables_no_subsets) %>% 
     mutate(population = "refugee")
   
@@ -799,7 +799,7 @@ analysis_support_after_survey_creation <- function(input_ref_svy, input_host_svy
     subset_temp <- dap_refugee_subset_split[[i]]
     subset_value <- unique(subset_temp$subset_1)
     vars_temp <- subset_temp %>% pull(variable)
-    ref_overall_subset1[[subset_value]] <- butteR::survey_collapse(df = ref_svy,
+    ref_overall_subset1[[subset_value]] <- butteR::survey_collapse(df = input_ref_svy,
                                                                    vars_to_analyze = vars_temp ,
                                                                    disag = c( subset_value)
     )
@@ -818,7 +818,7 @@ analysis_support_after_survey_creation <- function(input_ref_svy, input_host_svy
     pull(variable) %>% unique()
   
   # host overall, no additional subset
-  outputs$host_overall <- butteR::survey_collapse(df = host_svy,
+  outputs$host_overall <- butteR::survey_collapse(df = input_host_svy,
                                                   vars_to_analyze = host_variables_no_subsets ) %>%
     mutate(population = "host")
   
@@ -838,7 +838,7 @@ analysis_support_after_survey_creation <- function(input_ref_svy, input_host_svy
     subset_temp <- dap_host_subset_split[[i]]
     subset_value <- unique(subset_temp$subset_1)
     vars_temp <- subset_temp %>% pull(variable)
-    host_overall_subset1[[subset_value]] <- butteR::survey_collapse(df = host_svy,
+    host_overall_subset1[[subset_value]] <- butteR::survey_collapse(df = input_host_svy,
                                                                     vars_to_analyze = vars_temp ,
                                                                     disag = c(subset_value)
     )
