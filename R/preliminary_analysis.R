@@ -97,7 +97,7 @@ df_children_perform_domestic_chores_info_analysis <- analysis_support_after_surv
 
 # protection_risky_places: prepare data and create survey ------------------------------------------------
 
-df_with_composites_protection_risky_places <- create_composite_indicators_cpa_caregiver_repeats(input_df = df_cleaned_protection_risky_places_data) 
+df_with_composites_protection_risky_places <- create_composite_indicators_cpa_caregiver_repeats(input_df = df_protection_risky_places) 
 
 # split data into host and refugee
 
@@ -109,8 +109,8 @@ df_host_protection_risky_places <- df_with_composites_protection_risky_places %>
 
 # set up design objects
 
-ref_svy_protection_risky_places <- as_survey(.data = df_ref_with_weights_protection_risky_places)
-host_svy_protection_risky_places <- as_survey(.data = df_host_with_weights_protection_risky_places)
+ref_svy_protection_risky_places <- as_survey(.data = df_ref_protection_risky_places)
+host_svy_protection_risky_places <- as_survey(.data = df_host_protection_risky_places)
 
 
 df_protection_risky_places_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy_protection_risky_places,
