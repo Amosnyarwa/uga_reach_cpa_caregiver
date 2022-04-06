@@ -61,9 +61,9 @@ host_svy <- as_survey(.data = df_host_with_weights, strata = strata, weights = w
 
 df_main_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy,
                                                            input_host_svy = host_svy,
-                                     input_dap = dap %>% filter(!variable %in% c("places_where_children_are_mostly_at_risk",
-                                                                                 "hrs_child_perfoms_domestic_chores",
-                                                                                 "hrs_child_perfoms_econ_labour")))
+                                                           input_dap = dap %>% filter(!variable %in% c("places_where_children_are_mostly_at_risk",
+                                                                                                       "hrs_child_perfoms_domestic_chores",
+                                                                                                       "hrs_child_perfoms_econ_labour")))
 
 # children_perform_domestic_chores: prepare data and create survey ------------------------------------------------
 
@@ -93,7 +93,7 @@ host_svy_children_perform_domestic_chores <- as_survey(.data = df_host_with_weig
 
 df_children_perform_domestic_chores_info_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy_children_perform_domestic_chores,
                                                                                             input_host_svy = host_svy_children_perform_domestic_chores, 
-                                                                      input_dap = dap %>% filter(variable %in% c("hrs_child_perfoms_domestic_chores")))
+                                                                                            input_dap = dap %>% filter(variable %in% c("hrs_child_perfoms_domestic_chores")))
 
 # protection_risky_places: prepare data and create survey ------------------------------------------------
 
@@ -115,7 +115,7 @@ host_svy_protection_risky_places <- as_survey(.data = df_host_with_weights_prote
 
 df_protection_risky_places_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy_protection_risky_places,
                                                                               input_host_svy = host_svy_protection_risky_places,
-                                                        input_dap = dap %>% filter(variable %in% c("places_where_children_are_mostly_at_risk")))
+                                                                              input_dap = dap %>% filter(variable %in% c("places_where_children_are_mostly_at_risk")))
 
 # children_perform_economic_labour_info: prepare data and create survey ------------------------------------------------
 
