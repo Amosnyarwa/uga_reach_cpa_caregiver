@@ -14,7 +14,8 @@ create_composite_indicators_cpa_caregiver <- function(input_df) {
                                   TRUE ~ "rural"),
       i.respondent_age = case_when(respondent_age <= 18 ~ "age_12_18",
                                    respondent_age <= 59 ~ "age_19_59",
-                                   TRUE ~ "age_greater_59"),
+                                   respondent_age > 59 ~ "age_greater_59",
+                                   TRUE ~ "NA"),
       i.education_level = case_when(hh_member_education %in% c("no_formal_education") ~ "none",
                                     hh_member_education %in% c("completed_primary", "incomplete_primary", "incomplete_secondary") ~ "low",
                                     hh_member_education %in% c("completed_secondary", "incomplete_university", "incomplete_prof_degree", 
@@ -30,7 +31,8 @@ create_composite_indicators_cpa_caregiver <- function(input_df) {
                                  int.length_since_date_arrival <= 1 ~ "6_month_1_yr_ago",
                                  int.length_since_date_arrival <= 5 ~ "1_and_5_yrs_ago",
                                  int.length_since_date_arrival <= 10 ~ "5_and_10_yrs_ago",
-                                 TRUE ~ "greater_10_yrs_ago"
+                                 int.length_since_date_arrival > 10 ~ "greater_10_yrs_ago",
+                                 TRUE ~ "NA"
                                  )
     )
 }
@@ -49,6 +51,7 @@ create_composite_indicators_cpa_caregiver_repeats <- function(input_df) {
                                   TRUE ~ "rural"),
       i.respondent_age = case_when(respondent_age <= 18 ~ "age_12_18",
                                    respondent_age <= 59 ~ "age_19_59",
-                                   TRUE ~ "age_greater_59")
+                                   respondent_age > 59 ~ "age_greater_59",
+                                   TRUE ~ "NA")
     )
 }
