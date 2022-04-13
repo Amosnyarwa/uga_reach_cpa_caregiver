@@ -123,3 +123,15 @@ df_cleaned_children_perform_economic_labour_info_data <- implement_cleaning_supp
   select(cols_from_main_dataset, any_of(colnames(children_perform_economic_labour_info)))
 
 write_csv(df_cleaned_children_perform_economic_labour_info_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_economic_labour_info_data_caregiver.csv"))
+
+
+list_of_clean_datasets <- list("UGA2109_Cross-Sectoral Child..." = df_cleaned_data,
+                               "children_perform_domestic_ch..." = df_cleaned_children_perform_domestic_chores_info_data,
+                               "protection_risky_places" = df_cleaned_protection_risky_places_data,
+                               "children_perform_economic_la..." = df_cleaned_children_perform_economic_labour_info_data
+)
+
+openxlsx::write.xlsx(x = list_of_clean_datasets,
+                     file = paste0("outputs/", butteR::date_file_prefix(), 
+                                   "_clean_data_caregiver.xlsx"), 
+                     overwrite = TRUE)
