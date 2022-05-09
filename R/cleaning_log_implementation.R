@@ -86,7 +86,7 @@ df_cleaned_data <- implement_cleaning_support(input_df_raw_data = df_raw_data,
                                               input_df_choices = df_choices, 
                                               input_df_cleaning_log = df_cleaning_log %>% filter(name %in% colnames(df_raw_data)))
 
-write_csv(df_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_caregiver.csv"))
+# write_csv(df_cleaned_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_caregiver.csv"))
 
 # children_perform_domestic_chores_info
 df_cleaning_log_children_perform_domestic_chores_info <- df_cleaning_log %>% 
@@ -143,8 +143,32 @@ df_cleaned_children_perform_economic_labour_info_data_modify <- df_cleaned_child
 
 write_csv(df_cleaned_children_perform_economic_labour_info_data_modify, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_economic_labour_info_data_caregiver.csv"))
 
+# extra cleaning on child_labour
+df_cleaned_child_labour_domestic_chores <- df_cleaned_children_perform_domestic_chores_info_data_modify %>%
+  group_by(uuid) %>% 
+  summarise(int.child_labour_domestic_chores = str_c(child_labour, collapse = ":")) %>% 
+  mutate(child_labour_domestic = ifelse(str_detect(string = int.child_labour_domestic_chores, pattern = "yes"), "yes", "no")) %>% 
+  select(-starts_with("int.child_"))
 
-list_of_clean_datasets <- list("UGA2109_Cross-Sectoral Child..." = df_cleaned_data,
+df_cleaned_child_labour_economic_labour <- df_cleaned_children_perform_economic_labour_info_data_modify %>%
+  group_by(uuid) %>% 
+  summarise(int.child_labour_economic_labour = str_c(child_labour, collapse = ":")) %>% 
+  mutate(child_labour_economic = ifelse(str_detect(string = int.child_labour_economic_labour, pattern = "yes"), "yes", "no")) %>% 
+  select(-starts_with("int.child_"))
+
+df_combined_child_labour <- full_join(df_cleaned_child_labour_domestic_chores, df_cleaned_child_labour_economic_labour, by ="uuid" ) %>% 
+  mutate(child_labour = case_when(child_labour_domestic == "yes" | child_labour_economic == "yes" ~ "yes", 
+                               TRUE ~ "no")) %>% 
+  select(-c("child_labour_domestic", "child_labour_economic"))
+
+df_cleaned_data_and_child_labour <- df_cleaned_data %>% 
+  left_join(df_combined_child_labour, by = "uuid")
+
+write_csv(df_cleaned_data_and_child_labour, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_data_caregiver.csv"))
+
+# writing output to excel
+
+list_of_clean_datasets <- list("UGA2109_Cross-Sectoral Child..." = df_cleaned_data_and_child_labour,
                                "children_perform_domestic_ch..." = df_cleaned_children_perform_domestic_chores_info_data_modify,
                                "protection_risky_places" = df_cleaned_protection_risky_places_data,
                                "children_perform_economic_la..." = df_cleaned_children_perform_economic_labour_info_data_modify
