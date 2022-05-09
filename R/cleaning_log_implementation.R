@@ -98,7 +98,16 @@ df_cleaned_children_perform_domestic_chores_info_data <- implement_cleaning_supp
                                                                                     input_df_cleaning_log = df_cleaning_log_children_perform_domestic_chores_info) %>% 
   select(cols_from_main_dataset, any_of(colnames(children_perform_domestic_chores_info)))
 
-write_csv(df_cleaned_children_perform_domestic_chores_info_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_domestic_chores_info_data_caregiver.csv"))
+df_cleaned_children_perform_domestic_chores_info_data_modify <- df_cleaned_children_perform_domestic_chores_info_data %>% 
+  filter(!is.na(age_gender_breakdown_domestic_chores_post)) %>% 
+  mutate(i.child_labour = case_when(str_detect(string = age_gender_breakdown_domestic_chores_post   , pattern = "five_to_eleven|less_than_five|twelve_to_fourteen") & hrs_child_perfoms_domestic_chores > 20 ~ "yes",
+                                    str_detect(string = age_gender_breakdown_domestic_chores_post   , pattern = "fifteen_to_seventeen") & hrs_child_perfoms_domestic_chores > 42 ~ "yes",
+                                    TRUE ~ "no"),
+         hrs_child_perfoms_domestic_chores = i.child_labour) %>% 
+  rename(child_labour = hrs_child_perfoms_domestic_chores) %>% 
+  select(-i.child_labour)
+
+write_csv(df_cleaned_children_perform_domestic_chores_info_data_modify, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_domestic_chores_info_data_caregiver.csv"))
 
 # protection_risky_places
 df_cleaning_log_protection_risky_places <- df_cleaning_log %>% 
@@ -122,16 +131,26 @@ df_cleaned_children_perform_economic_labour_info_data <- implement_cleaning_supp
                                                                                     input_df_cleaning_log = df_cleaning_log_children_perform_economic_labour_info) %>% 
   select(cols_from_main_dataset, any_of(colnames(children_perform_economic_labour_info)))
 
-write_csv(df_cleaned_children_perform_economic_labour_info_data, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_economic_labour_info_data_caregiver.csv"))
+df_cleaned_children_perform_economic_labour_info_data_modify <- df_cleaned_children_perform_economic_labour_info_data %>% 
+  filter(!is.na(age_gender_breakdown_econ_labour_post)) %>% 
+  mutate(i.child_labour = case_when(str_detect(string = age_gender_breakdown_econ_labour_post   , pattern = "five_to_eleven|less_than_five") & hrs_child_perfoms_econ_labour > 0 ~ "yes",
+                                    str_detect(string = age_gender_breakdown_econ_labour_post   , pattern = "twelve_to_fourteen") & hrs_child_perfoms_econ_labour > 13 ~ "yes",
+                                    str_detect(string = age_gender_breakdown_econ_labour_post   , pattern = "fifteen_to_seventeen") & hrs_child_perfoms_econ_labour > 42 ~ "yes",
+                                    TRUE ~ "no"),
+         hrs_child_perfoms_econ_labour = i.child_labour) %>% 
+  rename(child_labour = hrs_child_perfoms_econ_labour) %>% 
+  select(-i.child_labour)
+
+write_csv(df_cleaned_children_perform_economic_labour_info_data_modify, file = paste0("outputs/", butteR::date_file_prefix(), "_clean_children_perform_economic_labour_info_data_caregiver.csv"))
 
 
 list_of_clean_datasets <- list("UGA2109_Cross-Sectoral Child..." = df_cleaned_data,
-                               "children_perform_domestic_ch..." = df_cleaned_children_perform_domestic_chores_info_data,
+                               "children_perform_domestic_ch..." = df_cleaned_children_perform_domestic_chores_info_data_modify,
                                "protection_risky_places" = df_cleaned_protection_risky_places_data,
-                               "children_perform_economic_la..." = df_cleaned_children_perform_economic_labour_info_data
+                               "children_perform_economic_la..." = df_cleaned_children_perform_economic_labour_info_data_modify
 )
 
 openxlsx::write.xlsx(x = list_of_clean_datasets,
                      file = paste0("outputs/", butteR::date_file_prefix(), 
                                    "_clean_data_caregiver.xlsx"), 
-                     overwrite = TRUE)
+                     overwrite = TRUE, keepNA = TRUE, na.string = "NA")
