@@ -175,7 +175,9 @@ df_protection_risky_places_analysis_with_kampala <- analysis_support_mofificatio
 full_analysis_long <- bind_rows(df_main_analysis,
                                 df_children_perform_domestic_chores_info_analysis,
                                 df_protection_risky_places_analysis,
-                                df_children_perform_economic_labour_info_analysis)
+                                df_children_perform_economic_labour_info_analysis,
+                                df_main_analysis_with_kampala,
+                                df_protection_risky_places_analysis_with_kampala)
 end <- Sys.time()
 
 print(paste("Time taken to run the script: ", end - start))
