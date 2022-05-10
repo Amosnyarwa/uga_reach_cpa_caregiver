@@ -876,7 +876,7 @@ analysis_support_mofification_kampala <- function(input_df_cleaned, input_dap) {
   # refugee -----------------------------------------------------------------
   
   dap_refugee <- input_dap %>% 
-    filter(split %in% c("all", "refugee_only"))
+    filter(subset_1 == "i.location_type", split %in% c("all", "refugee_only"))
   
   # no subsets
   refugee_variables_no_subsets <- dap_refugee %>% 
@@ -885,7 +885,7 @@ analysis_support_mofification_kampala <- function(input_df_cleaned, input_dap) {
   # refugee overall, no additional subset
   outputs$ref_overall <- butteR::survey_collapse(df = ref_svy,
                                                  vars_to_analyze = refugee_variables_no_subsets) %>% 
-    mutate(population = "refugee")
+    mutate(population = "refugee_kampala")
   
   #  subsets
   dap_refugee_subset1 <- input_dap %>%
@@ -909,7 +909,7 @@ analysis_support_mofification_kampala <- function(input_df_cleaned, input_dap) {
   }
   
   outputs$ref_overall_subset1 <- bind_rows(ref_overall_subset1) %>%
-    mutate(population = "refugee")
+    mutate(population = "refugee_kampala")
   
   # merge analysis ----------------------------------------------------------
   
