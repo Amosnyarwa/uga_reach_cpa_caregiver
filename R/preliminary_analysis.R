@@ -76,35 +76,35 @@ df_main_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_s
                                                                                                        "hrs_child_perfoms_domestic_chores",
                                                                                                        "hrs_child_perfoms_econ_labour")))
 
-# children_perform_domestic_chores: prepare data and create survey ------------------------------------------------
-
-df_with_composites_children_perform_domestic_chores <- create_composite_indicators_cpa_caregiver_repeats(input_df = df_children_perform_domestic_chores_info)
-
-# split data into host and refugee
-
-df_ref_children_perform_domestic_chores <- df_with_composites_children_perform_domestic_chores %>% 
-  filter(status == "refugee")
-
-df_host_children_perform_domestic_chores <- df_with_composites_children_perform_domestic_chores %>% 
-  filter(status == "host_community")
-
-# attach weights
-
-df_ref_with_weights_children_perform_domestic_chores <- df_ref_children_perform_domestic_chores %>% 
-  left_join(df_ref_with_weights %>% select(uuid, strata, weights), by = "uuid")
-
-df_host_with_weights_children_perform_domestic_chores <- df_host_children_perform_domestic_chores %>% 
-  left_join(df_host_with_weights %>% select(uuid, strata, weights), by = "uuid")
-
-# set up design objects
-
-ref_svy_children_perform_domestic_chores <- as_survey(.data = df_ref_with_weights_children_perform_domestic_chores, strata = strata, weights = weights )
-host_svy_children_perform_domestic_chores <- as_survey(.data = df_host_with_weights_children_perform_domestic_chores, strata = strata, weights = weights )
-
-
-df_children_perform_domestic_chores_info_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy_children_perform_domestic_chores,
-                                                                                            input_host_svy = host_svy_children_perform_domestic_chores, 
-                                                                                            input_dap = dap %>% filter(variable %in% c("hrs_child_perfoms_domestic_chores")))
+# # children_perform_domestic_chores: prepare data and create survey ------------------------------------------------
+# 
+# df_with_composites_children_perform_domestic_chores <- create_composite_indicators_cpa_caregiver_repeats(input_df = df_children_perform_domestic_chores_info)
+# 
+# # split data into host and refugee
+# 
+# df_ref_children_perform_domestic_chores <- df_with_composites_children_perform_domestic_chores %>% 
+#   filter(status == "refugee")
+# 
+# df_host_children_perform_domestic_chores <- df_with_composites_children_perform_domestic_chores %>% 
+#   filter(status == "host_community")
+# 
+# # attach weights
+# 
+# df_ref_with_weights_children_perform_domestic_chores <- df_ref_children_perform_domestic_chores %>% 
+#   left_join(df_ref_with_weights %>% select(uuid, strata, weights), by = "uuid")
+# 
+# df_host_with_weights_children_perform_domestic_chores <- df_host_children_perform_domestic_chores %>% 
+#   left_join(df_host_with_weights %>% select(uuid, strata, weights), by = "uuid")
+# 
+# # set up design objects
+# 
+# ref_svy_children_perform_domestic_chores <- as_survey(.data = df_ref_with_weights_children_perform_domestic_chores, strata = strata, weights = weights )
+# host_svy_children_perform_domestic_chores <- as_survey(.data = df_host_with_weights_children_perform_domestic_chores, strata = strata, weights = weights )
+# 
+# 
+# df_children_perform_domestic_chores_info_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy_children_perform_domestic_chores,
+#                                                                                             input_host_svy = host_svy_children_perform_domestic_chores, 
+#                                                                                             input_dap = dap %>% filter(variable %in% c("hrs_child_perfoms_domestic_chores")))
 
 # protection_risky_places: prepare data and create survey ------------------------------------------------
 
@@ -128,35 +128,47 @@ df_protection_risky_places_analysis <- analysis_support_after_survey_creation(in
                                                                               input_host_svy = host_svy_protection_risky_places,
                                                                               input_dap = dap %>% filter(variable %in% c("places_where_children_are_mostly_at_risk")))
 
-# children_perform_economic_labour_info: prepare data and create survey ------------------------------------------------
+# # children_perform_economic_labour_info: prepare data and create survey ------------------------------------------------
+# 
+# df_with_composites_children_perform_economic_labour_info <- create_composite_indicators_cpa_caregiver_repeats(input_df = df_children_perform_economic_labour_info)
+# 
+# # split data into host and refugee
+# 
+# df_ref_children_perform_economic_labour_info <- df_with_composites_children_perform_economic_labour_info %>% 
+#   filter(status == "refugee")
+# 
+# df_host_children_perform_economic_labour_info <- df_with_composites_children_perform_economic_labour_info %>% 
+#   filter(status == "host_community")
+# 
+# # attach weights
+# 
+# df_ref_with_weights_children_perform_economic_labour_info <- df_ref_children_perform_economic_labour_info %>% 
+#   left_join(df_ref_with_weights %>% select(uuid, strata, weights), by = "uuid")
+# 
+# df_host_with_weights_children_perform_economic_labour_info <- df_host_children_perform_economic_labour_info %>% 
+#   left_join(df_host_with_weights %>% select(uuid, strata, weights), by = "uuid")
+# 
+# # set up design objects
+# 
+# ref_svy_children_perform_economic_labour_info <- as_survey(.data = df_ref_with_weights_children_perform_economic_labour_info, strata = strata, weights = weights )
+# host_svy_children_perform_economic_labour_info <- as_survey(.data = df_host_with_weights_children_perform_economic_labour_info, strata = strata, weights = weights )
+# 
+# 
+# df_children_perform_economic_labour_info_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy_children_perform_economic_labour_info,
+#                                                                                             input_host_svy = host_svy_children_perform_economic_labour_info, 
+#                                                                                             input_dap = dap %>% filter(variable %in% c("hrs_child_perfoms_econ_labour")))
+# 
+# 
 
-df_with_composites_children_perform_economic_labour_info <- create_composite_indicators_cpa_caregiver_repeats(input_df = df_children_perform_economic_labour_info)
-
-# split data into host and refugee
-
-df_ref_children_perform_economic_labour_info <- df_with_composites_children_perform_economic_labour_info %>% 
-  filter(status == "refugee")
-
-df_host_children_perform_economic_labour_info <- df_with_composites_children_perform_economic_labour_info %>% 
-  filter(status == "host_community")
-
-# attach weights
-
-df_ref_with_weights_children_perform_economic_labour_info <- df_ref_children_perform_economic_labour_info %>% 
-  left_join(df_ref_with_weights %>% select(uuid, strata, weights), by = "uuid")
-
-df_host_with_weights_children_perform_economic_labour_info <- df_host_children_perform_economic_labour_info %>% 
-  left_join(df_host_with_weights %>% select(uuid, strata, weights), by = "uuid")
-
-# set up design objects
-
-ref_svy_children_perform_economic_labour_info <- as_survey(.data = df_ref_with_weights_children_perform_economic_labour_info, strata = strata, weights = weights )
-host_svy_children_perform_economic_labour_info <- as_survey(.data = df_host_with_weights_children_perform_economic_labour_info, strata = strata, weights = weights )
+# analysis including kampala ----------------------------------------------
+df_main_analysis_with_kampala <- analysis_support_mofification_kampala(input_df_cleaned = df_cleaned_with_kampala, 
+                                                                    input_dap = dap %>% filter(!variable %in% c("places_where_children_are_mostly_at_risk",
+                                                                                                                "hrs_child_perfoms_domestic_chores",
+                                                                                                                "hrs_child_perfoms_econ_labour")))
+df_protection_risky_places_analysis_with_kampala <- analysis_support_mofification_kampala(input_df_cleaned = df_protection_risky_places_analysis_with_kampala,
+                                                                              input_dap = dap %>% filter(variable %in% c("places_where_children_are_mostly_at_risk")))
 
 
-df_children_perform_economic_labour_info_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy_children_perform_economic_labour_info,
-                                                                                            input_host_svy = host_svy_children_perform_economic_labour_info, 
-                                                                                            input_dap = dap %>% filter(variable %in% c("hrs_child_perfoms_econ_labour")))
 
 # merge analysis ----------------------------------------------------------
 
