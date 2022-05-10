@@ -11,10 +11,18 @@ source("R/support_functions.R")
 
 # load data ---------------------------------------------------------------
 
-df_cleaned <- read_csv(file = "inputs/clean_data_caregiver.csv")
-df_children_perform_domestic_chores_info <- read_csv(file = "inputs/clean_children_perform_domestic_chores_info_data_caregiver.csv") 
-df_protection_risky_places <- read_csv(file = "inputs/clean_protection_risky_places_data_caregiver.csv")
-df_children_perform_economic_labour_info <- read_csv(file = "inputs/clean_children_perform_economic_labour_info_data_caregiver.csv")
+df_cleaned_with_kampala <- read_csv(file = "inputs/clean_data_caregiver.csv")
+df_cleaned <- df_cleaned_with_kampala %>% 
+  filter(district_name != "kampala")
+df_children_perform_domestic_chores_info_with_kampala <- read_csv(file = "inputs/clean_children_perform_domestic_chores_info_data_caregiver.csv") 
+df_children_perform_domestic_chores_info <- df_children_perform_domestic_chores_info_with_kampala %>% 
+  filter(district_name != "kampala") 
+df_protection_risky_places_with_kampala <- read_csv(file = "inputs/clean_protection_risky_places_data_caregiver.csv")
+df_protection_risky_places <- df_protection_risky_places_with_kampala %>% 
+  filter(district_name != "kampala")
+df_children_perform_economic_labour_info_with_kampala <- read_csv(file = "inputs/clean_children_perform_economic_labour_info_data_caregiver.csv")
+df_children_perform_economic_labour_info <- df_children_perform_economic_labour_info_with_kampala %>% 
+  filter(district_name != "kampala")
 
 dap <- read_csv("inputs/r_dap_caregiver.csv") %>% 
   janitor::clean_names()
@@ -22,7 +30,9 @@ dap <- read_csv("inputs/r_dap_caregiver.csv") %>%
 start<- Sys.time() 
 
 # load in individual level population data sets
-df_ref_pop <- read_csv("inputs/refugee_population_caregiver.csv")
+df_ref_pop_with_kampala <- read_csv("inputs/refugee_population_caregiver.csv")
+df_ref_pop <- df_ref_pop_with_kampala %>% 
+  filter(strata != "kampala")
 df_host_pop <- read_csv("inputs/host_population_caregiver.csv")
 
 # main: prepare data and create survey ------------------------------------------------
