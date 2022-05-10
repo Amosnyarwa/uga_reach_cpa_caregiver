@@ -72,9 +72,9 @@ host_svy <- as_survey(.data = df_host_with_weights, strata = strata, weights = w
 
 df_main_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy,
                                                            input_host_svy = host_svy,
-                                                           input_dap = dap %>% filter(!variable %in% c("places_where_children_are_mostly_at_risk",
-                                                                                                       "hrs_child_perfoms_domestic_chores",
-                                                                                                       "hrs_child_perfoms_econ_labour")))
+                                                           input_dap = dap %>% filter(subset_1 != "i.location_type", !variable %in% c("places_where_children_are_mostly_at_risk",
+                                                                                                                                      "hrs_child_perfoms_domestic_chores",
+                                                                                                                                      "hrs_child_perfoms_econ_labour")))
 
 # # children_perform_domestic_chores: prepare data and create survey ------------------------------------------------
 # 
@@ -126,7 +126,7 @@ host_svy_protection_risky_places <- as_survey(.data = df_host_protection_risky_p
 
 df_protection_risky_places_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy_protection_risky_places,
                                                                               input_host_svy = host_svy_protection_risky_places,
-                                                                              input_dap = dap %>% filter(variable %in% c("places_where_children_are_mostly_at_risk")))
+                                                                              input_dap = dap %>% filter(subset_1 != "i.location_type", variable %in% c("places_where_children_are_mostly_at_risk")))
 
 # # children_perform_economic_labour_info: prepare data and create survey ------------------------------------------------
 # 
@@ -162,22 +162,26 @@ df_protection_risky_places_analysis <- analysis_support_after_survey_creation(in
 
 # analysis including kampala ----------------------------------------------
 df_main_analysis_with_kampala <- analysis_support_mofification_kampala(input_df_cleaned = df_cleaned_with_kampala, 
-                                                                    input_dap = dap %>% filter(!variable %in% c("places_where_children_are_mostly_at_risk",
-                                                                                                                "hrs_child_perfoms_domestic_chores",
-                                                                                                                "hrs_child_perfoms_econ_labour")))
-df_protection_risky_places_analysis_with_kampala <- analysis_support_mofification_kampala(input_df_cleaned = df_protection_risky_places_analysis_with_kampala,
-                                                                              input_dap = dap %>% filter(variable %in% c("places_where_children_are_mostly_at_risk")))
+                                                                       input_dap = dap %>% filter(!variable %in% c("places_where_children_are_mostly_at_risk",
+                                                                                                                   "hrs_child_perfoms_domestic_chores",
+                                                                                                                   "hrs_child_perfoms_econ_labour")), 
+                                                                       input_dataset = "main_dataset")
+
+df_protection_risky_places_analysis_with_kampala <- analysis_support_mofification_kampala(input_df_cleaned = df_protection_risky_places_with_kampala,
+                                                                                          input_dap = dap %>% filter(variable %in% c("places_where_children_are_mostly_at_risk")), 
+                                                                                          input_dataset = "repeats_dataset")
 
 
 
 # merge analysis ----------------------------------------------------------
 
 full_analysis_long <- bind_rows(df_main_analysis,
-                                df_children_perform_domestic_chores_info_analysis,
+                                # df_children_perform_domestic_chores_info_analysis,
                                 df_protection_risky_places_analysis,
-                                df_children_perform_economic_labour_info_analysis,
+                                # df_children_perform_economic_labour_info_analysis,
                                 df_main_analysis_with_kampala,
-                                df_protection_risky_places_analysis_with_kampala)
+                                # df_protection_risky_places_analysis_with_kampala
+                                )
 end <- Sys.time()
 
 print(paste("Time taken to run the script: ", end - start))
