@@ -14,15 +14,15 @@ source("R/support_functions.R")
 df_cleaned_with_kampala <- read_csv(file = "inputs/clean_data_caregiver.csv")
 df_cleaned <- df_cleaned_with_kampala %>% 
   filter(district_name != "kampala")
-df_children_perform_domestic_chores_info_with_kampala <- read_csv(file = "inputs/clean_children_perform_domestic_chores_info_data_caregiver.csv") 
-df_children_perform_domestic_chores_info <- df_children_perform_domestic_chores_info_with_kampala %>% 
-  filter(district_name != "kampala") 
+# df_children_perform_domestic_chores_info_with_kampala <- read_csv(file = "inputs/clean_children_perform_domestic_chores_info_data_caregiver.csv") 
+# df_children_perform_domestic_chores_info <- df_children_perform_domestic_chores_info_with_kampala %>% 
+#   filter(district_name != "kampala") 
 df_protection_risky_places_with_kampala <- read_csv(file = "inputs/clean_protection_risky_places_data_caregiver.csv")
 df_protection_risky_places <- df_protection_risky_places_with_kampala %>% 
   filter(district_name != "kampala")
-df_children_perform_economic_labour_info_with_kampala <- read_csv(file = "inputs/clean_children_perform_economic_labour_info_data_caregiver.csv")
-df_children_perform_economic_labour_info <- df_children_perform_economic_labour_info_with_kampala %>% 
-  filter(district_name != "kampala")
+# df_children_perform_economic_labour_info_with_kampala <- read_csv(file = "inputs/clean_children_perform_economic_labour_info_data_caregiver.csv")
+# df_children_perform_economic_labour_info <- df_children_perform_economic_labour_info_with_kampala %>% 
+#   filter(district_name != "kampala")
 
 dap <- read_csv("inputs/r_dap_caregiver.csv") %>% 
   janitor::clean_names()
@@ -72,7 +72,7 @@ host_svy <- as_survey(.data = df_host_with_weights, strata = strata, weights = w
 
 df_main_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy,
                                                            input_host_svy = host_svy,
-                                                           input_dap = dap %>% filter(subset_1 != "i.location_type", !variable %in% c("places_where_children_are_mostly_at_risk",
+                                                           input_dap = dap %>% filter(!variable %in% c("places_where_children_are_mostly_at_risk",
                                                                                                                                       "hrs_child_perfoms_domestic_chores",
                                                                                                                                       "hrs_child_perfoms_econ_labour")))
 
@@ -126,7 +126,7 @@ host_svy_protection_risky_places <- as_survey(.data = df_host_protection_risky_p
 
 df_protection_risky_places_analysis <- analysis_support_after_survey_creation(input_ref_svy = ref_svy_protection_risky_places,
                                                                               input_host_svy = host_svy_protection_risky_places,
-                                                                              input_dap = dap %>% filter(subset_1 != "i.location_type", variable %in% c("places_where_children_are_mostly_at_risk")))
+                                                                              input_dap = dap %>% filter(variable %in% c("places_where_children_are_mostly_at_risk")))
 
 # # children_perform_economic_labour_info: prepare data and create survey ------------------------------------------------
 # 
