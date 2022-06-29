@@ -1,6 +1,4 @@
 library(tidyverse)
-library(janitor)
-library(lubridate)
 
 # read data ---------------------------------------------------------------
 
@@ -74,7 +72,9 @@ df_prepare_analysis_output <- df_analysis_output %>%
   select(`Question`= label, `choices/options` = variable_val, `Results(mean/percentage)` = `mean/pct`, population, subset_1_name, subset_1_val)
 
 
-openxlsx::write.xlsx(x = df_prepare_analysis_output,
+list_of_output <- list("caregiver" = df_prepare_analysis_output)
+
+openxlsx::write.xlsx(x = list_of_output,
                      file = paste0("outputs/", butteR::date_file_prefix(), 
                                    "_UGA2109 - Cross-sectoral child protection assessment_caregiver_analysis.xlsx"), 
                      overwrite = TRUE, keepNA = TRUE, na.string = "NA")
