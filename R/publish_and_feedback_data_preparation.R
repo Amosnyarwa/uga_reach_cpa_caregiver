@@ -10,6 +10,7 @@ c_types <- ifelse(str_detect(string = data_nms, pattern = "_other$"), "text", "g
 
 df_clean_data <- readxl::read_excel(path = data_file, sheet = "UGA2109_Cross-Sectoral Child...", col_types = c_types)
 df_clean_data_protection_risky_places <- readxl::read_excel(path = data_file, sheet = "protection_risky_places")
+df_clean_data_with_weights <- readxl::read_excel(path = "inputs/clean_data_caregiver_with_weights.xlsx")
 
 # read analysis output 
 df_analysis_output <- readr::read_csv("inputs/full_analysis_lf_caregiver.csv")
@@ -34,11 +35,14 @@ openxlsx::write.xlsx(x = df_feedback_data,
 
 # main
 
+audit_cols_to_remove <- c("deviceid", "audit", "audit_URL", "instance_name")
+
 df_prepared_data_main <- df_clean_data %>% 
-  select(-c("interview_feedback":"call_back_note"))
+  select(-c("interview_feedback":"call_back_note"), -any_of(audit_cols_to_remove)) %>% 
+  left_join(df_clean_data_with_weights)
 
 df_prepared_data_protection_risky_places <- df_clean_data_protection_risky_places %>% 
-  select(-c("start":"nationality_other"))
+  select(-c("start":"nationality_other"), -any_of(audit_cols_to_remove))
 
 # writing output to excel
 
