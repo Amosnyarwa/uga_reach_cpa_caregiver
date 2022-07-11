@@ -67,14 +67,14 @@ df_host_with_weights <- df_host %>%
 
 # output data with weights and composite indicators for publishing
 
-df_combined_data <- bind_rows(df_ref_with_weights, df_host_with_weights) %>% 
+df_combined_data_with_weights <- bind_rows(df_ref_with_weights, df_host_with_weights) %>% 
   select(c("uuid", "weights"), starts_with("i.") )
 
-openxlsx::write.xlsx(x = df_combined_data,
+openxlsx::write.xlsx(x = df_combined_data_with_weights,
                      file = paste0("outputs/", butteR::date_file_prefix(), 
                                    "_clean_data_caregiver_with_weights.xlsx"), 
                      overwrite = TRUE, keepNA = TRUE, na.string = "NA")
-openxlsx::write.xlsx(x = df_combined_data,
+openxlsx::write.xlsx(x = df_combined_data_with_weights,
                      file = paste0("inputs/clean_data_caregiver_with_weights.xlsx"), 
                      overwrite = TRUE, keepNA = TRUE, na.string = "NA")
 
